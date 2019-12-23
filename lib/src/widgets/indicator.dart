@@ -3,16 +3,16 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import '../easy_loading.dart';
 
-class loadingIndicator extends StatefulWidget {
-  const loadingIndicator({
+class LoadingIndicator extends StatefulWidget {
+  const LoadingIndicator({
     Key key,
   }) : super(key: key);
 
   @override
-  _loadingIndicatorState createState() => _loadingIndicatorState();
+  _LoadingIndicatorState createState() => _LoadingIndicatorState();
 }
 
-class _loadingIndicatorState extends State<loadingIndicator> {
+class _LoadingIndicatorState extends State<LoadingIndicator> {
   final double _size = EasyLoading.instance.indicatorSize;
   final EasyLoadingAnimationType _animationType =
       EasyLoading.instance.animationType;

@@ -2,27 +2,28 @@ import 'package:flutter/material.dart';
 import './indicator.dart';
 import '../easy_loading.dart';
 
-class ProgressloadingContainer extends StatefulWidget {
+class LoadingContainer extends StatefulWidget {
   final Widget indicator;
   final String status;
 
-  ProgressloadingContainer({
+  LoadingContainer({
     Key key,
     this.indicator,
     this.status,
   }) : super(key: key);
 
   @override
-  ProgressloadingContainerState createState() => ProgressloadingContainerState();
+  LoadingContainerState createState() => LoadingContainerState();
 }
 
-class ProgressloadingContainerState extends State<ProgressloadingContainer> {
+class LoadingContainerState extends State<LoadingContainer> {
   final EdgeInsets _contentPadding = EasyLoading.instance.contentPadding;
   final double _radius = EasyLoading.instance.radius;
   final double _fontSize = EasyLoading.instance.fontSize;
-  final Color _color = EasyLoading.instance.loadingStyle == EasyLoadingStyle.dark
-      ? Colors.black.withOpacity(0.9)
-      : Colors.white;
+  final Color _color =
+      EasyLoading.instance.loadingStyle == EasyLoadingStyle.dark
+          ? Colors.black.withOpacity(0.9)
+          : Colors.white;
   final Color _textColor =
       EasyLoading.instance.loadingStyle == EasyLoadingStyle.dark
           ? Colors.white
@@ -87,7 +88,7 @@ class ProgressloadingContainerState extends State<ProgressloadingContainer> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  widget.indicator ?? loadingIndicator(),
+                  widget.indicator ?? LoadingIndicator(),
                   widget.status?.isNotEmpty == true
                       ? Padding(
                           padding: const EdgeInsets.only(top: 10.0),

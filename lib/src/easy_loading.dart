@@ -75,7 +75,7 @@ class EasyLoading {
 
   BuildContext context;
   OverlayEntry overlayEntry;
-  GlobalKey<ProgressloadingContainerState> key = GlobalKey();
+  GlobalKey<LoadingContainerState> key = GlobalKey();
 
   factory EasyLoading() => _getInstance();
   static EasyLoading _instance;
@@ -177,7 +177,7 @@ class EasyLoading {
     _getInstance()._remove();
 
     OverlayEntry _overlayEntry = OverlayEntry(
-      builder: (BuildContext context) => ProgressloadingContainer(
+      builder: (BuildContext context) => LoadingContainer(
         key: _getInstance().key,
         status: status,
         indicator: w,
