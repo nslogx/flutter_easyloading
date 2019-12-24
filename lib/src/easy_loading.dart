@@ -8,7 +8,7 @@ enum EasyLoadingStyle {
   custom,
 }
 
-/// loading animation type see [https://github.com/jogboms/flutter_spinkit#-showcase]
+/// loading animation type. see [https://github.com/jogboms/flutter_spinkit#-showcase]
 enum EasyLoadingAnimationType {
   fadingCircle,
   circle,
@@ -111,12 +111,6 @@ class EasyLoading {
     _getInstance()._show(status: status);
   }
 
-  /// show progress with [progress] [status]
-  static void showProgress(
-    double progress, {
-    String status,
-  }) {}
-
   /// showSuccess [status]
   static void showSuccess(
     String status, {
@@ -168,10 +162,10 @@ class EasyLoading {
     );
   }
 
+  /// show loading
   void _show({
     Widget w,
     String status,
-    double progress,
     Duration duration,
   }) {
     _getInstance()._remove();
@@ -198,13 +192,14 @@ class EasyLoading {
     bool animation = true,
   }) async {
     if (animation == true) {
-      await _getInstance().key.currentState.dismiss();
+      await _getInstance().key.currentState?.dismiss();
       _getInstance()._remove();
     } else {
       _getInstance()._remove();
     }
   }
 
+  /// remove loading
   void _remove() {
     _getInstance().overlayEntry?.remove();
     _getInstance().overlayEntry = null;
