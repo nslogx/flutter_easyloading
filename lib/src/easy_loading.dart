@@ -9,7 +9,7 @@ enum EasyLoadingStyle {
 }
 
 /// loading animation type. see [https://github.com/jogboms/flutter_spinkit#-showcase]
-enum EasyLoadingAnimationType {
+enum EasyLoadingIndicatorType {
   fadingCircle,
   circle,
   threeBounce,
@@ -49,8 +49,8 @@ class EasyLoading {
   /// loading style, default [EasyLoadingStyle.dark]
   EasyLoadingStyle loadingStyle;
 
-  /// loading animation type, default [EasyLoadingAnimationType.fadingCircle]
-  EasyLoadingAnimationType animationType;
+  /// loading animation type, default [EasyLoadingIndicatorType.fadingCircle]
+  EasyLoadingIndicatorType animationType;
 
   /// loading mask type, default [EasyLoadingMaskType.none]
   EasyLoadingMaskType maskType;
@@ -84,7 +84,7 @@ class EasyLoading {
   EasyLoading._internal() {
     /// set deafult value
     loadingStyle = EasyLoadingStyle.dark;
-    animationType = EasyLoadingAnimationType.wave;
+    animationType = EasyLoadingIndicatorType.wave;
     maskType = EasyLoadingMaskType.none;
     textAlign = TextAlign.center;
     indicatorSize = 30.0;

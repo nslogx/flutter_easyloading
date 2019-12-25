@@ -14,7 +14,7 @@ class LoadingIndicator extends StatefulWidget {
 
 class _LoadingIndicatorState extends State<LoadingIndicator> {
   final double _size = EasyLoading.instance.indicatorSize;
-  final EasyLoadingAnimationType _animationType =
+  final EasyLoadingIndicatorType _animationType =
       EasyLoading.instance.animationType;
   final Color _indicatorColor =
       EasyLoading.instance.loadingStyle == EasyLoadingStyle.dark
@@ -35,139 +35,139 @@ class _LoadingIndicatorState extends State<LoadingIndicator> {
   Widget build(BuildContext context) {
     Widget _indicator;
     switch (_animationType) {
-      case EasyLoadingAnimationType.fadingCircle:
+      case EasyLoadingIndicatorType.fadingCircle:
         _indicator = SpinKitFadingCircle(
           color: _indicatorColor,
           size: _size,
         );
         break;
-      case EasyLoadingAnimationType.circle:
+      case EasyLoadingIndicatorType.circle:
         _indicator = SpinKitCircle(
           color: _indicatorColor,
           size: _size,
         );
         break;
-      case EasyLoadingAnimationType.threeBounce:
+      case EasyLoadingIndicatorType.threeBounce:
         _indicator = SpinKitThreeBounce(
           color: _indicatorColor,
           size: _size,
         );
         break;
-      case EasyLoadingAnimationType.chasingDots:
+      case EasyLoadingIndicatorType.chasingDots:
         _indicator = SpinKitChasingDots(
           color: _indicatorColor,
           size: _size,
         );
         break;
-      case EasyLoadingAnimationType.wave:
+      case EasyLoadingIndicatorType.wave:
         _indicator = SpinKitWave(
           color: _indicatorColor,
           size: _size,
         );
         break;
-      case EasyLoadingAnimationType.wanderingCubes:
+      case EasyLoadingIndicatorType.wanderingCubes:
         _indicator = SpinKitWanderingCubes(
           color: _indicatorColor,
           size: _size,
         );
         break;
-      case EasyLoadingAnimationType.rotatingCircle:
+      case EasyLoadingIndicatorType.rotatingCircle:
         _indicator = SpinKitRotatingCircle(
           color: _indicatorColor,
           size: _size,
         );
         break;
-      case EasyLoadingAnimationType.rotatingPlain:
+      case EasyLoadingIndicatorType.rotatingPlain:
         _indicator = SpinKitRotatingPlain(
           color: _indicatorColor,
           size: _size,
         );
         break;
-      case EasyLoadingAnimationType.doubleBounce:
+      case EasyLoadingIndicatorType.doubleBounce:
         _indicator = SpinKitDoubleBounce(
           color: _indicatorColor,
           size: _size,
         );
         break;
-      case EasyLoadingAnimationType.fadingFour:
+      case EasyLoadingIndicatorType.fadingFour:
         _indicator = SpinKitFadingFour(
           color: _indicatorColor,
           size: _size,
         );
         break;
-      case EasyLoadingAnimationType.fadingCube:
+      case EasyLoadingIndicatorType.fadingCube:
         _indicator = SpinKitFadingCube(
           color: _indicatorColor,
           size: _size,
         );
         break;
-      case EasyLoadingAnimationType.pulse:
+      case EasyLoadingIndicatorType.pulse:
         _indicator = SpinKitPulse(
           color: _indicatorColor,
           size: _size,
         );
         break;
-      case EasyLoadingAnimationType.cubeGrid:
+      case EasyLoadingIndicatorType.cubeGrid:
         _indicator = SpinKitCubeGrid(
           color: _indicatorColor,
           size: _size,
         );
         break;
-      case EasyLoadingAnimationType.foldingCube:
+      case EasyLoadingIndicatorType.foldingCube:
         _indicator = SpinKitFoldingCube(
           color: _indicatorColor,
           size: _size,
         );
         break;
-      case EasyLoadingAnimationType.pumpingHeart:
+      case EasyLoadingIndicatorType.pumpingHeart:
         _indicator = SpinKitPumpingHeart(
           color: _indicatorColor,
           size: _size,
         );
         break;
-      case EasyLoadingAnimationType.dualRing:
+      case EasyLoadingIndicatorType.dualRing:
         _indicator = SpinKitDualRing(
           color: _indicatorColor,
           size: _size,
         );
         break;
-      case EasyLoadingAnimationType.hourGlass:
+      case EasyLoadingIndicatorType.hourGlass:
         _indicator = SpinKitHourGlass(
           color: _indicatorColor,
           size: _size,
         );
         break;
-      case EasyLoadingAnimationType.pouringHourGlass:
+      case EasyLoadingIndicatorType.pouringHourGlass:
         _indicator = SpinKitPouringHourglass(
           color: _indicatorColor,
           size: _size,
         );
         break;
-      case EasyLoadingAnimationType.fadingGrid:
+      case EasyLoadingIndicatorType.fadingGrid:
         _indicator = SpinKitFadingGrid(
           color: _indicatorColor,
           size: _size,
         );
         break;
-      case EasyLoadingAnimationType.ring:
+      case EasyLoadingIndicatorType.ring:
         _indicator = SpinKitRing(
           color: _indicatorColor,
           size: _size,
         );
         break;
-      case EasyLoadingAnimationType.ripple:
+      case EasyLoadingIndicatorType.ripple:
         _indicator = SpinKitRipple(
           color: _indicatorColor,
           size: _size,
         );
         break;
-      case EasyLoadingAnimationType.spinningCircle:
+      case EasyLoadingIndicatorType.spinningCircle:
         _indicator = SpinKitSpinningCircle(
           color: _indicatorColor,
           size: _size,
         );
         break;
-      case EasyLoadingAnimationType.squareCircle:
+      case EasyLoadingIndicatorType.squareCircle:
         _indicator = SpinKitSquareCircle(
           color: _indicatorColor,
           size: _size,
