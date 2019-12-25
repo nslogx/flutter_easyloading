@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
+
 import './indicator.dart';
 import '../easy_loading.dart';
 
@@ -50,11 +52,13 @@ class LoadingContainerState extends State<LoadingContainer> {
     super.dispose();
   }
 
-  Future<void> dismiss() {
+  dismiss(Completer completer) {
     setState(() {
       _opacity = 0.0;
     });
-    return Future.delayed(_animationDuration, () {});
+    Future.delayed(_animationDuration, () {
+      completer.complete();
+    });
   }
 
   @override

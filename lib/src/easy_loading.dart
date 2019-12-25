@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
+
 import './widgets/container.dart';
 
 /// loading style
@@ -75,7 +77,8 @@ class EasyLoading {
 
   BuildContext context;
   OverlayEntry overlayEntry;
-  GlobalKey<LoadingContainerState> key = GlobalKey();
+  GlobalKey<LoadingContainerState> key;
+  Timer timer;
 
   factory EasyLoading() => _getInstance();
   static EasyLoading _instance;
@@ -162,44 +165,60 @@ class EasyLoading {
     );
   }
 
+  /// dismiss loading
+  static void dismiss({
+    bool animation = true,
+  }) async {
+    if (animation) {
+      final Completer<void> completer = Completer<void>();
+      _getInstance().key.currentState?.dismiss(completer);
+      completer.future.then((value) {
+        _getInstance()._remove();
+      });
+    } else {
+      _getInstance()._remove();
+    }
+  }
+
   /// show loading
   void _show({
     Widget w,
     String status,
     Duration duration,
   }) {
-    _getInstance()._remove();
+    _stopTimer();
+
+    _remove();
+
+    GlobalKey<LoadingContainerState> _key = GlobalKey<LoadingContainerState>();
 
     OverlayEntry _overlayEntry = OverlayEntry(
       builder: (BuildContext context) => LoadingContainer(
-        key: _getInstance().key,
+        key: _key,
         status: status,
         indicator: w,
       ),
     );
-    _getInstance().overlayEntry = _overlayEntry;
+
     Overlay.of(_getInstance().context).insert(_overlayEntry);
 
+    _getInstance().overlayEntry = _overlayEntry;
+    _getInstance().key = _key;
+
     if (duration != null) {
-      Future.delayed(duration, () {
-        dismiss(animation: true);
+      _getInstance().timer = Timer.periodic(duration, (Timer timer) {
+        dismiss();
+        _stopTimer();
       });
     }
   }
 
-  /// dismiss loading
-  static void dismiss({
-    bool animation = true,
-  }) async {
-    if (animation == true) {
-      await _getInstance().key.currentState?.dismiss();
-      _getInstance()._remove();
-    } else {
-      _getInstance()._remove();
-    }
+  void _stopTimer() {
+    // stop timer
+    _getInstance().timer?.cancel();
+    _getInstance().timer = null;
   }
 
-  /// remove loading
   void _remove() {
     _getInstance().overlayEntry?.remove();
     _getInstance().overlayEntry = null;
