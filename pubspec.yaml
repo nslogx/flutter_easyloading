@@ -1,6 +1,6 @@
 name: flutter_easyloading
 description: a clean and lightweight Loading widget for Flutter App, easy to use without context.
-version: 0.0.2
+version: 0.0.3
 homepage: https://github.com/huangjianke/flutter_easyloading
 
 environment:

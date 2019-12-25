@@ -7,7 +7,6 @@ import './widgets/container.dart';
 enum EasyLoadingStyle {
   light,
   dark,
-  custom,
 }
 
 /// loading animation type. see [https://github.com/jogboms/flutter_spinkit#-showcase]
@@ -51,8 +50,8 @@ class EasyLoading {
   /// loading style, default [EasyLoadingStyle.dark]
   EasyLoadingStyle loadingStyle;
 
-  /// loading animation type, default [EasyLoadingIndicatorType.fadingCircle]
-  EasyLoadingIndicatorType animationType;
+  /// loading indicator type, default [EasyLoadingIndicatorType.fadingCircle]
+  EasyLoadingIndicatorType indicatorType;
 
   /// loading mask type, default [EasyLoadingMaskType.none]
   EasyLoadingMaskType maskType;
@@ -63,7 +62,7 @@ class EasyLoading {
   /// content padding of loading.
   EdgeInsets contentPadding;
 
-  /// size of indicator, default 30.0.
+  /// size of indicator, default 40.0.
   double indicatorSize;
 
   /// radius of loading, default 5.0.
@@ -87,16 +86,16 @@ class EasyLoading {
   EasyLoading._internal() {
     /// set deafult value
     loadingStyle = EasyLoadingStyle.dark;
-    animationType = EasyLoadingIndicatorType.wave;
+    indicatorType = EasyLoadingIndicatorType.wave;
     maskType = EasyLoadingMaskType.none;
     textAlign = TextAlign.center;
-    indicatorSize = 30.0;
+    indicatorSize = 40.0;
     radius = 5.0;
     fontSize = 15.0;
     displayDuration = const Duration(milliseconds: 2000);
     contentPadding = const EdgeInsets.symmetric(
-      vertical: 20.0,
-      horizontal: 25.0,
+      vertical: 15.0,
+      horizontal: 20.0,
     );
   }
 
@@ -121,7 +120,9 @@ class EasyLoading {
   }) {
     Widget w = Icon(
       Icons.done,
-      color: Colors.white,
+      color: _getInstance().loadingStyle == EasyLoadingStyle.dark
+          ? Colors.white
+          : Colors.black,
       size: _getInstance().indicatorSize,
     );
     _getInstance()._show(
@@ -138,7 +139,9 @@ class EasyLoading {
   }) {
     Widget w = Icon(
       Icons.clear,
-      color: Colors.white,
+      color: _getInstance().loadingStyle == EasyLoadingStyle.dark
+          ? Colors.white
+          : Colors.black,
       size: _getInstance().indicatorSize,
     );
     _getInstance()._show(
@@ -155,7 +158,9 @@ class EasyLoading {
   }) {
     Widget w = Icon(
       Icons.info_outline,
-      color: Colors.white,
+      color: _getInstance().loadingStyle == EasyLoadingStyle.dark
+          ? Colors.white
+          : Colors.black,
       size: _getInstance().indicatorSize,
     );
     _getInstance()._show(
@@ -188,15 +193,16 @@ class EasyLoading {
   }) {
     _stopTimer();
 
-    _remove();
-
     GlobalKey<LoadingContainerState> _key = GlobalKey<LoadingContainerState>();
+    bool _animation = _getInstance().overlayEntry == null;
+    _remove();
 
     OverlayEntry _overlayEntry = OverlayEntry(
       builder: (BuildContext context) => LoadingContainer(
         key: _key,
         status: status,
         indicator: w,
+        animation: _animation,
       ),
     );
 

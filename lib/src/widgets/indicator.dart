@@ -14,8 +14,8 @@ class LoadingIndicator extends StatefulWidget {
 
 class _LoadingIndicatorState extends State<LoadingIndicator> {
   final double _size = EasyLoading.instance.indicatorSize;
-  final EasyLoadingIndicatorType _animationType =
-      EasyLoading.instance.animationType;
+  final EasyLoadingIndicatorType _indicatorType =
+      EasyLoading.instance.indicatorType;
   final Color _indicatorColor =
       EasyLoading.instance.loadingStyle == EasyLoadingStyle.dark
           ? Colors.white
@@ -34,7 +34,8 @@ class _LoadingIndicatorState extends State<LoadingIndicator> {
   @override
   Widget build(BuildContext context) {
     Widget _indicator;
-    switch (_animationType) {
+    double _width = _size;
+    switch (_indicatorType) {
       case EasyLoadingIndicatorType.fadingCircle:
         _indicator = SpinKitFadingCircle(
           color: _indicatorColor,
@@ -52,6 +53,7 @@ class _LoadingIndicatorState extends State<LoadingIndicator> {
           color: _indicatorColor,
           size: _size,
         );
+        _width = _size * 2;
         break;
       case EasyLoadingIndicatorType.chasingDots:
         _indicator = SpinKitChasingDots(
@@ -64,6 +66,7 @@ class _LoadingIndicatorState extends State<LoadingIndicator> {
           color: _indicatorColor,
           size: _size,
         );
+        _width = _size * 1.25;
         break;
       case EasyLoadingIndicatorType.wanderingCubes:
         _indicator = SpinKitWanderingCubes(
@@ -178,7 +181,7 @@ class _LoadingIndicatorState extends State<LoadingIndicator> {
 
     return Container(
       constraints: BoxConstraints(
-        maxWidth: _size * 2,
+        maxWidth: _width,
       ),
       child: _indicator,
     );

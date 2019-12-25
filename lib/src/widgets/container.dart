@@ -7,11 +7,13 @@ import '../easy_loading.dart';
 class LoadingContainer extends StatefulWidget {
   final Widget indicator;
   final String status;
+  final bool animation;
 
   LoadingContainer({
     Key key,
     this.indicator,
     this.status,
+    this.animation = true,
   }) : super(key: key);
 
   @override
@@ -31,20 +33,28 @@ class LoadingContainerState extends State<LoadingContainer> {
           ? Colors.white
           : Colors.black;
   final EasyLoadingMaskType maskType = EasyLoading.instance.maskType;
+
   double _opacity = 0.0;
-  Duration _animationDuration = Duration(milliseconds: 300);
+  Duration _animationDuration;
 
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(milliseconds: 30), () {
-      if (!mounted) {
-        return;
-      }
+    _animationDuration = widget.animation
+        ? const Duration(milliseconds: 300)
+        : const Duration(milliseconds: 0);
+    if (widget.animation) {
+      Future.delayed(const Duration(milliseconds: 30), () {
+        if (!mounted) return;
+        setState(() {
+          _opacity = 1.0;
+        });
+      });
+    } else {
       setState(() {
         _opacity = 1.0;
       });
-    });
+    }
   }
 
   @override
@@ -54,6 +64,7 @@ class LoadingContainerState extends State<LoadingContainer> {
 
   dismiss(Completer completer) {
     setState(() {
+      _animationDuration = const Duration(milliseconds: 300);
       _opacity = 0.0;
     });
     Future.delayed(_animationDuration, () {
