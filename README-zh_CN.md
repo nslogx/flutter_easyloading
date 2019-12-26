@@ -4,6 +4,8 @@
 
 [English](./README.md) | 简体中文
 
+<img src="./images/gif01.gif" width=250 height=535/> <img src="./images/gif02.gif" width=250 height=535/> <img src="./images/gif03.gif" width=250 height=535/>
+
 ## 安装
 
 将以下代码添加到您项目中的 `pubspec.yaml` 文件:
@@ -134,9 +136,9 @@ EasyLoading.instance
 
 ## 待完成
 
-[ ] 新增进度条指示器
+- [ ] 新增进度条指示器
 
-[ ] 新增自定义动画
+- [ ] 新增自定义动画
 
 ## 更新日志
 

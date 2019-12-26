@@ -4,6 +4,8 @@
 
 English | [简体中文](./README-zh_CN.md)
 
+<img src="./images/gif01.gif" width=250 height=535/> <img src="./images/gif02.gif" width=250 height=535/> <img src="./images/gif03.gif" width=250 height=535/>
+
 ## Installing
 
 Add this to your package's `pubspec.yaml` file:
@@ -134,9 +136,9 @@ more indicatorType can see in [flutter_spinkit showcase](https://github.com/jogb
 
 ## Todo
 
-[ ] add progress indicator
+- [ ] add progress indicator
 
-[ ] add custom animation
+- [ ] add custom animation
 
 ## Changelog
 
