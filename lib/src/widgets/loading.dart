@@ -3,11 +3,15 @@ import '../easy_loading.dart';
 
 class FlutterEasyLoading extends StatefulWidget {
   /// should be [MaterialApp] or [CupertinoApp].
+  /// make sure that loading can be displayed in front of all other widgets
   final Widget child;
+
+  final TextDirection textDirection;
 
   const FlutterEasyLoading({
     Key key,
     @required this.child,
+    this.textDirection = TextDirection.ltr,
   }) : super(key: key);
 
   @override
@@ -38,7 +42,7 @@ class _FlutterEasyLoadingState extends State<FlutterEasyLoading> {
           ),
         ],
       ),
-      textDirection: TextDirection.ltr,
+      textDirection: widget.textDirection,
     );
   }
 }

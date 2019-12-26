@@ -16,10 +16,16 @@ class _LoadingIndicatorState extends State<LoadingIndicator> {
   final double _size = EasyLoading.instance.indicatorSize;
   final EasyLoadingIndicatorType _indicatorType =
       EasyLoading.instance.indicatorType;
+
+  /// indicator color of loading
   final Color _indicatorColor =
-      EasyLoading.instance.loadingStyle == EasyLoadingStyle.dark
-          ? Colors.white
-          : Colors.black;
+      EasyLoading.instance.loadingStyle == EasyLoadingStyle.custom
+          ? EasyLoading.instance.indicatorColor
+          : EasyLoading.instance.loadingStyle == EasyLoadingStyle.dark
+              ? Colors.white
+              : Colors.black;
+
+  Widget _indicator;
 
   @override
   void initState() {
@@ -29,11 +35,11 @@ class _LoadingIndicatorState extends State<LoadingIndicator> {
   @override
   void dispose() {
     super.dispose();
+    _indicator = null;
   }
 
   @override
   Widget build(BuildContext context) {
-    Widget _indicator;
     double _width = _size;
     switch (_indicatorType) {
       case EasyLoadingIndicatorType.fadingCircle:

@@ -7,6 +7,7 @@ import './widgets/container.dart';
 enum EasyLoadingStyle {
   light,
   dark,
+  custom,
 }
 
 /// loading animation type. see [https://github.com/jogboms/flutter_spinkit#-showcase]
@@ -44,16 +45,17 @@ enum EasyLoadingMaskType {
   none,
   clear,
   black,
+  custom,
 }
 
 class EasyLoading {
-  /// loading style, default [EasyLoadingStyle.dark]
+  /// loading style, default [EasyLoadingStyle.dark].
   EasyLoadingStyle loadingStyle;
 
-  /// loading indicator type, default [EasyLoadingIndicatorType.fadingCircle]
+  /// loading indicator type, default [EasyLoadingIndicatorType.fadingCircle].
   EasyLoadingIndicatorType indicatorType;
 
-  /// loading mask type, default [EasyLoadingMaskType.none]
+  /// loading mask type, default [EasyLoadingMaskType.none].
   EasyLoadingMaskType maskType;
 
   /// textAlign of status, default [TextAlign.center].
@@ -61,6 +63,9 @@ class EasyLoading {
 
   /// content padding of loading.
   EdgeInsets contentPadding;
+
+  /// padding of [status].
+  EdgeInsets textPadding;
 
   /// size of indicator, default 40.0.
   double indicatorSize;
@@ -71,13 +76,41 @@ class EasyLoading {
   /// fontSize of loading, default 15.0.
   double fontSize;
 
-  /// display duration of [showSuccess] [showError] [showInfo], default 2000ms
+  /// display duration of [showSuccess] [showError] [showInfo], default 2000ms.
   Duration displayDuration;
 
+  /// color of loading status, only used for [EasyLoadingStyle.custom].
+  Color textColor;
+
+  /// color of loading indicator, only used for [EasyLoadingStyle.custom].
+  Color indicatorColor;
+
+  /// background color of loading, only used for [EasyLoadingStyle.custom].
+  Color backgroundColor;
+
+  /// mask color of loading, only used for [EasyLoadingMaskType.custom].
+  Color maskColor;
+
+  /// should allow user interactions while loading is displayed.
+  bool userInteractions;
+
+  /// success widget of loading
+  Widget successWidget;
+
+  /// success widget of loading
+  Widget errorWidget;
+
+  /// success widget of loading
+  Widget infoWidget;
+
   BuildContext context;
-  OverlayEntry overlayEntry;
-  GlobalKey<LoadingContainerState> key;
-  Timer timer;
+  OverlayEntry _overlayEntry;
+  GlobalKey<LoadingContainerState> _key;
+  Timer _timer;
+
+  OverlayEntry get overlayEntry => _overlayEntry;
+  GlobalKey<LoadingContainerState> get key => _key;
+  Timer get timer => _timer;
 
   factory EasyLoading() => _getInstance();
   static EasyLoading _instance;
@@ -86,13 +119,14 @@ class EasyLoading {
   EasyLoading._internal() {
     /// set deafult value
     loadingStyle = EasyLoadingStyle.dark;
-    indicatorType = EasyLoadingIndicatorType.wave;
+    indicatorType = EasyLoadingIndicatorType.fadingCircle;
     maskType = EasyLoadingMaskType.none;
     textAlign = TextAlign.center;
     indicatorSize = 40.0;
     radius = 5.0;
     fontSize = 15.0;
     displayDuration = const Duration(milliseconds: 2000);
+    textPadding = const EdgeInsets.only(top: 10.0);
     contentPadding = const EdgeInsets.symmetric(
       vertical: 15.0,
       horizontal: 20.0,
@@ -113,18 +147,17 @@ class EasyLoading {
     _getInstance()._show(status: status);
   }
 
-  /// showSuccess [status]
+  /// showSuccess [status] [duration]
   static void showSuccess(
     String status, {
     Duration duration,
   }) {
-    Widget w = Icon(
-      Icons.done,
-      color: _getInstance().loadingStyle == EasyLoadingStyle.dark
-          ? Colors.white
-          : Colors.black,
-      size: _getInstance().indicatorSize,
-    );
+    Widget w = _getInstance().successWidget ??
+        Icon(
+          Icons.done,
+          color: _getInstance()._indicatorColor(),
+          size: _getInstance().indicatorSize,
+        );
     _getInstance()._show(
       status: status,
       duration: duration ?? _getInstance().displayDuration,
@@ -132,18 +165,17 @@ class EasyLoading {
     );
   }
 
-  /// showError [status]
+  /// showError [status] [duration]
   static void showError(
     String status, {
     Duration duration,
   }) {
-    Widget w = Icon(
-      Icons.clear,
-      color: _getInstance().loadingStyle == EasyLoadingStyle.dark
-          ? Colors.white
-          : Colors.black,
-      size: _getInstance().indicatorSize,
-    );
+    Widget w = _getInstance().errorWidget ??
+        Icon(
+          Icons.clear,
+          color: _getInstance()._indicatorColor(),
+          size: _getInstance().indicatorSize,
+        );
     _getInstance()._show(
       status: status,
       duration: duration ?? _getInstance().displayDuration,
@@ -151,18 +183,17 @@ class EasyLoading {
     );
   }
 
-  /// showInfo [status]
+  /// showInfo [status] [duration]
   static void showInfo(
     String status, {
     Duration duration,
   }) {
-    Widget w = Icon(
-      Icons.info_outline,
-      color: _getInstance().loadingStyle == EasyLoadingStyle.dark
-          ? Colors.white
-          : Colors.black,
-      size: _getInstance().indicatorSize,
-    );
+    Widget w = _getInstance().infoWidget ??
+        Icon(
+          Icons.info_outline,
+          color: _getInstance()._indicatorColor(),
+          size: _getInstance().indicatorSize,
+        );
     _getInstance()._show(
       status: status,
       duration: duration ?? _getInstance().displayDuration,
@@ -176,7 +207,7 @@ class EasyLoading {
   }) async {
     if (animation) {
       final Completer<void> completer = Completer<void>();
-      _getInstance().key.currentState?.dismiss(completer);
+      _getInstance().key?.currentState?.dismiss(completer);
       completer.future.then((value) {
         _getInstance()._remove();
       });
@@ -193,6 +224,25 @@ class EasyLoading {
   }) {
     _stopTimer();
 
+    if (_getInstance().loadingStyle == EasyLoadingStyle.custom) {
+      assert(
+        _getInstance().backgroundColor != null,
+        'while loading style is custom, backgroundColor should not be null',
+      );
+      assert(
+        _getInstance().indicatorColor != null,
+        'while loading style is custom, indicatorColor should not be null',
+      );
+      assert(
+        _getInstance().textColor != null,
+        'while loading style is custom, textColor should not be null',
+      );
+    }
+
+    if (_getInstance().maskType == EasyLoadingMaskType.custom) {
+      assert(_getInstance().maskColor != null, 'maskColor should not be null');
+    }
+
     GlobalKey<LoadingContainerState> _key = GlobalKey<LoadingContainerState>();
     bool _animation = _getInstance().overlayEntry == null;
     _remove();
@@ -208,11 +258,11 @@ class EasyLoading {
 
     Overlay.of(_getInstance().context).insert(_overlayEntry);
 
-    _getInstance().overlayEntry = _overlayEntry;
-    _getInstance().key = _key;
+    _getInstance()._overlayEntry = _overlayEntry;
+    _getInstance()._key = _key;
 
     if (duration != null) {
-      _getInstance().timer = Timer.periodic(duration, (Timer timer) {
+      _getInstance()._timer = Timer.periodic(duration, (Timer timer) {
         dismiss();
         _stopTimer();
       });
@@ -222,11 +272,20 @@ class EasyLoading {
   void _stopTimer() {
     // stop timer
     _getInstance().timer?.cancel();
-    _getInstance().timer = null;
+    _getInstance()._timer = null;
   }
 
   void _remove() {
     _getInstance().overlayEntry?.remove();
-    _getInstance().overlayEntry = null;
+    _getInstance()._overlayEntry = null;
+    _getInstance()._key = null;
+  }
+
+  Color _indicatorColor() {
+    return _getInstance().loadingStyle == EasyLoadingStyle.custom
+        ? _getInstance().indicatorColor
+        : _getInstance().loadingStyle == EasyLoadingStyle.dark
+            ? Colors.white
+            : Colors.black;
   }
 }

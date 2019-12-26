@@ -21,18 +21,49 @@ class LoadingContainer extends StatefulWidget {
 }
 
 class LoadingContainerState extends State<LoadingContainer> {
+  /// contentPadding of loading
   final EdgeInsets _contentPadding = EasyLoading.instance.contentPadding;
+
+  /// radius of loading
   final double _radius = EasyLoading.instance.radius;
-  final double _fontSize = EasyLoading.instance.fontSize;
-  final Color _color =
-      EasyLoading.instance.loadingStyle == EasyLoadingStyle.dark
-          ? Colors.black.withOpacity(0.9)
-          : Colors.white;
+
+  /// background color of loading
+  final Color _backgroundColor =
+      EasyLoading.instance.loadingStyle == EasyLoadingStyle.custom
+          ? EasyLoading.instance.backgroundColor
+          : EasyLoading.instance.loadingStyle == EasyLoadingStyle.dark
+              ? Colors.black.withOpacity(0.9)
+              : Colors.white;
+
+  /// font color of status
   final Color _textColor =
-      EasyLoading.instance.loadingStyle == EasyLoadingStyle.dark
-          ? Colors.white
-          : Colors.black;
-  final EasyLoadingMaskType maskType = EasyLoading.instance.maskType;
+      EasyLoading.instance.loadingStyle == EasyLoadingStyle.custom
+          ? EasyLoading.instance.textColor
+          : EasyLoading.instance.loadingStyle == EasyLoadingStyle.dark
+              ? Colors.white
+              : Colors.black;
+
+  /// font size of status
+  final double _fontSize = EasyLoading.instance.fontSize;
+
+  /// padding of status
+  final EdgeInsets _textPadding = EasyLoading.instance.textPadding;
+
+  /// textAlign of status
+  final TextAlign _textAlign = EasyLoading.instance.textAlign;
+
+  /// mask color of loading
+  final Color _maskColor =
+      EasyLoading.instance.maskType == EasyLoadingMaskType.custom
+          ? EasyLoading.instance.maskColor
+          : EasyLoading.instance.maskType == EasyLoadingMaskType.black
+              ? Colors.black.withOpacity(0.5)
+              : Colors.transparent;
+
+  final bool _ignoring = EasyLoading.instance.userInteractions ??
+      (EasyLoading.instance.maskType == EasyLoadingMaskType.none
+          ? true
+          : false);
 
   double _opacity = 0.0;
   Duration _animationDuration;
@@ -63,8 +94,8 @@ class LoadingContainerState extends State<LoadingContainer> {
   }
 
   dismiss(Completer completer) {
+    _animationDuration = const Duration(milliseconds: 300);
     setState(() {
-      _animationDuration = const Duration(milliseconds: 300);
       _opacity = 0.0;
     });
     Future.delayed(_animationDuration, () {
@@ -74,53 +105,53 @@ class LoadingContainerState extends State<LoadingContainer> {
 
   @override
   Widget build(BuildContext context) {
+    Widget loading = Align(
+      alignment: Alignment.center,
+      child: Container(
+        margin: const EdgeInsets.all(50.0),
+        decoration: BoxDecoration(
+          color: _backgroundColor,
+          borderRadius: BorderRadius.circular(_radius),
+        ),
+        padding: _contentPadding,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            widget.indicator ?? LoadingIndicator(),
+            widget.status?.isNotEmpty == true
+                ? Padding(
+                    padding: _textPadding,
+                    child: Text(
+                      widget.status,
+                      style: TextStyle(
+                        color: _textColor,
+                        fontSize: _fontSize,
+                      ),
+                      textAlign: _textAlign,
+                    ),
+                  )
+                : null,
+          ].where((w) => w != null).toList(),
+        ),
+      ),
+    );
+
     return AnimatedOpacity(
       opacity: _opacity,
       duration: _animationDuration,
       child: Stack(
         children: <Widget>[
           IgnorePointer(
-            ignoring: maskType == EasyLoadingMaskType.none ? true : false,
+            ignoring: _ignoring,
             child: Container(
               width: double.infinity,
               height: double.infinity,
-              color: maskType == EasyLoadingMaskType.black
-                  ? Colors.black.withOpacity(0.5)
-                  : Colors.transparent,
+              color: _maskColor,
             ),
           ),
-          Align(
-            alignment: Alignment.center,
-            child: Container(
-              margin: const EdgeInsets.all(50.0),
-              decoration: BoxDecoration(
-                color: _color,
-                borderRadius: BorderRadius.circular(_radius),
-              ),
-              padding: _contentPadding,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  widget.indicator ?? LoadingIndicator(),
-                  widget.status?.isNotEmpty == true
-                      ? Padding(
-                          padding: const EdgeInsets.only(top: 10.0),
-                          child: Text(
-                            widget.status,
-                            style: TextStyle(
-                              color: _textColor,
-                              fontSize: _fontSize,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        )
-                      : null,
-                ].where((w) => w != null).toList(),
-              ),
-            ),
-          ),
+          loading,
         ],
       ),
     );
