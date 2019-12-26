@@ -1,3 +1,7 @@
+## [1.0.1] - 2019.12.26
+
+* fixed bugs
+
 ## [1.0.0] - 2019.12.26
 
 * support custom style
