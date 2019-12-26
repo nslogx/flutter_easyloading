@@ -2,7 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  runApp(MyApp());
+  configLoading();
+}
+
+void configLoading() {
+  EasyLoading.instance
+    ..displayDuration = const Duration(milliseconds: 2000)
+    ..indicatorType = EasyLoadingIndicatorType.fadingCircle
+    ..loadingStyle = EasyLoadingStyle.dark
+    ..indicatorSize = 45.0
+    ..radius = 10.0
+    ..backgroundColor = Colors.green
+    ..indicatorColor = Colors.yellow
+    ..textColor = Colors.yellow
+    ..maskColor = Colors.blue.withOpacity(0.5)
+    ..userInteractions = true;
+}
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -10,7 +27,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return FlutterEasyLoading(
       child: MaterialApp(
-        title: 'Flutter Demo',
+        title: 'Flutter EasyLoading',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
@@ -82,97 +99,106 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ],
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  Column(
-                    children: <Widget>[
-                      Text('Style'),
-                      Padding(
-                        padding: EdgeInsets.only(top: 10.0),
-                        child: CupertinoSegmentedControl<EasyLoadingStyle>(
-                          selectedColor: Colors.blue,
-                          children: {
-                            EasyLoadingStyle.dark: Padding(
-                              padding: EdgeInsets.all(5.0),
-                              child: Text("dark"),
-                            ),
-                            EasyLoadingStyle.light: Padding(
-                              padding: EdgeInsets.all(5.0),
-                              child: Text("light"),
-                            ),
-                          },
-                          onValueChanged: (value) {
-                            EasyLoading.instance.loadingStyle = value;
-                          },
-                        ),
+              Padding(
+                padding: EdgeInsets.only(top: 20.0),
+                child: Column(
+                  children: <Widget>[
+                    Text('Style'),
+                    Padding(
+                      padding: EdgeInsets.only(top: 10.0),
+                      child: CupertinoSegmentedControl<EasyLoadingStyle>(
+                        selectedColor: Colors.blue,
+                        children: {
+                          EasyLoadingStyle.dark: Padding(
+                            padding: EdgeInsets.all(5.0),
+                            child: Text("dark"),
+                          ),
+                          EasyLoadingStyle.light: Padding(
+                            padding: EdgeInsets.all(5.0),
+                            child: Text("light"),
+                          ),
+                          EasyLoadingStyle.custom: Padding(
+                            padding: EdgeInsets.all(5.0),
+                            child: Text("custom"),
+                          ),
+                        },
+                        onValueChanged: (value) {
+                          EasyLoading.instance.loadingStyle = value;
+                        },
                       ),
-                    ],
-                  ),
-                  Column(
-                    children: <Widget>[
-                      Text('MaskType'),
-                      Padding(
-                        padding: EdgeInsets.only(top: 10.0),
-                        child: CupertinoSegmentedControl<EasyLoadingMaskType>(
-                          selectedColor: Colors.blue,
-                          children: {
-                            EasyLoadingMaskType.none: Padding(
-                              padding: EdgeInsets.all(5.0),
-                              child: Text("none"),
-                            ),
-                            EasyLoadingMaskType.clear: Padding(
-                              padding: EdgeInsets.all(5.0),
-                              child: Text("clear"),
-                            ),
-                            EasyLoadingMaskType.black: Padding(
-                              padding: EdgeInsets.all(5.0),
-                              child: Text("black"),
-                            ),
-                          },
-                          onValueChanged: (value) {
-                            EasyLoading.instance.maskType = value;
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+                    ),
+                  ],
+                ),
               ),
               Padding(
                 padding: EdgeInsets.only(top: 20.0),
                 child: Column(
                   children: <Widget>[
-                    Text('IndicatorType'),
+                    Text('MaskType'),
+                    Padding(
+                      padding: EdgeInsets.only(top: 10.0),
+                      child: CupertinoSegmentedControl<EasyLoadingMaskType>(
+                        selectedColor: Colors.blue,
+                        children: {
+                          EasyLoadingMaskType.none: Padding(
+                            padding: EdgeInsets.all(5.0),
+                            child: Text("none"),
+                          ),
+                          EasyLoadingMaskType.clear: Padding(
+                            padding: EdgeInsets.all(5.0),
+                            child: Text("clear"),
+                          ),
+                          EasyLoadingMaskType.black: Padding(
+                            padding: EdgeInsets.all(5.0),
+                            child: Text("black"),
+                          ),
+                          EasyLoadingMaskType.custom: Padding(
+                            padding: EdgeInsets.all(5.0),
+                            child: Text("custom"),
+                          ),
+                        },
+                        onValueChanged: (value) {
+                          EasyLoading.instance.maskType = value;
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 20.0),
+                child: Column(
+                  children: <Widget>[
+                    Text('IndicatorType(total: 23)'),
                     Padding(
                       padding: EdgeInsets.only(top: 10.0),
                       child:
                           CupertinoSegmentedControl<EasyLoadingIndicatorType>(
                         selectedColor: Colors.blue,
                         children: {
+                          EasyLoadingIndicatorType.circle: Padding(
+                            padding: EdgeInsets.all(5.0),
+                            child: Text("circle"),
+                          ),
                           EasyLoadingIndicatorType.wave: Padding(
                             padding: EdgeInsets.all(5.0),
                             child: Text("wave"),
                           ),
-                          EasyLoadingIndicatorType.fadingCircle: Padding(
+                          EasyLoadingIndicatorType.ring: Padding(
                             padding: EdgeInsets.all(5.0),
-                            child: Text("fadingCircle"),
-                          ),
-                          EasyLoadingIndicatorType.cubeGrid: Padding(
-                            padding: EdgeInsets.all(5.0),
-                            child: Text("cubeGrid"),
+                            child: Text("ring"),
                           ),
                           EasyLoadingIndicatorType.pulse: Padding(
                             padding: EdgeInsets.all(5.0),
                             child: Text("pulse"),
                           ),
+                          EasyLoadingIndicatorType.cubeGrid: Padding(
+                            padding: EdgeInsets.all(5.0),
+                            child: Text("cubeGrid"),
+                          ),
                           EasyLoadingIndicatorType.threeBounce: Padding(
                             padding: EdgeInsets.all(5.0),
                             child: Text("threeBounce"),
-                          ),
-                          EasyLoadingIndicatorType.circle: Padding(
-                            padding: EdgeInsets.all(5.0),
-                            child: Text("circle"),
                           ),
                         },
                         onValueChanged: (value) {
