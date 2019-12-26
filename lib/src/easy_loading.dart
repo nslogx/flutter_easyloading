@@ -97,10 +97,10 @@ class EasyLoading {
   /// success widget of loading
   Widget successWidget;
 
-  /// success widget of loading
+  /// error widget of loading
   Widget errorWidget;
 
-  /// success widget of loading
+  /// info widget of loading
   Widget infoWidget;
 
   BuildContext context;
