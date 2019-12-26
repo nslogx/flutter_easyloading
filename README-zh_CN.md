@@ -4,7 +4,7 @@
 
 [English](./README.md) | 简体中文
 
-<img src="./images/gif01.gif" width=250 height=535/> <img src="./images/gif02.gif" width=250 height=535/> <img src="./images/gif03.gif" width=250 height=535/>
+<img src="https://raw.githubusercontent.com/huangjianke/flutter_easyloading/master/images/gif01.gif" width=250 height=535/> <img src="https://raw.githubusercontent.com/huangjianke/flutter_easyloading/master/images/gif02.gif" width=250 height=535/> <img src="https://raw.githubusercontent.com/huangjianke/flutter_easyloading/master/images/gif03.gif" width=250 height=535/>
 
 ## 安装
 
@@ -12,7 +12,7 @@
 
 ```yaml
 dependencies:
-  flutter_easyloading: ^1.0.0
+  flutter_easyloading: ^1.0.1
 ```
 
 ## 导入
