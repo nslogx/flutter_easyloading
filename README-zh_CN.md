@@ -134,8 +134,9 @@ EasyLoading.instance
 
 ## 待完成
 
-[ ] add progress indicator
-[ ] add custom animation
+[] 新增进度条指示器
+
+[] 新增自定义动画
 
 ## 更新日志
 
