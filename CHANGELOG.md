@@ -2,6 +2,7 @@
 
 * support custom style
 * relased v1.0.0
+* fixed bugs
 
 ## [0.0.3] - 2019.12.25
 
