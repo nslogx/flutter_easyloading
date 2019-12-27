@@ -10,7 +10,7 @@ enum EasyLoadingStyle {
   custom,
 }
 
-/// loading animation type. see [https://github.com/jogboms/flutter_spinkit#-showcase]
+/// loading indicator type. see [https://github.com/jogboms/flutter_spinkit#-showcase]
 enum EasyLoadingIndicatorType {
   fadingCircle,
   circle,
@@ -240,7 +240,10 @@ class EasyLoading {
     }
 
     if (_getInstance().maskType == EasyLoadingMaskType.custom) {
-      assert(_getInstance().maskColor != null, 'maskColor should not be null');
+      assert(
+        _getInstance().maskColor != null,
+        'while mask type is custom, maskColor should not be null',
+      );
     }
 
     GlobalKey<LoadingContainerState> _key = GlobalKey<LoadingContainerState>();
