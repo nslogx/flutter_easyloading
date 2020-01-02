@@ -29,8 +29,8 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    /// child should be [MaterialApp] or [CupertinoApp].
-    /// make sure that loading can be displayed in front of all other widgets
+    /// 子组件通常为 [MaterialApp] 或者 [CupertinoApp].
+    /// 这样做是为了确保 loading 组件能覆盖在其他组件之上.
     return FlutterEasyLoading(
       child: MaterialApp(
         title: 'Flutter EasyLoading',
