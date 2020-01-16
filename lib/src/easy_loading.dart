@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 
 import './widgets/container.dart';
+import './widgets/progress.dart';
 
 /// loading style
 enum EasyLoadingStyle {
@@ -76,6 +77,9 @@ class EasyLoading {
   /// fontSize of loading, default 15.0.
   double fontSize;
 
+  /// width of progress indicator, default 3.0.
+  double progressWidth;
+
   /// display duration of [showSuccess] [showError] [showInfo], default 2000ms.
   Duration displayDuration;
 
@@ -84,6 +88,9 @@ class EasyLoading {
 
   /// color of loading indicator, only used for [EasyLoadingStyle.custom].
   Color indicatorColor;
+
+  /// progress color of loading, only used for [EasyLoadingStyle.custom].
+  Color progressColor;
 
   /// background color of loading, only used for [EasyLoadingStyle.custom].
   Color backgroundColor;
@@ -105,11 +112,15 @@ class EasyLoading {
 
   BuildContext context;
   OverlayEntry _overlayEntry;
+  Widget _progress;
   GlobalKey<LoadingContainerState> _key;
+  GlobalKey<ProgressState> _progressKey;
   Timer _timer;
 
   OverlayEntry get overlayEntry => _overlayEntry;
+  Widget get progress => _progress;
   GlobalKey<LoadingContainerState> get key => _key;
+  GlobalKey<ProgressState> get progressKey => _progressKey;
   Timer get timer => _timer;
 
   factory EasyLoading() => _getInstance();
@@ -125,6 +136,7 @@ class EasyLoading {
     indicatorSize = 40.0;
     radius = 5.0;
     fontSize = 15.0;
+    progressWidth = 3.0;
     displayDuration = const Duration(milliseconds: 2000);
     textPadding = const EdgeInsets.only(top: 10.0);
     contentPadding = const EdgeInsets.symmetric(
@@ -135,7 +147,7 @@ class EasyLoading {
 
   static EasyLoading _getInstance() {
     if (_instance == null) {
-      _instance = new EasyLoading._internal();
+      _instance = EasyLoading._internal();
     }
     return _instance;
   }
@@ -145,6 +157,33 @@ class EasyLoading {
     String status,
   }) {
     _getInstance()._show(status: status);
+  }
+
+  /// show progress with [value] [status], value should be 0.0 ~ 1.0.
+  static void showProgress(
+    double value, {
+    String status,
+  }) {
+    if (_getInstance().progress == null) {
+      GlobalKey<ProgressState> _progressKey = GlobalKey<ProgressState>();
+      Widget w = Progress(
+        key: _progressKey,
+        value: value,
+      );
+      _getInstance()._show(
+        status: status,
+        w: w,
+      );
+      _getInstance()._progressKey = _progressKey;
+      _getInstance()._progress = w;
+    }
+    _getInstance()
+        .progressKey
+        .currentState
+        ?.updateProgress(value >= 1 ? 1 : value);
+    if (status != null) {
+      _getInstance().key.currentState?.updateStatus(status);
+    }
   }
 
   /// showSuccess [status] [duration]
@@ -205,6 +244,9 @@ class EasyLoading {
   static void dismiss({
     bool animation = true,
   }) async {
+    // cancel timer
+    _getInstance()._cancelTimer();
+
     if (animation) {
       final Completer<void> completer = Completer<void>();
       _getInstance().key?.currentState?.dismiss(completer);
@@ -222,7 +264,7 @@ class EasyLoading {
     String status,
     Duration duration,
   }) {
-    _stopTimer();
+    _cancelTimer();
 
     if (_getInstance().loadingStyle == EasyLoadingStyle.custom) {
       assert(
@@ -232,6 +274,10 @@ class EasyLoading {
       assert(
         _getInstance().indicatorColor != null,
         'while loading style is custom, indicatorColor should not be null',
+      );
+      assert(
+        _getInstance().progressColor != null,
+        'while loading style is custom, progressColor should not be null',
       );
       assert(
         _getInstance().textColor != null,
@@ -267,13 +313,11 @@ class EasyLoading {
     if (duration != null) {
       _getInstance()._timer = Timer.periodic(duration, (Timer timer) {
         dismiss();
-        _stopTimer();
       });
     }
   }
 
-  void _stopTimer() {
-    // stop timer
+  void _cancelTimer() {
     _getInstance().timer?.cancel();
     _getInstance()._timer = null;
   }
@@ -282,6 +326,8 @@ class EasyLoading {
     _getInstance().overlayEntry?.remove();
     _getInstance()._overlayEntry = null;
     _getInstance()._key = null;
+    _getInstance()._progress = null;
+    _getInstance()._progressKey = null;
   }
 
   Color _indicatorColor() {

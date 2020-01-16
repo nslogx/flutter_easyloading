@@ -67,10 +67,12 @@ class LoadingContainerState extends State<LoadingContainer> {
 
   double _opacity = 0.0;
   Duration _animationDuration;
+  String _status;
 
   @override
   void initState() {
     super.initState();
+    _status = widget.status;
     _animationDuration = widget.animation
         ? const Duration(milliseconds: 300)
         : const Duration(milliseconds: 0);
@@ -93,13 +95,19 @@ class LoadingContainerState extends State<LoadingContainer> {
     super.dispose();
   }
 
-  dismiss(Completer completer) {
+  void dismiss(Completer completer) {
     _animationDuration = const Duration(milliseconds: 300);
     setState(() {
       _opacity = 0.0;
     });
     Future.delayed(_animationDuration, () {
       completer.complete();
+    });
+  }
+
+  void updateStatus(String status) {
+    setState(() {
+      _status = status;
     });
   }
 
@@ -120,11 +128,11 @@ class LoadingContainerState extends State<LoadingContainer> {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             widget.indicator ?? LoadingIndicator(),
-            widget.status?.isNotEmpty == true
+            _status?.isNotEmpty == true
                 ? Padding(
                     padding: _textPadding,
                     child: Text(
-                      widget.status,
+                      _status,
                       style: TextStyle(
                         color: _textColor,
                         fontSize: _fontSize,
