@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -14,6 +16,7 @@ void configLoading() {
     ..loadingStyle = EasyLoadingStyle.dark
     ..indicatorSize = 45.0
     ..radius = 10.0
+    ..progressColor = Colors.yellow
     ..backgroundColor = Colors.green
     ..indicatorColor = Colors.yellow
     ..textColor = Colors.yellow
@@ -47,6 +50,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  Timer _timer;
+  double _progress;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,6 +72,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     textColor: Colors.blue,
                     child: Text('dismiss'),
                     onPressed: () {
+                      _timer?.cancel();
                       EasyLoading.dismiss();
                     },
                   ),
@@ -73,13 +80,34 @@ class _MyHomePageState extends State<MyHomePage> {
                     textColor: Colors.blue,
                     child: Text('show'),
                     onPressed: () {
+                      _timer?.cancel();
                       EasyLoading.show(status: 'loading...');
+                    },
+                  ),
+                  FlatButton(
+                    textColor: Colors.blue,
+                    child: Text('showProgress'),
+                    onPressed: () {
+                      _progress = 0;
+                      _timer?.cancel();
+                      _timer = Timer.periodic(const Duration(milliseconds: 100),
+                          (Timer timer) {
+                        EasyLoading.showProgress(_progress,
+                            status: '${(_progress * 100).toStringAsFixed(0)}%');
+                        _progress += 0.03;
+
+                        if (_progress >= 1) {
+                          _timer?.cancel();
+                          EasyLoading.dismiss();
+                        }
+                      });
                     },
                   ),
                   FlatButton(
                     textColor: Colors.blue,
                     child: Text('showSuccess'),
                     onPressed: () {
+                      _timer?.cancel();
                       EasyLoading.showSuccess('Great Success!');
                     },
                   ),
@@ -87,6 +115,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     textColor: Colors.blue,
                     child: Text('showError'),
                     onPressed: () {
+                      _timer?.cancel();
                       EasyLoading.showError('Failed with Error');
                     },
                   ),
@@ -94,6 +123,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     textColor: Colors.blue,
                     child: Text('showInfo'),
                     onPressed: () {
+                      _timer?.cancel();
                       EasyLoading.showInfo('Useful Information.');
                     },
                   ),
