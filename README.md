@@ -144,7 +144,7 @@ more indicatorType can see in [flutter_spinkit showcase](https://github.com/jogb
 
 ## Todo
 
-- [ ] add progress indicator
+- [x] add progress indicator
 
 - [ ] add custom animation
 
