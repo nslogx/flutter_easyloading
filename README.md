@@ -4,7 +4,7 @@
 
 English | [简体中文](./README-zh_CN.md)
 
-<img src="https://raw.githubusercontent.com/huangjianke/flutter_easyloading/master/images/gif01.gif" width=250 height=535/> <img src="https://raw.githubusercontent.com/huangjianke/flutter_easyloading/master/images/gif02.gif" width=250 height=535/> <img src="https://raw.githubusercontent.com/huangjianke/flutter_easyloading/master/images/gif03.gif" width=250 height=535/>
+<img src="https://raw.githubusercontent.com/huangjianke/flutter_easyloading/master/images/gif01.gif" width=200 height=429/> <img src="https://raw.githubusercontent.com/huangjianke/flutter_easyloading/master/images/gif02.gif" width=200 height=429/> <img src="https://raw.githubusercontent.com/huangjianke/flutter_easyloading/master/images/gif03.gif" width=200 height=429/> <img src="https://raw.githubusercontent.com/huangjianke/flutter_easyloading/master/images/gif04.gif" width=200 height=429/>
 
 ## Installing
 
@@ -49,6 +49,8 @@ then, enjoy yourself:
 ```dart
 EasyLoading.show(status: 'loading...');
 
+EasyLoading.showProgress(0.3, status: 'downloading...');
+
 EasyLoading.showSuccess('Great Success!');
 
 EasyLoading.showError('Failed with Error');
@@ -58,7 +60,7 @@ EasyLoading.showInfo('Useful Information.');
 EasyLoading.dismiss();
 ```
 
-## Custom
+## Customize
 
 ```dart
 /// loading style, default [EasyLoadingStyle.dark].
@@ -88,6 +90,9 @@ double radius;
 /// fontSize of loading, default 15.0.
 double fontSize;
 
+/// width of progress indicator, default 2.0.
+double progressWidth;
+
 /// display duration of [showSuccess] [showError] [showInfo], default 2000ms.
 Duration displayDuration;
 
@@ -96,6 +101,9 @@ Color textColor;
 
 /// color of loading indicator, only used for [EasyLoadingStyle.custom].
 Color indicatorColor;
+
+/// progress color of loading, only used for [EasyLoadingStyle.custom].
+Color progressColor;
 
 /// background color of loading, only used for [EasyLoadingStyle.custom].
 Color backgroundColor;

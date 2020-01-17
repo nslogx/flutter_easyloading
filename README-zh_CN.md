@@ -4,7 +4,7 @@
 
 [English](./README.md) | 简体中文
 
-<img src="https://raw.githubusercontent.com/huangjianke/flutter_easyloading/master/images/gif01.gif" width=250 height=535/> <img src="https://raw.githubusercontent.com/huangjianke/flutter_easyloading/master/images/gif02.gif" width=250 height=535/> <img src="https://raw.githubusercontent.com/huangjianke/flutter_easyloading/master/images/gif03.gif" width=250 height=535/>
+<img src="https://raw.githubusercontent.com/huangjianke/flutter_easyloading/master/images/gif01.gif" width=200 height=429/> <img src="https://raw.githubusercontent.com/huangjianke/flutter_easyloading/master/images/gif02.gif" width=200 height=429/> <img src="https://raw.githubusercontent.com/huangjianke/flutter_easyloading/master/images/gif03.gif" width=200 height=429/> <img src="https://raw.githubusercontent.com/huangjianke/flutter_easyloading/master/images/gif04.gif" width=200 height=429/>
 
 ## 安装
 
@@ -49,6 +49,8 @@ class MyApp extends StatelessWidget {
 ```dart
 EasyLoading.show(status: 'loading...');
 
+EasyLoading.showProgress(0.3, status: 'downloading...');
+
 EasyLoading.showSuccess('Great Success!');
 
 EasyLoading.showError('Failed with Error');
@@ -88,6 +90,9 @@ double radius;
 /// 文本大小, 默认15.0.
 double fontSize;
 
+/// 进度条指示器的宽度, 默认2.0.
+double progressWidth;
+
 /// [showSuccess] [showError] [showInfo]的展示时间, 默认2000ms.
 Duration displayDuration;
 
@@ -96,6 +101,9 @@ Color textColor;
 
 /// 指示器的颜色, 仅对[EasyLoadingStyle.custom]有效.
 Color indicatorColor;
+
+/// 进度条指示器的颜色, 仅对[EasyLoadingStyle.custom]有效.
+Color progressColor;
 
 /// loading的背景色, 仅对[EasyLoadingStyle.custom]有效.
 Color backgroundColor;
