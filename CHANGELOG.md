@@ -1,3 +1,7 @@
+## [1.1.0] - 2020.01.17
+
+* add progress indicator
+
 ## [1.0.1] - 2019.12.26
 
 * fixed bugs
