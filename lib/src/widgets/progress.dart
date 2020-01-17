@@ -30,6 +30,7 @@ class ProgressState extends State<Progress> {
   /// width of progress indicator
   final double _width = EasyLoading.instance.progressWidth;
 
+  /// value of progress, should be 0.0~1.0.
   double _value = 0;
 
   @override

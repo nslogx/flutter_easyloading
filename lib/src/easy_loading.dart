@@ -42,6 +42,7 @@ enum EasyLoadingIndicatorType {
 /// [none] default mask type, allow user interactions while loading is displayed
 /// [clear] don't allow user interactions while loading is displayed
 /// [black] don't allow user interactions while loading is displayed
+/// [custom] while mask type is custom, maskColor should not be null
 enum EasyLoadingMaskType {
   none,
   clear,
@@ -77,7 +78,7 @@ class EasyLoading {
   /// fontSize of loading, default 15.0.
   double fontSize;
 
-  /// width of progress indicator, default 3.0.
+  /// width of progress indicator, default 2.0.
   double progressWidth;
 
   /// display duration of [showSuccess] [showError] [showInfo], default 2000ms.
@@ -136,7 +137,7 @@ class EasyLoading {
     indicatorSize = 40.0;
     radius = 5.0;
     fontSize = 15.0;
-    progressWidth = 3.0;
+    progressWidth = 2.0;
     displayDuration = const Duration(milliseconds: 2000);
     textPadding = const EdgeInsets.only(top: 10.0);
     contentPadding = const EdgeInsets.symmetric(
@@ -153,10 +154,15 @@ class EasyLoading {
   }
 
   /// show loading with [status]
+  /// [indicator] custom indicator
   static void show({
     String status,
+    Widget indicator,
   }) {
-    _getInstance()._show(status: status);
+    _getInstance()._show(
+      status: status,
+      w: indicator,
+    );
   }
 
   /// show progress with [value] [status], value should be 0.0 ~ 1.0.
@@ -164,6 +170,8 @@ class EasyLoading {
     double value, {
     String status,
   }) {
+    assert(value >= 0.0 && value <= 1.0, 'value should be 0.0 ~ 1.0');
+
     if (_getInstance().progress == null) {
       GlobalKey<ProgressState> _progressKey = GlobalKey<ProgressState>();
       Widget w = Progress(
