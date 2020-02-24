@@ -256,14 +256,18 @@ class EasyLoading {
     _getInstance()._cancelTimer();
 
     if (animation) {
-      final Completer<void> completer = Completer<void>();
-      _getInstance().key?.currentState?.dismiss(completer);
-      completer.future.then((value) {
-        _getInstance()._remove();
-      });
-    } else {
-      _getInstance()._remove();
+      LoadingContainerState loadingContainerState =
+          _getInstance().key?.currentState;
+      if (loadingContainerState != null) {
+        final Completer<void> completer = Completer<void>();
+        loadingContainerState.dismiss(completer);
+        completer.future.then((value) {
+          _getInstance()._remove();
+        });
+        return;
+      }
     }
+    _getInstance()._remove();
   }
 
   /// show loading
