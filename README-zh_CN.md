@@ -12,7 +12,7 @@
 
 ```yaml
 dependencies:
-  flutter_easyloading: ^1.1.0
+  flutter_easyloading: ^1.1.1
 ```
 
 ## 导入
