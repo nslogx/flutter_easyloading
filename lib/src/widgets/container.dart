@@ -126,13 +126,14 @@ class LoadingContainerState extends State<LoadingContainer> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            if (widget.indicator != null)
-              Container(
-                margin: _status?.isNotEmpty == true
-                    ? _textPadding
-                    : EdgeInsets.zero,
-                child: widget.indicator,
-              ),
+            widget.indicator != null
+                ? Container(
+                    margin: _status?.isNotEmpty == true
+                        ? _textPadding
+                        : EdgeInsets.zero,
+                    child: widget.indicator,
+                  )
+                : null,
             _status?.isNotEmpty == true
                 ? Text(
                     _status,
