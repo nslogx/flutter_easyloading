@@ -10,7 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  flutter_spinkit: ^4.1.1+1
+  flutter_spinkit: ^4.1.2
 
 dev_dependencies:
   flutter_test:
