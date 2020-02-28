@@ -57,6 +57,8 @@ EasyLoading.showError('Failed with Error');
 
 EasyLoading.showInfo('Useful Information.');
 
+EasyLoading.showToast('Toast');
+
 EasyLoading.dismiss();
 ```
 

@@ -127,6 +127,14 @@ class _MyHomePageState extends State<MyHomePage> {
                       EasyLoading.showInfo('Useful Information.');
                     },
                   ),
+                  FlatButton(
+                    textColor: Colors.blue,
+                    child: Text('showToast'),
+                    onPressed: () {
+                      _timer?.cancel();
+                      EasyLoading.showToast('Toast');
+                    },
+                  ),
                 ],
               ),
               Padding(

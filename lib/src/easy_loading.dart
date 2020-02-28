@@ -3,6 +3,7 @@ import 'dart:async';
 
 import './widgets/container.dart';
 import './widgets/progress.dart';
+import './widgets/indicator.dart';
 
 /// loading style
 enum EasyLoadingStyle {
@@ -139,7 +140,7 @@ class EasyLoading {
     fontSize = 15.0;
     progressWidth = 2.0;
     displayDuration = const Duration(milliseconds: 2000);
-    textPadding = const EdgeInsets.only(top: 10.0);
+    textPadding = const EdgeInsets.only(bottom: 10.0);
     contentPadding = const EdgeInsets.symmetric(
       vertical: 15.0,
       horizontal: 20.0,
@@ -159,9 +160,10 @@ class EasyLoading {
     String status,
     Widget indicator,
   }) {
+    Widget w = indicator ?? LoadingIndicator();
     _getInstance()._show(
       status: status,
-      w: indicator,
+      w: w,
     );
   }
 
@@ -245,6 +247,17 @@ class EasyLoading {
       status: status,
       duration: duration ?? _getInstance().displayDuration,
       w: w,
+    );
+  }
+
+  /// showToast [status] [duration]
+  static void showToast(
+    String status, {
+    Duration duration,
+  }) {
+    _getInstance()._show(
+      status: status,
+      duration: duration ?? _getInstance().displayDuration,
     );
   }
 

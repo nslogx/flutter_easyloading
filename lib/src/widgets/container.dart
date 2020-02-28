@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-import './indicator.dart';
 import '../easy_loading.dart';
 
 class LoadingContainer extends StatefulWidget {
@@ -127,18 +126,21 @@ class LoadingContainerState extends State<LoadingContainer> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            widget.indicator ?? LoadingIndicator(),
+            if (widget.indicator != null)
+              Container(
+                margin: _status?.isNotEmpty == true
+                    ? _textPadding
+                    : EdgeInsets.zero,
+                child: widget.indicator,
+              ),
             _status?.isNotEmpty == true
-                ? Padding(
-                    padding: _textPadding,
-                    child: Text(
-                      _status,
-                      style: TextStyle(
-                        color: _textColor,
-                        fontSize: _fontSize,
-                      ),
-                      textAlign: _textAlign,
+                ? Text(
+                    _status,
+                    style: TextStyle(
+                      color: _textColor,
+                      fontSize: _fontSize,
                     ),
+                    textAlign: _textAlign,
                   )
                 : null,
           ].where((w) => w != null).toList(),
