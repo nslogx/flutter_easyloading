@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-import '../easy_loading.dart';
+import '../theme.dart';
 
 class LoadingContainer extends StatefulWidget {
   final Widget indicator;
@@ -20,50 +20,6 @@ class LoadingContainer extends StatefulWidget {
 }
 
 class LoadingContainerState extends State<LoadingContainer> {
-  /// contentPadding of loading
-  final EdgeInsets _contentPadding = EasyLoading.instance.contentPadding;
-
-  /// radius of loading
-  final double _radius = EasyLoading.instance.radius;
-
-  /// background color of loading
-  final Color _backgroundColor =
-      EasyLoading.instance.loadingStyle == EasyLoadingStyle.custom
-          ? EasyLoading.instance.backgroundColor
-          : EasyLoading.instance.loadingStyle == EasyLoadingStyle.dark
-              ? Colors.black.withOpacity(0.9)
-              : Colors.white;
-
-  /// font color of status
-  final Color _textColor =
-      EasyLoading.instance.loadingStyle == EasyLoadingStyle.custom
-          ? EasyLoading.instance.textColor
-          : EasyLoading.instance.loadingStyle == EasyLoadingStyle.dark
-              ? Colors.white
-              : Colors.black;
-
-  /// font size of status
-  final double _fontSize = EasyLoading.instance.fontSize;
-
-  /// padding of status
-  final EdgeInsets _textPadding = EasyLoading.instance.textPadding;
-
-  /// textAlign of status
-  final TextAlign _textAlign = EasyLoading.instance.textAlign;
-
-  /// mask color of loading
-  final Color _maskColor =
-      EasyLoading.instance.maskType == EasyLoadingMaskType.custom
-          ? EasyLoading.instance.maskColor
-          : EasyLoading.instance.maskType == EasyLoadingMaskType.black
-              ? Colors.black.withOpacity(0.5)
-              : Colors.transparent;
-
-  final bool _ignoring = EasyLoading.instance.userInteractions ??
-      (EasyLoading.instance.maskType == EasyLoadingMaskType.none
-          ? true
-          : false);
-
   double _opacity = 0.0;
   Duration _animationDuration;
   String _status;
@@ -117,10 +73,12 @@ class LoadingContainerState extends State<LoadingContainer> {
       child: Container(
         margin: const EdgeInsets.all(50.0),
         decoration: BoxDecoration(
-          color: _backgroundColor,
-          borderRadius: BorderRadius.circular(_radius),
+          color: EasyLoadingTheme.backgroundColor,
+          borderRadius: BorderRadius.circular(
+            EasyLoadingTheme.radius,
+          ),
         ),
-        padding: _contentPadding,
+        padding: EasyLoadingTheme.contentPadding,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -129,7 +87,7 @@ class LoadingContainerState extends State<LoadingContainer> {
             widget.indicator != null
                 ? Container(
                     margin: _status?.isNotEmpty == true
-                        ? _textPadding
+                        ? EasyLoadingTheme.textPadding
                         : EdgeInsets.zero,
                     child: widget.indicator,
                   )
@@ -138,10 +96,10 @@ class LoadingContainerState extends State<LoadingContainer> {
                 ? Text(
                     _status,
                     style: TextStyle(
-                      color: _textColor,
-                      fontSize: _fontSize,
+                      color: EasyLoadingTheme.textColor,
+                      fontSize: EasyLoadingTheme.fontSize,
                     ),
-                    textAlign: _textAlign,
+                    textAlign: EasyLoadingTheme.textAlign,
                   )
                 : null,
           ].where((w) => w != null).toList(),
@@ -155,11 +113,11 @@ class LoadingContainerState extends State<LoadingContainer> {
       child: Stack(
         children: <Widget>[
           IgnorePointer(
-            ignoring: _ignoring,
+            ignoring: EasyLoadingTheme.ignoring,
             child: Container(
               width: double.infinity,
               height: double.infinity,
-              color: _maskColor,
+              color: EasyLoadingTheme.maskColor,
             ),
           ),
           loading,

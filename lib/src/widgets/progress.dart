@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
-import '../easy_loading.dart';
+import '../theme.dart';
 
 class Progress extends StatefulWidget {
   final double value;
@@ -16,20 +16,6 @@ class Progress extends StatefulWidget {
 }
 
 class ProgressState extends State<Progress> {
-  /// color of progress indicator
-  final Color _color =
-      EasyLoading.instance.loadingStyle == EasyLoadingStyle.custom
-          ? EasyLoading.instance.progressColor
-          : EasyLoading.instance.loadingStyle == EasyLoadingStyle.dark
-              ? Colors.white
-              : Colors.black;
-
-  /// size of progress indicator
-  final double _size = EasyLoading.instance.indicatorSize;
-
-  /// width of progress indicator
-  final double _width = EasyLoading.instance.progressWidth;
-
   /// value of progress, should be 0.0~1.0.
   double _value = 0;
 
@@ -52,12 +38,12 @@ class ProgressState extends State<Progress> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: _size,
-      height: _size,
+      width: EasyLoadingTheme.indicatorSize,
+      height: EasyLoadingTheme.indicatorSize,
       child: _CircleProgress(
         value: _value,
-        color: _color,
-        width: _width,
+        color: EasyLoadingTheme.progressColor,
+        width: EasyLoadingTheme.progressWidth,
       ),
     );
   }

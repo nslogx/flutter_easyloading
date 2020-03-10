@@ -4,6 +4,7 @@ import 'dart:async';
 import './widgets/container.dart';
 import './widgets/progress.dart';
 import './widgets/indicator.dart';
+import 'theme.dart';
 
 /// loading style
 enum EasyLoadingStyle {
@@ -82,7 +83,7 @@ class EasyLoading {
   /// width of progress indicator, default 2.0.
   double progressWidth;
 
-  /// display duration of [showSuccess] [showError] [showInfo], default 2000ms.
+  /// display duration of [showSuccess] [showError] [showInfo] [showToast], default 2000ms.
   Duration displayDuration;
 
   /// color of loading status, only used for [EasyLoadingStyle.custom].
@@ -204,12 +205,12 @@ class EasyLoading {
     Widget w = _getInstance().successWidget ??
         Icon(
           Icons.done,
-          color: _getInstance()._indicatorColor(),
-          size: _getInstance().indicatorSize,
+          color: EasyLoadingTheme.indicatorColor,
+          size: EasyLoadingTheme.indicatorSize,
         );
     _getInstance()._show(
       status: status,
-      duration: duration ?? _getInstance().displayDuration,
+      duration: duration ?? EasyLoadingTheme.displayDuration,
       w: w,
     );
   }
@@ -222,12 +223,12 @@ class EasyLoading {
     Widget w = _getInstance().errorWidget ??
         Icon(
           Icons.clear,
-          color: _getInstance()._indicatorColor(),
-          size: _getInstance().indicatorSize,
+          color: EasyLoadingTheme.indicatorColor,
+          size: EasyLoadingTheme.indicatorSize,
         );
     _getInstance()._show(
       status: status,
-      duration: duration ?? _getInstance().displayDuration,
+      duration: duration ?? EasyLoadingTheme.displayDuration,
       w: w,
     );
   }
@@ -240,12 +241,12 @@ class EasyLoading {
     Widget w = _getInstance().infoWidget ??
         Icon(
           Icons.info_outline,
-          color: _getInstance()._indicatorColor(),
-          size: _getInstance().indicatorSize,
+          color: EasyLoadingTheme.indicatorColor,
+          size: EasyLoadingTheme.indicatorSize,
         );
     _getInstance()._show(
       status: status,
-      duration: duration ?? _getInstance().displayDuration,
+      duration: duration ?? EasyLoadingTheme.displayDuration,
       w: w,
     );
   }
@@ -257,7 +258,7 @@ class EasyLoading {
   }) {
     _getInstance()._show(
       status: status,
-      duration: duration ?? _getInstance().displayDuration,
+      duration: duration ?? EasyLoadingTheme.displayDuration,
     );
   }
 
@@ -353,13 +354,5 @@ class EasyLoading {
     _getInstance()._key = null;
     _getInstance()._progress = null;
     _getInstance()._progressKey = null;
-  }
-
-  Color _indicatorColor() {
-    return _getInstance().loadingStyle == EasyLoadingStyle.custom
-        ? _getInstance().indicatorColor
-        : _getInstance().loadingStyle == EasyLoadingStyle.dark
-            ? Colors.white
-            : Colors.black;
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import '../easy_loading.dart';
+import '../theme.dart';
 
 class LoadingIndicator extends StatefulWidget {
   const LoadingIndicator({
@@ -13,17 +14,10 @@ class LoadingIndicator extends StatefulWidget {
 }
 
 class _LoadingIndicatorState extends State<LoadingIndicator> {
-  final double _size = EasyLoading.instance.indicatorSize;
-  final EasyLoadingIndicatorType _indicatorType =
-      EasyLoading.instance.indicatorType;
+  final double _size = EasyLoadingTheme.indicatorSize;
 
   /// indicator color of loading
-  final Color _indicatorColor =
-      EasyLoading.instance.loadingStyle == EasyLoadingStyle.custom
-          ? EasyLoading.instance.indicatorColor
-          : EasyLoading.instance.loadingStyle == EasyLoadingStyle.dark
-              ? Colors.white
-              : Colors.black;
+  final Color _indicatorColor = EasyLoadingTheme.indicatorColor;
 
   Widget _indicator;
 
@@ -34,14 +28,14 @@ class _LoadingIndicatorState extends State<LoadingIndicator> {
 
   @override
   void dispose() {
-    super.dispose();
     _indicator = null;
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     double _width = _size;
-    switch (_indicatorType) {
+    switch (EasyLoadingTheme.indicatorType) {
       case EasyLoadingIndicatorType.fadingCircle:
         _indicator = SpinKitFadingCircle(
           color: _indicatorColor,
