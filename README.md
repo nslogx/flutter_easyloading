@@ -131,6 +131,7 @@ Widget infoWidget;
  *`textColor`、`indicatorColor`、`progressColor`、`backgroundColor` only used for `EasyLoadingStyle.custom`.*
 
  *`maskColor` only used for `EasyLoadingMaskType.custom`.*
+
 because `EasyLoading` is a singleton, so you can custom loading style any where like this:
 
 ```dart
