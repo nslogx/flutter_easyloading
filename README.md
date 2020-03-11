@@ -126,6 +126,11 @@ Widget errorWidget;
 Widget infoWidget;
 ```
 
+❗️**Note:**
+
+ *`textColor`、`indicatorColor`、`progressColor`、`backgroundColor` only used for `EasyLoadingStyle.custom`.*
+
+ *`maskColor` only used for `EasyLoadingMaskType.custom`.*
 because `EasyLoading` is a singleton, so you can custom loading style any where like this:
 
 ```dart
@@ -143,12 +148,6 @@ EasyLoading.instance
 ```
 
 more indicatorType can see in [flutter_spinkit showcase](https://github.com/jogboms/flutter_spinkit#-showcase)
-
-❗️**Note:**
-
- `textColor`、`indicatorColor`、`progressColor`、`backgroundColor` only used for `EasyLoadingStyle.custom`.
-
- `maskColor` only used for `EasyLoadingMaskType.custom`.
 
 ## Todo
 
