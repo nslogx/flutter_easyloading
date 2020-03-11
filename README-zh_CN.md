@@ -126,6 +126,12 @@ Widget errorWidget;
 Widget infoWidget;
 ```
 
+❗️**注意:**
+
+ *`textColor`、`indicatorColor`、`progressColor`、`backgroundColor` 仅对 `EasyLoadingStyle.custom`有效。*
+
+ *`maskColor` 仅对 `EasyLoadingMaskType.custom`有效。*
+
 因为 `EasyLoading` 是一个全局单例, 所以你可以在任意一个地方自定义它的样式:
 
 ```dart
