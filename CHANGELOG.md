@@ -1,3 +1,8 @@
+## [1.1.2] - 2020.03.16
+
+* fixed [#7](https://github.com/huangjianke/flutter_easyloading/issues/7)
+* optimize code style
+
 ## [1.1.1] - 2020.02.28
 
 * add showToast
