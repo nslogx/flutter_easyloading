@@ -54,6 +54,16 @@ class _MyHomePageState extends State<MyHomePage> {
   double _progress;
 
   @override
+  void initState() {
+    super.initState();
+
+    /// Schedule a callback for the end of this frame
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      EasyLoading.showSuccess('Use in initState!');
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
