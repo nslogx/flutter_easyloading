@@ -12,7 +12,7 @@
 
 ```yaml
 dependencies:
-  flutter_easyloading: ^1.1.2
+  flutter_easyloading: ^1.1.3
 ```
 
 ## 导入
@@ -128,9 +128,17 @@ Widget infoWidget;
 
 ❗️**注意:**
 
- *`textColor`、`indicatorColor`、`progressColor`、`backgroundColor` 仅对 `EasyLoadingStyle.custom`有效。*
+- **`textColor`、`indicatorColor`、`progressColor`、`backgroundColor` 仅对 `EasyLoadingStyle.custom`有效。**
 
- *`maskColor` 仅对 `EasyLoadingMaskType.custom`有效。*
+- **`maskColor` 仅对 `EasyLoadingMaskType.custom`有效。**
+
+- **如果你想在 `initState` 方法里面使用 `EasyLoading`, 你应该这样做:**
+  ```dart
+  /// 帧绘制完成回调通知
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    EasyLoading.showSuccess('Great Success!');
+  });
+  ```
 
 因为 `EasyLoading` 是一个全局单例, 所以你可以在任意一个地方自定义它的样式:
 

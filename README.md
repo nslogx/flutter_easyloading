@@ -12,7 +12,7 @@ Add this to your package's `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  flutter_easyloading: ^1.1.2
+  flutter_easyloading: ^1.1.3
 ```
 
 ## Import
@@ -128,9 +128,17 @@ Widget infoWidget;
 
 ❗️**Note:**
 
- *`textColor`、`indicatorColor`、`progressColor`、`backgroundColor` only used for `EasyLoadingStyle.custom`.*
+- **`textColor`、`indicatorColor`、`progressColor`、`backgroundColor` only used for `EasyLoadingStyle.custom`.**
 
- *`maskColor` only used for `EasyLoadingMaskType.custom`.*
+- **`maskColor` only used for `EasyLoadingMaskType.custom`.**
+
+- **if you want use `EasyLoading` in `initState` method, you should do like this:**
+  ```dart
+  /// Schedule a callback for the end of this frame
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    EasyLoading.showSuccess('Great Success!');
+  });
+  ```
 
 because `EasyLoading` is a singleton, so you can custom loading style any where like this:
 
