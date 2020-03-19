@@ -331,8 +331,7 @@ class EasyLoading {
       ),
     );
 
-    WidgetsBinding.instance.addPostFrameCallback(
-        (_) => Overlay.of(_getInstance().context).insert(_overlayEntry));
+    Overlay.of(_getInstance().context).insert(_overlayEntry);
 
     _getInstance()._overlayEntry = _overlayEntry;
     _getInstance()._key = _key;
