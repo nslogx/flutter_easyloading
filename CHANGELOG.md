@@ -1,3 +1,7 @@
+## [1.1.4] - 2020.03.23
+
+* add lineWidth option [#9](https://github.com/huangjianke/flutter_easyloading/issues/9)
+
 ## [1.1.3] - 2020.03.19
 
 * fixed [#8](https://github.com/huangjianke/flutter_easyloading/issues/8)
