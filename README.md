@@ -95,6 +95,9 @@ double fontSize;
 /// width of progress indicator, default 2.0.
 double progressWidth;
 
+/// width of indicator, default 4.0, only used for [EasyLoadingIndicatorType.ring, EasyLoadingIndicatorType.dualRing].
+double lineWidth;
+
 /// display duration of [showSuccess] [showError] [showInfo], default 2000ms.
 Duration displayDuration;
 

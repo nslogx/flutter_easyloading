@@ -52,6 +52,9 @@ class EasyLoadingTheme {
   /// width of progress indicator
   static double get progressWidth => EasyLoading.instance.progressWidth;
 
+  /// width of indicator
+  static double get lineWidth => EasyLoading.instance.lineWidth;
+
   /// loading indicator type
   static EasyLoadingIndicatorType get indicatorType =>
       EasyLoading.instance.indicatorType;

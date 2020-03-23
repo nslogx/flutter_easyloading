@@ -83,6 +83,9 @@ class EasyLoading {
   /// width of progress indicator, default 2.0.
   double progressWidth;
 
+  /// width of indicator, default 4.0, only used for [EasyLoadingIndicatorType.ring, EasyLoadingIndicatorType.dualRing].
+  double lineWidth;
+
   /// display duration of [showSuccess] [showError] [showInfo] [showToast], default 2000ms.
   Duration displayDuration;
 
@@ -140,6 +143,7 @@ class EasyLoading {
     radius = 5.0;
     fontSize = 15.0;
     progressWidth = 2.0;
+    lineWidth = 4.0;
     displayDuration = const Duration(milliseconds: 2000);
     textPadding = const EdgeInsets.only(bottom: 10.0);
     contentPadding = const EdgeInsets.symmetric(

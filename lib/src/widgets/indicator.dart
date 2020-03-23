@@ -65,6 +65,7 @@ class _LoadingIndicatorState extends State<LoadingIndicator> {
         _indicator = SpinKitWave(
           color: _indicatorColor,
           size: _size,
+          itemCount: 6,
         );
         _width = _size * 1.25;
         break;
@@ -132,6 +133,7 @@ class _LoadingIndicatorState extends State<LoadingIndicator> {
         _indicator = SpinKitDualRing(
           color: _indicatorColor,
           size: _size,
+          lineWidth: EasyLoadingTheme.lineWidth,
         );
         break;
       case EasyLoadingIndicatorType.hourGlass:
@@ -156,6 +158,7 @@ class _LoadingIndicatorState extends State<LoadingIndicator> {
         _indicator = SpinKitRing(
           color: _indicatorColor,
           size: _size,
+          lineWidth: EasyLoadingTheme.lineWidth,
         );
         break;
       case EasyLoadingIndicatorType.ripple:

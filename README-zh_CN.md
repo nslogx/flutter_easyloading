@@ -95,6 +95,9 @@ double fontSize;
 /// 进度条指示器的宽度, 默认2.0.
 double progressWidth;
 
+/// 指示器的宽度, 默认4.0, 仅对[EasyLoadingIndicatorType.ring, EasyLoadingIndicatorType.dualRing]有效.
+double lineWidth;
+
 /// [showSuccess] [showError] [showInfo]的展示时间, 默认2000ms.
 Duration displayDuration;
 
