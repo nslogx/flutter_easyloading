@@ -28,14 +28,16 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return FlutterEasyLoading(
-      child: MaterialApp(
-        title: 'Flutter EasyLoading',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: MyHomePage(title: 'Flutter EasyLoading'),
+    return MaterialApp(
+      title: 'Flutter EasyLoading',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
       ),
+      builder: (BuildContext context, Widget child) {
+        return FlutterEasyLoading(
+          child: MyHomePage(title: 'Flutter EasyLoading'),
+        );
+      },
     );
   }
 }
@@ -76,6 +78,7 @@ class _MyHomePageState extends State<MyHomePage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
+              TextField(),
               Column(
                 children: <Widget>[
                   FlatButton(
