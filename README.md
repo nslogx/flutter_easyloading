@@ -29,16 +29,17 @@ first, warp your app widget with `FlutterEasyLoading`:
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    /// child should be [MaterialApp] or [CupertinoApp].
-    /// make sure that loading can be displayed in front of all other widgets
-    return FlutterEasyLoading(
-      child: MaterialApp(
-        title: 'Flutter EasyLoading',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: MyHomePage(title: 'Flutter EasyLoading'),
+    return MaterialApp(
+      title: 'Flutter EasyLoading',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
       ),
+      builder: (BuildContext context, Widget child) {
+        /// make sure that loading can be displayed in front of all other widgets
+        return FlutterEasyLoading(
+          child: MyHomePage(title: 'Flutter EasyLoading'),
+        );
+      },
     );
   }
 }

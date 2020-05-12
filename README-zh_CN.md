@@ -29,16 +29,17 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    /// 子组件通常为 [MaterialApp] 或者 [CupertinoApp].
-    /// 这样做是为了确保 loading 组件能覆盖在其他组件之上.
-    return FlutterEasyLoading(
-      child: MaterialApp(
-        title: 'Flutter EasyLoading',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: MyHomePage(title: 'Flutter EasyLoading'),
+    return MaterialApp(
+      title: 'Flutter EasyLoading',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
       ),
+      builder: (BuildContext context, Widget child) {
+        /// 确保 loading 组件能覆盖在其他组件之上.
+        return FlutterEasyLoading(
+          child: MyHomePage(title: 'Flutter EasyLoading'),
+        );
+      },
     );
   }
 }
