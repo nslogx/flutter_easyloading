@@ -31,18 +31,20 @@ class _FlutterEasyLoadingState extends State<FlutterEasyLoading> {
 
   @override
   Widget build(BuildContext context) {
-    return Directionality(
-      child: Overlay(
-        initialEntries: [
-          OverlayEntry(
-            builder: (BuildContext _context) {
-              EasyLoading.instance.context = _context;
-              return widget.child;
-            },
-          ),
-        ],
+    return Material(
+      child: Directionality(
+        child: Overlay(
+          initialEntries: [
+            OverlayEntry(
+              builder: (BuildContext _context) {
+                EasyLoading.instance.context = _context;
+                return widget.child;
+              },
+            ),
+          ],
+        ),
+        textDirection: widget.textDirection,
       ),
-      textDirection: widget.textDirection,
     );
   }
 }

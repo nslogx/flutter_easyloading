@@ -12,7 +12,7 @@ Add this to your package's `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  flutter_easyloading: ^1.1.3
+  flutter_easyloading: ^1.2.0
 ```
 
 ## Import
@@ -77,6 +77,9 @@ EasyLoadingMaskType maskType;
 
 /// textAlign of status, default [TextAlign.center].
 TextAlign textAlign;
+
+/// textStyle of status, default null.
+TextStyle textStyle;
 
 /// content padding of loading.
 EdgeInsets contentPadding;

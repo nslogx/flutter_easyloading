@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
 import 'dart:async';
+import 'package:flutter/material.dart';
 
 import './widgets/container.dart';
 import './widgets/progress.dart';
 import './widgets/indicator.dart';
-import 'theme.dart';
+import './theme.dart';
 
 /// loading style
 enum EasyLoadingStyle {
@@ -64,6 +64,9 @@ class EasyLoading {
 
   /// textAlign of status, default [TextAlign.center].
   TextAlign textAlign;
+
+  /// textStyle of status, default null.
+  TextStyle textStyle;
 
   /// content padding of loading.
   EdgeInsets contentPadding;

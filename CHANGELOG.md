@@ -1,3 +1,8 @@
+## [1.2.0] - 2020.09.16
+
+* add textStyle option [#34](https://github.com/huangjianke/flutter_easyloading/issues/34)
+* fixed bugs
+
 ## [1.1.4] - 2020.03.23
 
 * add lineWidth option [#9](https://github.com/huangjianke/flutter_easyloading/issues/9)

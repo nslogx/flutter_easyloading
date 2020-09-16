@@ -12,7 +12,7 @@
 
 ```yaml
 dependencies:
-  flutter_easyloading: ^1.1.3
+  flutter_easyloading: ^1.2.0
 ```
 
 ## 导入
@@ -77,6 +77,9 @@ EasyLoadingMaskType maskType;
 
 /// 文本的对齐方式 , 默认[TextAlign.center].
 TextAlign textAlign;
+
+/// 文本的样式 , 默认 null.
+TextStyle textStyle;
 
 /// loading内容区域的内边距.
 EdgeInsets contentPadding;

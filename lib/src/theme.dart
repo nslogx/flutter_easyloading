@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'easy_loading.dart';
+import './easy_loading.dart';
 
 class EasyLoadingTheme {
   /// color of indicator
@@ -70,6 +69,9 @@ class EasyLoadingTheme {
 
   /// textAlign of status
   static TextAlign get textAlign => EasyLoading.instance.textAlign;
+
+  /// textStyle of status
+  static TextStyle get textStyle => EasyLoading.instance.textStyle;
 
   /// radius of loading
   static double get radius => EasyLoading.instance.radius;

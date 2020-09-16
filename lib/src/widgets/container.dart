@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'dart:async';
+import 'package:flutter/material.dart';
 
 import '../theme.dart';
 
@@ -95,10 +95,11 @@ class LoadingContainerState extends State<LoadingContainer> {
             _status?.isNotEmpty == true
                 ? Text(
                     _status,
-                    style: TextStyle(
-                      color: EasyLoadingTheme.textColor,
-                      fontSize: EasyLoadingTheme.fontSize,
-                    ),
+                    style: EasyLoadingTheme.textStyle ??
+                        TextStyle(
+                          color: EasyLoadingTheme.textColor,
+                          fontSize: EasyLoadingTheme.fontSize,
+                        ),
                     textAlign: EasyLoadingTheme.textAlign,
                   )
                 : null,
