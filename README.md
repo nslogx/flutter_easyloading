@@ -23,7 +23,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 ## How to use
 
-first, warp your app widget with `FlutterEasyLoading`:
+First, warp your app widget with `FlutterEasyLoading`:
 
 ```dart
 class MyApp extends StatelessWidget {
@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
 }
 ```
 
-then, enjoy yourself:
+Then, enjoy yourself:
 
 ```dart
 EasyLoading.show(status: 'loading...');
@@ -147,7 +147,7 @@ Widget infoWidget;
   });
   ```
 
-because `EasyLoading` is a singleton, so you can custom loading style any where like this:
+Because of `EasyLoading` is a singleton, so you can custom loading style any where like this:
 
 ```dart
 EasyLoading.instance
@@ -163,7 +163,7 @@ EasyLoading.instance
   ..userInteractions = true;
 ```
 
-more indicatorType can see in [flutter_spinkit showcase](https://github.com/jogboms/flutter_spinkit#-showcase)
+More indicatorType can see in [flutter_spinkit showcase](https://github.com/jogboms/flutter_spinkit#-showcase)
 
 ## Todo
 
