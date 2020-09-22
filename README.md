@@ -123,6 +123,9 @@ Color maskColor;
 /// should allow user interactions while loading is displayed.
 bool userInteractions;
 
+/// indicator widget of loading
+Widget indicatorWidget;
+
 /// success widget of loading
 Widget successWidget;
 

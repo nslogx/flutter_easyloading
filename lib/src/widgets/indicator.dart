@@ -180,6 +180,11 @@ class _LoadingIndicatorState extends State<LoadingIndicator> {
         );
         break;
       default:
+        _indicator = SpinKitFadingCircle(
+          color: _indicatorColor,
+          size: _size,
+        );
+        break;
     }
 
     return Container(

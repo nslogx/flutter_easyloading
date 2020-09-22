@@ -123,6 +123,9 @@ Color maskColor;
 /// 当loading展示的时候，是否允许用户操作.
 bool userInteractions;
 
+/// 指示器自定义组件
+Widget indicatorWidget;
+
 /// 展示成功状态的自定义组件
 Widget successWidget;
 

@@ -110,6 +110,9 @@ class EasyLoading {
   /// should allow user interactions while loading is displayed.
   bool userInteractions;
 
+  /// indicator widget of loading
+  Widget indicatorWidget;
+
   /// success widget of loading
   Widget successWidget;
 
@@ -168,7 +171,8 @@ class EasyLoading {
     String status,
     Widget indicator,
   }) {
-    Widget w = indicator ?? LoadingIndicator();
+    Widget w =
+        indicator ?? (_getInstance().indicatorWidget ?? LoadingIndicator());
     _getInstance()._show(
       status: status,
       w: w,
