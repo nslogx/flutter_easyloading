@@ -12,7 +12,7 @@ Add this to your package's `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  flutter_easyloading: ^1.2.0
+  flutter_easyloading: ^1.2.1
 ```
 
 ## Import
