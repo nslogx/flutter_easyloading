@@ -1,3 +1,7 @@
+## [1.2.1] - 2020.09.22
+
+* add indicatorWidget option [#34](https://github.com/huangjianke/flutter_easyloading/issues/45)
+
 ## [1.2.0] - 2020.09.16
 
 * add textStyle option [#34](https://github.com/huangjianke/flutter_easyloading/issues/34)
