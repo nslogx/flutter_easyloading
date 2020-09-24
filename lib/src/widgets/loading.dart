@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
+
 import '../easy_loading.dart';
 
 class FlutterEasyLoading extends StatefulWidget {
-  /// should be [MaterialApp] or [CupertinoApp].
-  /// make sure that loading can be displayed in front of all other widgets
   final Widget child;
-
-  final TextDirection textDirection;
 
   const FlutterEasyLoading({
     Key key,
     @required this.child,
-    this.textDirection = TextDirection.ltr,
   }) : super(key: key);
 
   @override
@@ -19,31 +15,31 @@ class FlutterEasyLoading extends StatefulWidget {
 }
 
 class _FlutterEasyLoadingState extends State<FlutterEasyLoading> {
+  OverlayEntry _overlayEntry;
+
   @override
   void initState() {
     super.initState();
+    _overlayEntry = OverlayEntry(
+      builder: (BuildContext context) => EasyLoading.instance.w ?? Container(),
+    );
+    EasyLoading.instance.overlayEntry = _overlayEntry;
   }
 
   @override
   void dispose() {
+    _overlayEntry = null;
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Material(
-      child: Directionality(
-        child: Overlay(
-          initialEntries: [
-            OverlayEntry(
-              builder: (BuildContext _context) {
-                EasyLoading.instance.context = _context;
-                return widget.child;
-              },
-            ),
-          ],
-        ),
-        textDirection: widget.textDirection,
+      child: Overlay(
+        initialEntries: [
+          OverlayEntry(builder: (BuildContext context) => widget.child),
+          _overlayEntry,
+        ],
       ),
     );
   }

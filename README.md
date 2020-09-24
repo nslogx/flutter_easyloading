@@ -12,7 +12,7 @@ Add this to your package's `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  flutter_easyloading: ^1.2.1
+  flutter_easyloading: ^1.3.0
 ```
 
 ## Import
@@ -23,10 +23,11 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 ## How to use
 
-First, warp your app widget with `FlutterEasyLoading`:
+First, initialize `FlutterEasyLoading` in `MaterialApp`/`CupertinoApp`:
 
 ```dart
 class MyApp extends StatelessWidget {
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -34,11 +35,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
+      home: MyHomePage(title: 'Flutter EasyLoading'),
       builder: (BuildContext context, Widget child) {
         /// make sure that loading can be displayed in front of all other widgets
-        return FlutterEasyLoading(
-          child: MyHomePage(title: 'Flutter EasyLoading'),
-        );
+        return FlutterEasyLoading(child: child);
       },
     );
   }
@@ -142,13 +142,6 @@ Widget infoWidget;
 
 - **`maskColor` only used for `EasyLoadingMaskType.custom`.**
 
-- **if you want use `EasyLoading` in `initState` method, you should do like this:**
-  ```dart
-  /// Schedule a callback for the end of this frame
-  WidgetsBinding.instance.addPostFrameCallback((_) {
-    EasyLoading.showSuccess('Great Success!');
-  });
-  ```
 
 Because of `EasyLoading` is a singleton, so you can custom loading style any where like this:
 

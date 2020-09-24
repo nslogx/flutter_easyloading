@@ -27,13 +27,13 @@ class LoadingContainerState extends State<LoadingContainer> {
   @override
   void initState() {
     super.initState();
+    if (!mounted) return;
     _status = widget.status;
     _animationDuration = widget.animation
         ? const Duration(milliseconds: 300)
         : const Duration(milliseconds: 0);
     if (widget.animation) {
       Future.delayed(const Duration(milliseconds: 30), () {
-        if (!mounted) return;
         setState(() {
           _opacity = 1.0;
         });
@@ -61,6 +61,7 @@ class LoadingContainerState extends State<LoadingContainer> {
   }
 
   void updateStatus(String status) {
+    if (_status == status) return;
     setState(() {
       _status = status;
     });

@@ -1,3 +1,7 @@
+## [1.3.0] - 2020.09.24
+
+* fixed bugs
+
 ## [1.2.1] - 2020.09.22
 
 * add indicatorWidget option [#45](https://github.com/huangjianke/flutter_easyloading/issues/45)

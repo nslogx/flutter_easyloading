@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
+import './test.dart';
+
 void main() {
   runApp(MyApp());
   configLoading();
@@ -33,10 +35,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
+      home: MyHomePage(title: 'Flutter EasyLoading'),
       builder: (BuildContext context, Widget child) {
-        return FlutterEasyLoading(
-          child: MyHomePage(title: 'Flutter EasyLoading'),
-        );
+        /// make sure that loading can be displayed in front of all other widgets
+        return FlutterEasyLoading(child: child);
       },
     );
   }
@@ -58,11 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-
-    /// Schedule a callback for the end of this frame
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      EasyLoading.showSuccess('Use in initState!');
-    });
+    EasyLoading.showSuccess('Use in initState');
   }
 
   @override
@@ -78,9 +76,22 @@ class _MyHomePageState extends State<MyHomePage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              TextField(),
               Column(
                 children: <Widget>[
+                  TextField(),
+                  FlatButton(
+                    textColor: Colors.blue,
+                    child: Text('push test page'),
+                    onPressed: () {
+                      _timer?.cancel();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (BuildContext context) => TestPage(),
+                        ),
+                      );
+                    },
+                  ),
                   FlatButton(
                     textColor: Colors.blue,
                     child: Text('dismiss'),

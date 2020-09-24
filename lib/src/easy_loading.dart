@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 
 import './widgets/container.dart';
 import './widgets/progress.dart';
@@ -122,15 +123,14 @@ class EasyLoading {
   /// info widget of loading
   Widget infoWidget;
 
-  BuildContext context;
-  OverlayEntry _overlayEntry;
-  Widget _progress;
+  OverlayEntry overlayEntry;
+  Widget _w;
+
   GlobalKey<LoadingContainerState> _key;
   GlobalKey<ProgressState> _progressKey;
   Timer _timer;
 
-  OverlayEntry get overlayEntry => _overlayEntry;
-  Widget get progress => _progress;
+  Widget get w => _w;
   GlobalKey<LoadingContainerState> get key => _key;
   GlobalKey<ProgressState> get progressKey => _progressKey;
   Timer get timer => _timer;
@@ -184,9 +184,11 @@ class EasyLoading {
     double value, {
     String status,
   }) {
-    assert(value >= 0.0 && value <= 1.0, 'value should be 0.0 ~ 1.0');
-
-    if (_getInstance().progress == null) {
+    assert(
+      value >= 0.0 && value <= 1.0,
+      'progress value should be 0.0 ~ 1.0',
+    );
+    if (_getInstance()._progressKey == null || _getInstance().w == null) {
       GlobalKey<ProgressState> _progressKey = GlobalKey<ProgressState>();
       Widget w = Progress(
         key: _progressKey,
@@ -197,15 +199,12 @@ class EasyLoading {
         w: w,
       );
       _getInstance()._progressKey = _progressKey;
-      _getInstance()._progress = w;
     }
     _getInstance()
         .progressKey
-        .currentState
-        ?.updateProgress(value >= 1 ? 1 : value);
-    if (status != null) {
-      _getInstance().key.currentState?.updateStatus(status);
-    }
+        ?.currentState
+        ?.updateProgress(value >= 1.0 ? 1.0 : value);
+    if (status != null) _getInstance().key?.currentState?.updateStatus(status);
   }
 
   /// showSuccess [status] [duration]
@@ -279,20 +278,14 @@ class EasyLoading {
   }) async {
     // cancel timer
     _getInstance()._cancelTimer();
-
-    if (animation) {
-      LoadingContainerState loadingContainerState =
-          _getInstance().key?.currentState;
-      if (loadingContainerState != null) {
-        final Completer<void> completer = Completer<void>();
-        loadingContainerState.dismiss(completer);
-        completer.future.then((value) {
-          _getInstance()._remove();
-        });
-        return;
-      }
+    if (SchedulerBinding.instance.schedulerPhase ==
+        SchedulerPhase.persistentCallbacks) {
+      SchedulerBinding.instance.addPostFrameCallback((_) {
+        _getInstance()._dismiss(animation);
+      });
+    } else {
+      _getInstance()._dismiss(animation);
     }
-    _getInstance()._remove();
   }
 
   /// show loading
@@ -301,7 +294,10 @@ class EasyLoading {
     String status,
     Duration duration,
   }) {
-    _cancelTimer();
+    assert(
+      _getInstance().overlayEntry != null,
+      'overlayEntry should not be null',
+    );
 
     if (_getInstance().loadingStyle == EasyLoadingStyle.custom) {
       assert(
@@ -329,24 +325,18 @@ class EasyLoading {
       );
     }
 
+    _cancelTimer();
+    _getInstance()._progressKey = null;
+
     GlobalKey<LoadingContainerState> _key = GlobalKey<LoadingContainerState>();
-    bool _animation = _getInstance().overlayEntry == null;
-    _remove();
-
-    OverlayEntry _overlayEntry = OverlayEntry(
-      builder: (BuildContext context) => LoadingContainer(
-        key: _key,
-        status: status,
-        indicator: w,
-        animation: _animation,
-      ),
+    _getInstance()._w = LoadingContainer(
+      key: _key,
+      status: status,
+      indicator: w,
+      animation: _getInstance()._w == null,
     );
-
-    Overlay.of(_getInstance().context).insert(_overlayEntry);
-
-    _getInstance()._overlayEntry = _overlayEntry;
+    _markNeedsBuild();
     _getInstance()._key = _key;
-
     if (duration != null) {
       _getInstance()._timer = Timer.periodic(duration, (Timer timer) {
         dismiss();
@@ -354,16 +344,42 @@ class EasyLoading {
     }
   }
 
+  void _dismiss(bool animation) {
+    if (animation) {
+      LoadingContainerState loadingContainerState =
+          _getInstance().key?.currentState;
+      if (loadingContainerState != null) {
+        final Completer<void> completer = Completer<void>();
+        loadingContainerState.dismiss(completer);
+        completer.future.then((value) {
+          _reset();
+        });
+        return;
+      }
+    }
+    _reset();
+  }
+
+  void _reset() {
+    _getInstance()._w = null;
+    _getInstance()._key = null;
+    _getInstance()._progressKey = null;
+    _markNeedsBuild();
+  }
+
+  void _markNeedsBuild() {
+    if (SchedulerBinding.instance.schedulerPhase ==
+        SchedulerPhase.persistentCallbacks) {
+      SchedulerBinding.instance.addPostFrameCallback((_) {
+        _getInstance().overlayEntry?.markNeedsBuild();
+      });
+    } else {
+      _getInstance().overlayEntry?.markNeedsBuild();
+    }
+  }
+
   void _cancelTimer() {
     _getInstance().timer?.cancel();
     _getInstance()._timer = null;
-  }
-
-  void _remove() {
-    _getInstance().overlayEntry?.remove();
-    _getInstance()._overlayEntry = null;
-    _getInstance()._key = null;
-    _getInstance()._progress = null;
-    _getInstance()._progressKey = null;
   }
 }
