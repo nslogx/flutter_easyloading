@@ -14,6 +14,25 @@ enum EasyLoadingStyle {
   custom,
 }
 
+/// toast position
+enum EasyLoadingToastPosition {
+  top,
+  center,
+  bottom,
+}
+
+/// loading mask type
+/// [none] default mask type, allow user interactions while loading is displayed
+/// [clear] don't allow user interactions while loading is displayed
+/// [black] don't allow user interactions while loading is displayed
+/// [custom] while mask type is custom, maskColor should not be null
+enum EasyLoadingMaskType {
+  none,
+  clear,
+  black,
+  custom,
+}
+
 /// loading indicator type. see [https://github.com/jogboms/flutter_spinkit#-showcase]
 enum EasyLoadingIndicatorType {
   fadingCircle,
@@ -41,18 +60,6 @@ enum EasyLoadingIndicatorType {
   squareCircle,
 }
 
-/// loading mask type
-/// [none] default mask type, allow user interactions while loading is displayed
-/// [clear] don't allow user interactions while loading is displayed
-/// [black] don't allow user interactions while loading is displayed
-/// [custom] while mask type is custom, maskColor should not be null
-enum EasyLoadingMaskType {
-  none,
-  clear,
-  black,
-  custom,
-}
-
 class EasyLoading {
   /// loading style, default [EasyLoadingStyle.dark].
   EasyLoadingStyle loadingStyle;
@@ -62,6 +69,9 @@ class EasyLoading {
 
   /// loading mask type, default [EasyLoadingMaskType.none].
   EasyLoadingMaskType maskType;
+
+  /// toast position, default [EasyLoadingToastPosition.center].
+  EasyLoadingToastPosition toastPosition;
 
   /// textAlign of status, default [TextAlign.center].
   TextAlign textAlign;
@@ -126,13 +136,13 @@ class EasyLoading {
   OverlayEntry overlayEntry;
   Widget _w;
 
-  GlobalKey<LoadingContainerState> _key;
-  GlobalKey<ProgressState> _progressKey;
+  GlobalKey<EasyLoadingContainerState> _key;
+  GlobalKey<EasyLoadingProgressState> _progressKey;
   Timer _timer;
 
   Widget get w => _w;
-  GlobalKey<LoadingContainerState> get key => _key;
-  GlobalKey<ProgressState> get progressKey => _progressKey;
+  GlobalKey<EasyLoadingContainerState> get key => _key;
+  GlobalKey<EasyLoadingProgressState> get progressKey => _progressKey;
   Timer get timer => _timer;
 
   factory EasyLoading() => _getInstance();
@@ -189,8 +199,9 @@ class EasyLoading {
       'progress value should be 0.0 ~ 1.0',
     );
     if (_getInstance()._progressKey == null || _getInstance().w == null) {
-      GlobalKey<ProgressState> _progressKey = GlobalKey<ProgressState>();
-      Widget w = Progress(
+      GlobalKey<EasyLoadingProgressState> _progressKey =
+          GlobalKey<EasyLoadingProgressState>();
+      Widget w = EasyLoadingProgress(
         key: _progressKey,
         value: value,
       );
@@ -265,10 +276,12 @@ class EasyLoading {
   static void showToast(
     String status, {
     Duration duration,
+    EasyLoadingToastPosition toastPosition,
   }) {
     _getInstance()._show(
       status: status,
       duration: duration ?? EasyLoadingTheme.displayDuration,
+      toastPosition: toastPosition ?? EasyLoadingTheme.toastPosition,
     );
   }
 
@@ -293,10 +306,16 @@ class EasyLoading {
     Widget w,
     String status,
     Duration duration,
+    EasyLoadingToastPosition toastPosition = EasyLoadingToastPosition.center,
   }) {
     assert(
       _getInstance().overlayEntry != null,
       'overlayEntry should not be null',
+    );
+
+    assert(
+      toastPosition != null,
+      'toastPosition should not be null',
     );
 
     if (_getInstance().loadingStyle == EasyLoadingStyle.custom) {
@@ -328,12 +347,14 @@ class EasyLoading {
     _cancelTimer();
     _getInstance()._progressKey = null;
 
-    GlobalKey<LoadingContainerState> _key = GlobalKey<LoadingContainerState>();
-    _getInstance()._w = LoadingContainer(
+    GlobalKey<EasyLoadingContainerState> _key =
+        GlobalKey<EasyLoadingContainerState>();
+    _getInstance()._w = EasyLoadingContainer(
       key: _key,
       status: status,
       indicator: w,
       animation: _getInstance()._w == null,
+      toastPosition: toastPosition,
     );
     _markNeedsBuild();
     _getInstance()._key = _key;
@@ -346,11 +367,11 @@ class EasyLoading {
 
   void _dismiss(bool animation) {
     if (animation) {
-      LoadingContainerState loadingContainerState =
+      EasyLoadingContainerState easyLoadingContainerState =
           _getInstance().key?.currentState;
-      if (loadingContainerState != null) {
+      if (easyLoadingContainerState != null) {
         final Completer<void> completer = Completer<void>();
-        loadingContainerState.dismiss(completer);
+        easyLoadingContainerState.dismiss(completer);
         completer.future.then((value) {
           _reset();
         });

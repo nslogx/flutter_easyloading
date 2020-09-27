@@ -8,7 +8,8 @@ class FlutterEasyLoading extends StatefulWidget {
   const FlutterEasyLoading({
     Key key,
     @required this.child,
-  }) : super(key: key);
+  })  : assert(child != null),
+        super(key: key);
 
   @override
   _FlutterEasyLoadingState createState() => _FlutterEasyLoadingState();

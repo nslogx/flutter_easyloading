@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import './easy_loading.dart';
 
 class EasyLoadingTheme {
@@ -57,6 +58,18 @@ class EasyLoadingTheme {
   /// loading indicator type
   static EasyLoadingIndicatorType get indicatorType =>
       EasyLoading.instance.indicatorType;
+
+  /// toast position
+  static EasyLoadingToastPosition get toastPosition =>
+      EasyLoading.instance.toastPosition;
+
+  /// toast position
+  static AlignmentGeometry alignment(EasyLoadingToastPosition position) =>
+      position == EasyLoadingToastPosition.bottom
+          ? AlignmentDirectional.bottomCenter
+          : (position == EasyLoadingToastPosition.top
+              ? AlignmentDirectional.topCenter
+              : AlignmentDirectional.center);
 
   /// display duration
   static Duration get displayDuration => EasyLoading.instance.displayDuration;

@@ -110,21 +110,13 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   FlatButton(
                     textColor: Colors.blue,
-                    child: Text('showProgress'),
+                    child: Text('showToast'),
                     onPressed: () {
-                      _progress = 0;
                       _timer?.cancel();
-                      _timer = Timer.periodic(const Duration(milliseconds: 100),
-                          (Timer timer) {
-                        EasyLoading.showProgress(_progress,
-                            status: '${(_progress * 100).toStringAsFixed(0)}%');
-                        _progress += 0.03;
-
-                        if (_progress >= 1) {
-                          _timer?.cancel();
-                          EasyLoading.dismiss();
-                        }
-                      });
+                      EasyLoading.showToast(
+                        'Toast',
+                        toastPosition: EasyLoadingToastPosition.top,
+                      );
                     },
                   ),
                   FlatButton(
@@ -153,10 +145,21 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   FlatButton(
                     textColor: Colors.blue,
-                    child: Text('showToast'),
+                    child: Text('showProgress'),
                     onPressed: () {
+                      _progress = 0;
                       _timer?.cancel();
-                      EasyLoading.showToast('Toast');
+                      _timer = Timer.periodic(const Duration(milliseconds: 100),
+                          (Timer timer) {
+                        EasyLoading.showProgress(_progress,
+                            status: '${(_progress * 100).toStringAsFixed(0)}%');
+                        _progress += 0.03;
+
+                        if (_progress >= 1) {
+                          _timer?.cancel();
+                          EasyLoading.dismiss();
+                        }
+                      });
                     },
                   ),
                 ],
@@ -228,7 +231,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(top: 20.0),
+                padding: EdgeInsets.only(
+                  top: 20.0,
+                  bottom: 50.0,
+                ),
                 child: Column(
                   children: <Widget>[
                     Text('IndicatorType(total: 23)'),
