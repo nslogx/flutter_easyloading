@@ -152,6 +152,10 @@ Widget errorWidget;
 Widget infoWidget;
 ```
 
+## Custom Animation
+
+example: [Custom Animation](https://github.com/huangjianke/flutter_easyloading/blob/develop/example/lib/custom_animation.dart)
+
 ❗️**Note:**
 
 - **`textColor`、`indicatorColor`、`progressColor`、`backgroundColor` only used for `EasyLoadingStyle.custom`.**

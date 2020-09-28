@@ -6,12 +6,18 @@ abstract class EasyLoadingAnimation {
   Widget call(
     Widget child,
     AnimationController controller,
+    AlignmentGeometry alignment,
   ) {
-    return buildWidget(child, controller);
+    return buildWidget(
+      child,
+      controller,
+      alignment,
+    );
   }
 
   Widget buildWidget(
     Widget child,
     AnimationController controller,
+    AlignmentGeometry alignment,
   );
 }

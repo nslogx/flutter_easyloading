@@ -8,6 +8,7 @@ class CustomAnimation extends EasyLoadingAnimation {
   Widget buildWidget(
     Widget child,
     AnimationController controller,
+    AlignmentGeometry alignment,
   ) {
     double opacity = controller?.value ?? 0;
     return Opacity(

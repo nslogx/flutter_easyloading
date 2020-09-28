@@ -65,10 +65,12 @@ class EasyLoadingContainerState extends State<EasyLoadingContainer>
 
   @override
   Widget build(BuildContext context) {
+    AlignmentGeometry _alignment =
+        (widget.indicator == null && widget.status?.isNotEmpty == true)
+            ? EasyLoadingTheme.alignment(widget.toastPosition)
+            : AlignmentDirectional.center;
     return Stack(
-      alignment: (widget.indicator == null && widget.status?.isNotEmpty == true)
-          ? EasyLoadingTheme.alignment(widget.toastPosition)
-          : AlignmentDirectional.center,
+      alignment: _alignment,
       children: <Widget>[
         AnimatedBuilder(
           animation: _animationController,
@@ -95,6 +97,7 @@ class EasyLoadingContainerState extends State<EasyLoadingContainer>
                 indicator: widget.indicator,
               ),
               _animationController,
+              _alignment,
             );
           },
         ),
