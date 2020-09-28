@@ -151,10 +151,6 @@ Widget errorWidget;
 Widget infoWidget;
 ```
 
-## 自定义动画
-
-例子: 👉 [Custom Animation](https://github.com/huangjianke/flutter_easyloading/blob/develop/example/lib/custom_animation.dart)
-
 ❗️**注意:**
 
 - **`textColor`、`indicatorColor`、`progressColor`、`backgroundColor` 仅对 `EasyLoadingStyle.custom`有效。**
@@ -178,6 +174,10 @@ EasyLoading.instance
 ```
 
 更多的指示器类型可查看 👉 [flutter_spinkit showcase](https://github.com/jogboms/flutter_spinkit#-showcase)
+
+## 自定义动画
+
+例子: 👉 [Custom Animation](https://github.com/huangjianke/flutter_easyloading/blob/develop/example/lib/custom_animation.dart)
 
 ## 待完成
 
