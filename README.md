@@ -8,7 +8,7 @@ English | [简体中文](./README-zh_CN.md)
 
 ## Live Preview
 
-[http://huangjianke.github.io/flutter_easyloading](http://huangjianke.github.io/flutter_easyloading/)
+👉 [https://huangjianke.github.io/flutter_easyloading](https://huangjianke.github.io/flutter_easyloading/#/)
 
 ## Installing
 
@@ -154,7 +154,7 @@ Widget infoWidget;
 
 ## Custom Animation
 
-example: [Custom Animation](https://github.com/huangjianke/flutter_easyloading/blob/develop/example/lib/custom_animation.dart)
+example: 👉 [Custom Animation](https://github.com/huangjianke/flutter_easyloading/blob/develop/example/lib/custom_animation.dart)
 
 ❗️**Note:**
 
@@ -179,7 +179,7 @@ EasyLoading.instance
   ..userInteractions = true;
 ```
 
-More indicatorType can see in [flutter_spinkit showcase](https://github.com/jogboms/flutter_spinkit#-showcase)
+More indicatorType can see in 👉 [flutter_spinkit showcase](https://github.com/jogboms/flutter_spinkit#-showcase)
 
 ## Todo
 

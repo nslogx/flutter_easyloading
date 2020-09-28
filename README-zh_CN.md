@@ -8,7 +8,7 @@
 
 ## 在线预览
 
-[http://huangjianke.github.io/flutter_easyloading](http://huangjianke.github.io/flutter_easyloading/)
+👉 [https://huangjianke.github.io/flutter_easyloading](https://huangjianke.github.io/flutter_easyloading/#/)
 
 ## 安装
 
@@ -153,7 +153,7 @@ Widget infoWidget;
 
 ## 自定义动画
 
-例子: [Custom Animation](https://github.com/huangjianke/flutter_easyloading/blob/develop/example/lib/custom_animation.dart)
+例子: 👉 [Custom Animation](https://github.com/huangjianke/flutter_easyloading/blob/develop/example/lib/custom_animation.dart)
 
 ❗️**注意:**
 
@@ -177,7 +177,7 @@ EasyLoading.instance
   ..userInteractions = true;
 ```
 
-更多的指示器类型可查看 [flutter_spinkit showcase](https://github.com/jogboms/flutter_spinkit#-showcase)
+更多的指示器类型可查看 👉 [flutter_spinkit showcase](https://github.com/jogboms/flutter_spinkit#-showcase)
 
 ## 待完成
 
