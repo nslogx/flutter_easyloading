@@ -181,7 +181,7 @@ More indicatorType can see in [flutter_spinkit showcase](https://github.com/jogb
 
 - [x] add progress indicator
 
-- [ ] add custom animation
+- [x] add custom animation
 
 ## Changelog
 
