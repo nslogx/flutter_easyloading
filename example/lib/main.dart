@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
+import './custom_animation.dart';
+
 import './test.dart';
 
 void main() {
@@ -23,7 +25,8 @@ void configLoading() {
     ..indicatorColor = Colors.yellow
     ..textColor = Colors.yellow
     ..maskColor = Colors.blue.withOpacity(0.5)
-    ..userInteractions = true;
+    ..userInteractions = true
+    ..customAnimation = CustomAnimation();
 }
 
 class MyApp extends StatelessWidget {
@@ -76,12 +79,14 @@ class _MyHomePageState extends State<MyHomePage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              Column(
+              TextField(),
+              Wrap(
+                runAlignment: WrapAlignment.center,
+                crossAxisAlignment: WrapCrossAlignment.center,
                 children: <Widget>[
-                  TextField(),
                   FlatButton(
                     textColor: Colors.blue,
-                    child: Text('push test page'),
+                    child: Text('open test page'),
                     onPressed: () {
                       _timer?.cancel();
                       Navigator.push(
@@ -115,7 +120,6 @@ class _MyHomePageState extends State<MyHomePage> {
                       _timer?.cancel();
                       EasyLoading.showToast(
                         'Toast',
-                        toastPosition: EasyLoadingToastPosition.top,
                       );
                     },
                   ),
@@ -176,15 +180,15 @@ class _MyHomePageState extends State<MyHomePage> {
                         children: {
                           EasyLoadingStyle.dark: Padding(
                             padding: EdgeInsets.all(5.0),
-                            child: Text("dark"),
+                            child: Text('dark'),
                           ),
                           EasyLoadingStyle.light: Padding(
                             padding: EdgeInsets.all(5.0),
-                            child: Text("light"),
+                            child: Text('light'),
                           ),
                           EasyLoadingStyle.custom: Padding(
                             padding: EdgeInsets.all(5.0),
-                            child: Text("custom"),
+                            child: Text('custom'),
                           ),
                         },
                         onValueChanged: (value) {
@@ -207,23 +211,91 @@ class _MyHomePageState extends State<MyHomePage> {
                         children: {
                           EasyLoadingMaskType.none: Padding(
                             padding: EdgeInsets.all(5.0),
-                            child: Text("none"),
+                            child: Text('none'),
                           ),
                           EasyLoadingMaskType.clear: Padding(
                             padding: EdgeInsets.all(5.0),
-                            child: Text("clear"),
+                            child: Text('clear'),
                           ),
                           EasyLoadingMaskType.black: Padding(
                             padding: EdgeInsets.all(5.0),
-                            child: Text("black"),
+                            child: Text('black'),
                           ),
                           EasyLoadingMaskType.custom: Padding(
                             padding: EdgeInsets.all(5.0),
-                            child: Text("custom"),
+                            child: Text('custom'),
                           ),
                         },
                         onValueChanged: (value) {
                           EasyLoading.instance.maskType = value;
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 20.0),
+                child: Column(
+                  children: <Widget>[
+                    Text('Toast Positon'),
+                    Padding(
+                      padding: EdgeInsets.only(top: 10.0),
+                      child:
+                          CupertinoSegmentedControl<EasyLoadingToastPosition>(
+                        selectedColor: Colors.blue,
+                        children: {
+                          EasyLoadingToastPosition.top: Padding(
+                            padding: EdgeInsets.all(5.0),
+                            child: Text('top'),
+                          ),
+                          EasyLoadingToastPosition.center: Padding(
+                            padding: EdgeInsets.all(5.0),
+                            child: Text('center'),
+                          ),
+                          EasyLoadingToastPosition.bottom: Padding(
+                            padding: EdgeInsets.all(5.0),
+                            child: Text('bottom'),
+                          ),
+                        },
+                        onValueChanged: (value) {
+                          EasyLoading.instance.toastPosition = value;
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 20.0),
+                child: Column(
+                  children: <Widget>[
+                    Text('Animation Style'),
+                    Padding(
+                      padding: EdgeInsets.only(top: 10.0),
+                      child:
+                          CupertinoSegmentedControl<EasyLoadingAnimationStyle>(
+                        selectedColor: Colors.blue,
+                        children: {
+                          EasyLoadingAnimationStyle.opacity: Padding(
+                            padding: EdgeInsets.all(5.0),
+                            child: Text('opacity'),
+                          ),
+                          EasyLoadingAnimationStyle.offset: Padding(
+                            padding: EdgeInsets.all(5.0),
+                            child: Text('offset'),
+                          ),
+                          EasyLoadingAnimationStyle.scale: Padding(
+                            padding: EdgeInsets.all(5.0),
+                            child: Text('scale'),
+                          ),
+                          EasyLoadingAnimationStyle.custom: Padding(
+                            padding: EdgeInsets.all(5.0),
+                            child: Text('custom'),
+                          ),
+                        },
+                        onValueChanged: (value) {
+                          EasyLoading.instance.animationStyle = value;
                         },
                       ),
                     ),
@@ -246,27 +318,27 @@ class _MyHomePageState extends State<MyHomePage> {
                         children: {
                           EasyLoadingIndicatorType.circle: Padding(
                             padding: EdgeInsets.all(5.0),
-                            child: Text("circle"),
+                            child: Text('circle'),
                           ),
                           EasyLoadingIndicatorType.wave: Padding(
                             padding: EdgeInsets.all(5.0),
-                            child: Text("wave"),
+                            child: Text('wave'),
                           ),
                           EasyLoadingIndicatorType.ring: Padding(
                             padding: EdgeInsets.all(5.0),
-                            child: Text("ring"),
+                            child: Text('ring'),
                           ),
                           EasyLoadingIndicatorType.pulse: Padding(
                             padding: EdgeInsets.all(5.0),
-                            child: Text("pulse"),
+                            child: Text('pulse'),
                           ),
                           EasyLoadingIndicatorType.cubeGrid: Padding(
                             padding: EdgeInsets.all(5.0),
-                            child: Text("cubeGrid"),
+                            child: Text('cubeGrid'),
                           ),
                           EasyLoadingIndicatorType.threeBounce: Padding(
                             padding: EdgeInsets.all(5.0),
-                            child: Text("threeBounce"),
+                            child: Text('threeBounce'),
                           ),
                         },
                         onValueChanged: (value) {

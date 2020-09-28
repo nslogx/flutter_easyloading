@@ -10,13 +10,13 @@ class _TestPageState extends State<TestPage> {
   @override
   void initState() {
     super.initState();
-    EasyLoading.showSuccess('Use in initState');
+    EasyLoading.show();
   }
 
   @override
   void deactivate() {
-    super.deactivate();
     EasyLoading.dismiss();
+    super.deactivate();
   }
 
   @override

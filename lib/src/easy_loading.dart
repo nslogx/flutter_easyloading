@@ -1,10 +1,12 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 import './widgets/container.dart';
 import './widgets/progress.dart';
 import './widgets/indicator.dart';
+import './widgets/overlay_entry.dart';
+import './animations/animation.dart';
 import './theme.dart';
 
 /// loading style
@@ -19,6 +21,14 @@ enum EasyLoadingToastPosition {
   top,
   center,
   bottom,
+}
+
+/// loading animation
+enum EasyLoadingAnimationStyle {
+  opacity,
+  offset,
+  scale,
+  custom,
 }
 
 /// loading mask type
@@ -73,6 +83,12 @@ class EasyLoading {
   /// toast position, default [EasyLoadingToastPosition.center].
   EasyLoadingToastPosition toastPosition;
 
+  /// loading animationStyle, default [EasyLoadingAnimationStyle.opacity].
+  EasyLoadingAnimationStyle animationStyle;
+
+  /// loading custom animation, default null.
+  EasyLoadingAnimation customAnimation;
+
   /// textAlign of status, default [TextAlign.center].
   TextAlign textAlign;
 
@@ -102,6 +118,9 @@ class EasyLoading {
 
   /// display duration of [showSuccess] [showError] [showInfo] [showToast], default 2000ms.
   Duration displayDuration;
+
+  /// animation duration of indicator, default 200ms.
+  Duration animationDuration;
 
   /// color of loading status, only used for [EasyLoadingStyle.custom].
   Color textColor;
@@ -133,7 +152,7 @@ class EasyLoading {
   /// info widget of loading
   Widget infoWidget;
 
-  OverlayEntry overlayEntry;
+  EasyLoadingOverlayEntry overlayEntry;
   Widget _w;
 
   GlobalKey<EasyLoadingContainerState> _key;
@@ -154,6 +173,8 @@ class EasyLoading {
     loadingStyle = EasyLoadingStyle.dark;
     indicatorType = EasyLoadingIndicatorType.fadingCircle;
     maskType = EasyLoadingMaskType.none;
+    toastPosition = EasyLoadingToastPosition.center;
+    animationStyle = EasyLoadingAnimationStyle.opacity;
     textAlign = TextAlign.center;
     indicatorSize = 40.0;
     radius = 5.0;
@@ -161,6 +182,7 @@ class EasyLoading {
     progressWidth = 2.0;
     lineWidth = 4.0;
     displayDuration = const Duration(milliseconds: 2000);
+    animationDuration = const Duration(milliseconds: 200);
     textPadding = const EdgeInsets.only(bottom: 10.0);
     contentPadding = const EdgeInsets.symmetric(
       vertical: 15.0,
@@ -291,14 +313,7 @@ class EasyLoading {
   }) async {
     // cancel timer
     _getInstance()._cancelTimer();
-    if (SchedulerBinding.instance.schedulerPhase ==
-        SchedulerPhase.persistentCallbacks) {
-      SchedulerBinding.instance.addPostFrameCallback((_) {
-        _getInstance()._dismiss(animation);
-      });
-    } else {
-      _getInstance()._dismiss(animation);
-    }
+    _getInstance()._dismiss(animation);
   }
 
   /// show loading
@@ -341,6 +356,13 @@ class EasyLoading {
       assert(
         _getInstance().maskColor != null,
         'while mask type is custom, maskColor should not be null',
+      );
+    }
+
+    if (_getInstance().animationStyle == EasyLoadingAnimationStyle.custom) {
+      assert(
+        _getInstance().customAnimation != null,
+        'while animationStyle is custom, customAnimation should not be null',
       );
     }
 
@@ -389,14 +411,7 @@ class EasyLoading {
   }
 
   void _markNeedsBuild() {
-    if (SchedulerBinding.instance.schedulerPhase ==
-        SchedulerPhase.persistentCallbacks) {
-      SchedulerBinding.instance.addPostFrameCallback((_) {
-        _getInstance().overlayEntry?.markNeedsBuild();
-      });
-    } else {
-      _getInstance().overlayEntry?.markNeedsBuild();
-    }
+    _getInstance().overlayEntry?.markNeedsBuild();
   }
 
   void _cancelTimer() {

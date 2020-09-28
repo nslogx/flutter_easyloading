@@ -24,8 +24,6 @@ class EasyLoadingContainer extends StatefulWidget {
 
 class EasyLoadingContainerState extends State<EasyLoadingContainer>
     with SingleTickerProviderStateMixin {
-  double _opacity = 0.0;
-  Duration _animationDuration;
   String _status;
   AnimationController _animationController;
 
@@ -34,28 +32,13 @@ class EasyLoadingContainerState extends State<EasyLoadingContainer>
     super.initState();
     if (!mounted) return;
     _status = widget.status;
-    _animationDuration = widget.animation
-        ? const Duration(milliseconds: 300)
-        : const Duration(milliseconds: 0);
 
     _animationController = AnimationController(
       vsync: this,
-      duration: _animationDuration,
+      duration: EasyLoadingTheme.animationDuration,
+      value: widget.animation ? 0 : 1,
     );
-
     _animationController.forward();
-
-    if (widget.animation) {
-      Future.delayed(const Duration(milliseconds: 30), () {
-        setState(() {
-          _opacity = 1.0;
-        });
-      });
-    } else {
-      setState(() {
-        _opacity = 1.0;
-      });
-    }
   }
 
   @override
@@ -66,12 +49,9 @@ class EasyLoadingContainerState extends State<EasyLoadingContainer>
   }
 
   void dismiss(Completer completer) {
-    _animationDuration = const Duration(milliseconds: 300);
     _animationController?.reverse();
-    setState(() {
-      _opacity = 0.0;
-    });
-    Future.delayed(_animationDuration, () {
+    Timer.periodic(EasyLoadingTheme.animationDuration, (Timer timer) {
+      timer?.cancel();
       completer.complete();
     });
   }
@@ -86,7 +66,9 @@ class EasyLoadingContainerState extends State<EasyLoadingContainer>
   @override
   Widget build(BuildContext context) {
     return Stack(
-      alignment: EasyLoadingTheme.alignment(widget.toastPosition),
+      alignment: (widget.indicator == null && widget.status?.isNotEmpty == true)
+          ? EasyLoadingTheme.alignment(widget.toastPosition)
+          : AlignmentDirectional.center,
       children: <Widget>[
         AnimatedBuilder(
           animation: _animationController,
@@ -104,9 +86,17 @@ class EasyLoadingContainerState extends State<EasyLoadingContainer>
             );
           },
         ),
-        _Indicator(
-          status: _status,
-          indicator: widget.indicator,
+        AnimatedBuilder(
+          animation: _animationController,
+          builder: (BuildContext context, Widget child) {
+            return EasyLoadingTheme.loadingAnimation?.buildWidget(
+              _Indicator(
+                status: _status,
+                indicator: widget.indicator,
+              ),
+              _animationController,
+            );
+          },
         ),
       ],
     );

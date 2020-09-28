@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../easy_loading.dart';
+import './overlay_entry.dart';
 
 class FlutterEasyLoading extends StatefulWidget {
   final Widget child;
@@ -16,12 +17,12 @@ class FlutterEasyLoading extends StatefulWidget {
 }
 
 class _FlutterEasyLoadingState extends State<FlutterEasyLoading> {
-  OverlayEntry _overlayEntry;
+  EasyLoadingOverlayEntry _overlayEntry;
 
   @override
   void initState() {
     super.initState();
-    _overlayEntry = OverlayEntry(
+    _overlayEntry = EasyLoadingOverlayEntry(
       builder: (BuildContext context) => EasyLoading.instance.w ?? Container(),
     );
     EasyLoading.instance.overlayEntry = _overlayEntry;
@@ -38,7 +39,9 @@ class _FlutterEasyLoadingState extends State<FlutterEasyLoading> {
     return Material(
       child: Overlay(
         initialEntries: [
-          OverlayEntry(builder: (BuildContext context) => widget.child),
+          EasyLoadingOverlayEntry(
+            builder: (BuildContext context) => widget.child,
+          ),
           _overlayEntry,
         ],
       ),
