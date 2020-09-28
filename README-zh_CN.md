@@ -6,13 +6,17 @@
 
 <img src="https://raw.githubusercontent.com/huangjianke/flutter_easyloading/master/images/gif01.gif" width=200 height=429/> <img src="https://raw.githubusercontent.com/huangjianke/flutter_easyloading/master/images/gif02.gif" width=200 height=429/> <img src="https://raw.githubusercontent.com/huangjianke/flutter_easyloading/master/images/gif03.gif" width=200 height=429/> <img src="https://raw.githubusercontent.com/huangjianke/flutter_easyloading/master/images/gif04.gif" width=200 height=429/>
 
+## 在线预览
+
+👉 [https://huangjianke.github.io/flutter_easyloading](https://huangjianke.github.io/flutter_easyloading/#/)
+
 ## 安装
 
 将以下代码添加到您项目中的 `pubspec.yaml` 文件:
 
 ```yaml
 dependencies:
-  flutter_easyloading: ^1.3.0
+  flutter_easyloading: ^2.0.0
 ```
 
 ## 导入
@@ -74,6 +78,15 @@ EasyLoadingIndicatorType indicatorType;
 /// loading的遮罩类型, 默认[EasyLoadingMaskType.none].
 EasyLoadingMaskType maskType;
 
+/// toast的位置, 默认 [EasyLoadingToastPosition.center].
+EasyLoadingToastPosition toastPosition;
+
+/// 动画类型, 默认 [EasyLoadingAnimationStyle.opacity].
+EasyLoadingAnimationStyle animationStyle;
+
+/// 自定义动画, 默认 null.
+EasyLoadingAnimation customAnimation;
+
 /// 文本的对齐方式 , 默认[TextAlign.center].
 TextAlign textAlign;
 
@@ -103,6 +116,9 @@ double lineWidth;
 
 /// [showSuccess] [showError] [showInfo]的展示时间, 默认2000ms.
 Duration displayDuration;
+
+/// 动画时间, 默认200ms.
+Duration animationDuration;
 
 /// 文本的颜色, 仅对[EasyLoadingStyle.custom]有效.
 Color textColor;
@@ -157,13 +173,17 @@ EasyLoading.instance
   ..userInteractions = true;
 ```
 
-更多的指示器类型可查看 [flutter_spinkit showcase](https://github.com/jogboms/flutter_spinkit#-showcase)
+更多的指示器类型可查看 👉 [flutter_spinkit showcase](https://github.com/jogboms/flutter_spinkit#-showcase)
+
+## 自定义动画
+
+例子: 👉 [Custom Animation](https://github.com/huangjianke/flutter_easyloading/blob/develop/example/lib/custom_animation.dart)
 
 ## 待完成
 
 - [x] 新增进度条指示器
 
-- [ ] 新增自定义动画
+- [x] 新增自定义动画
 
 ## 更新日志
 

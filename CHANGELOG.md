@@ -1,3 +1,9 @@
+## [2.0.0] - 2020.09.28
+
+* add custom animation style
+* add toast postion option [#14](https://github.com/huangjianke/flutter_easyloading/issues/14) [#49](https://github.com/huangjianke/flutter_easyloading/issues/49)
+* fixed bugs
+
 ## [1.3.0] - 2020.09.24
 
 * fixed bugs

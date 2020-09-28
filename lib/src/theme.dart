@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/src/animations/scale_animation.dart';
+
 import './easy_loading.dart';
+import './animations/animation.dart';
+import './animations/opacity_animation.dart';
+import './animations/offset_animation.dart';
 
 class EasyLoadingTheme {
   /// color of indicator
@@ -42,6 +47,26 @@ class EasyLoadingTheme {
               ? Colors.black.withOpacity(0.5)
               : Colors.transparent;
 
+  /// loading animation
+  static EasyLoadingAnimation get loadingAnimation {
+    EasyLoadingAnimation _animation;
+    switch (EasyLoading.instance.animationStyle) {
+      case EasyLoadingAnimationStyle.custom:
+        _animation = EasyLoading.instance.customAnimation;
+        break;
+      case EasyLoadingAnimationStyle.offset:
+        _animation = OffsetAnimation();
+        break;
+      case EasyLoadingAnimationStyle.scale:
+        _animation = ScaleAnimation();
+        break;
+      default:
+        _animation = OpacityAnimation();
+        break;
+    }
+    return _animation;
+  }
+
   /// font size of status
   static double get fontSize => EasyLoading.instance.fontSize;
 
@@ -58,8 +83,24 @@ class EasyLoadingTheme {
   static EasyLoadingIndicatorType get indicatorType =>
       EasyLoading.instance.indicatorType;
 
+  /// toast position
+  static EasyLoadingToastPosition get toastPosition =>
+      EasyLoading.instance.toastPosition;
+
+  /// toast position
+  static AlignmentGeometry alignment(EasyLoadingToastPosition position) =>
+      position == EasyLoadingToastPosition.bottom
+          ? AlignmentDirectional.bottomCenter
+          : (position == EasyLoadingToastPosition.top
+              ? AlignmentDirectional.topCenter
+              : AlignmentDirectional.center);
+
   /// display duration
   static Duration get displayDuration => EasyLoading.instance.displayDuration;
+
+  /// animation duration
+  static Duration get animationDuration =>
+      EasyLoading.instance.animationDuration;
 
   /// contentPadding of loading
   static EdgeInsets get contentPadding => EasyLoading.instance.contentPadding;

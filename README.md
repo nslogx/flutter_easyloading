@@ -6,13 +6,17 @@ English | [简体中文](./README-zh_CN.md)
 
 <img src="https://raw.githubusercontent.com/huangjianke/flutter_easyloading/master/images/gif01.gif" width=200 height=429/> <img src="https://raw.githubusercontent.com/huangjianke/flutter_easyloading/master/images/gif02.gif" width=200 height=429/> <img src="https://raw.githubusercontent.com/huangjianke/flutter_easyloading/master/images/gif03.gif" width=200 height=429/> <img src="https://raw.githubusercontent.com/huangjianke/flutter_easyloading/master/images/gif04.gif" width=200 height=429/>
 
+## Live Preview
+
+👉 [https://huangjianke.github.io/flutter_easyloading](https://huangjianke.github.io/flutter_easyloading/#/)
+
 ## Installing
 
 Add this to your package's `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  flutter_easyloading: ^1.3.0
+  flutter_easyloading: ^2.0.0
 ```
 
 ## Import
@@ -75,6 +79,15 @@ EasyLoadingIndicatorType indicatorType;
 /// loading mask type, default [EasyLoadingMaskType.none].
 EasyLoadingMaskType maskType;
 
+/// toast position, default [EasyLoadingToastPosition.center].
+EasyLoadingToastPosition toastPosition;
+
+/// loading animationStyle, default [EasyLoadingAnimationStyle.opacity].
+EasyLoadingAnimationStyle animationStyle;
+
+/// loading custom animation, default null.
+EasyLoadingAnimation customAnimation;
+
 /// textAlign of status, default [TextAlign.center].
 TextAlign textAlign;
 
@@ -104,6 +117,9 @@ double lineWidth;
 
 /// display duration of [showSuccess] [showError] [showInfo], default 2000ms.
 Duration displayDuration;
+
+/// animation duration of indicator, default 200ms.
+Duration animationDuration;
 
 /// color of loading status, only used for [EasyLoadingStyle.custom].
 Color textColor;
@@ -159,13 +175,17 @@ EasyLoading.instance
   ..userInteractions = true;
 ```
 
-More indicatorType can see in [flutter_spinkit showcase](https://github.com/jogboms/flutter_spinkit#-showcase)
+More indicatorType can see in 👉 [flutter_spinkit showcase](https://github.com/jogboms/flutter_spinkit#-showcase)
+
+## Custom Animation
+
+example: 👉 [Custom Animation](https://github.com/huangjianke/flutter_easyloading/blob/develop/example/lib/custom_animation.dart)
 
 ## Todo
 
 - [x] add progress indicator
 
-- [ ] add custom animation
+- [x] add custom animation
 
 ## Changelog
 

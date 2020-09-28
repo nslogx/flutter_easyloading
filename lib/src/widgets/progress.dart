@@ -1,20 +1,21 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
+
 import '../theme.dart';
 
-class Progress extends StatefulWidget {
+class EasyLoadingProgress extends StatefulWidget {
   final double value;
 
-  const Progress({
+  const EasyLoadingProgress({
     Key key,
     @required this.value,
   }) : super(key: key);
 
   @override
-  ProgressState createState() => ProgressState();
+  EasyLoadingProgressState createState() => EasyLoadingProgressState();
 }
 
-class ProgressState extends State<Progress> {
+class EasyLoadingProgressState extends State<EasyLoadingProgress> {
   /// value of progress, should be 0.0~1.0.
   double _value = 0;
 
