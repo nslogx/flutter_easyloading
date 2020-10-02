@@ -144,6 +144,7 @@ class _Indicator extends StatelessWidget {
                   status,
                   style: EasyLoadingTheme.textStyle ??
                       TextStyle(
+                        decoration: TextDecoration.none,
                         color: EasyLoadingTheme.textColor,
                         fontSize: EasyLoadingTheme.fontSize,
                       ),
