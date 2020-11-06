@@ -25,10 +25,7 @@ class OffsetAnimation extends EasyLoadingAnimation {
       opacity: value,
       child: SlideTransition(
         position: _animation,
-        child: ScaleTransition(
-          scale: controller,
-          child: child,
-        ),
+        child: child,
       ),
     );
   }
