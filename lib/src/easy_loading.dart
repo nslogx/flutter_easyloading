@@ -157,11 +157,11 @@ class EasyLoading {
   GlobalKey<EasyLoadingContainerState> _key;
   GlobalKey<EasyLoadingProgressState> _progressKey;
   Timer _timer;
+  Completer<void> _completer;
 
   Widget get w => _w;
   GlobalKey<EasyLoadingContainerState> get key => _key;
   GlobalKey<EasyLoadingProgressState> get progressKey => _progressKey;
-  Timer get timer => _timer;
 
   factory EasyLoading() => _getInstance();
   static EasyLoading _instance;
@@ -323,7 +323,7 @@ class EasyLoading {
     EasyLoadingToastPosition toastPosition = EasyLoadingToastPosition.center,
   }) {
     assert(
-      _getInstance().overlayEntry != null,
+      overlayEntry != null,
       'overlayEntry should not be null',
     );
 
@@ -332,55 +332,56 @@ class EasyLoading {
       'toastPosition should not be null',
     );
 
-    if (_getInstance().loadingStyle == EasyLoadingStyle.custom) {
+    if (loadingStyle == EasyLoadingStyle.custom) {
       assert(
-        _getInstance().backgroundColor != null,
+        backgroundColor != null,
         'while loading style is custom, backgroundColor should not be null',
       );
       assert(
-        _getInstance().indicatorColor != null,
+        indicatorColor != null,
         'while loading style is custom, indicatorColor should not be null',
       );
       assert(
-        _getInstance().progressColor != null,
+        progressColor != null,
         'while loading style is custom, progressColor should not be null',
       );
       assert(
-        _getInstance().textColor != null,
+        textColor != null,
         'while loading style is custom, textColor should not be null',
       );
     }
 
-    if (_getInstance().maskType == EasyLoadingMaskType.custom) {
+    if (maskType == EasyLoadingMaskType.custom) {
       assert(
-        _getInstance().maskColor != null,
+        maskColor != null,
         'while mask type is custom, maskColor should not be null',
       );
     }
 
-    if (_getInstance().animationStyle == EasyLoadingAnimationStyle.custom) {
+    if (animationStyle == EasyLoadingAnimationStyle.custom) {
       assert(
-        _getInstance().customAnimation != null,
+        customAnimation != null,
         'while animationStyle is custom, customAnimation should not be null',
       );
     }
 
     _cancelTimer();
-    _getInstance()._progressKey = null;
+    _progressKey = null;
+    if (_completer?.isCompleted == false) _completer = null;
 
-    GlobalKey<EasyLoadingContainerState> _key =
+    GlobalKey<EasyLoadingContainerState> _containerKey =
         GlobalKey<EasyLoadingContainerState>();
-    _getInstance()._w = EasyLoadingContainer(
-      key: _key,
+    _w = EasyLoadingContainer(
+      key: _containerKey,
       status: status,
       indicator: w,
       animation: _getInstance()._w == null,
       toastPosition: toastPosition,
     );
     _markNeedsBuild();
-    _getInstance()._key = _key;
+    _key = _containerKey;
     if (duration != null) {
-      _getInstance()._timer = Timer.periodic(duration, (Timer timer) {
+      _timer = Timer.periodic(duration, (Timer timer) {
         dismiss();
       });
     }
@@ -388,13 +389,12 @@ class EasyLoading {
 
   void _dismiss(bool animation) {
     if (animation) {
-      EasyLoadingContainerState easyLoadingContainerState =
-          _getInstance().key?.currentState;
+      EasyLoadingContainerState easyLoadingContainerState = key?.currentState;
       if (easyLoadingContainerState != null) {
-        final Completer<void> completer = Completer<void>();
-        easyLoadingContainerState.dismiss(completer);
-        completer.future.then((value) {
-          _reset();
+        _completer = Completer<void>();
+        easyLoadingContainerState.dismiss(_completer);
+        _completer?.future?.then((value) {
+          if (_completer != null) _reset();
         });
         return;
       }
@@ -403,18 +403,19 @@ class EasyLoading {
   }
 
   void _reset() {
-    _getInstance()._w = null;
-    _getInstance()._key = null;
-    _getInstance()._progressKey = null;
+    _w = null;
+    _key = null;
+    _progressKey = null;
+    _completer = null;
     _markNeedsBuild();
   }
 
   void _markNeedsBuild() {
-    _getInstance().overlayEntry?.markNeedsBuild();
+    overlayEntry?.markNeedsBuild();
   }
 
   void _cancelTimer() {
-    _getInstance().timer?.cancel();
-    _getInstance()._timer = null;
+    _timer?.cancel();
+    _timer = null;
   }
 }

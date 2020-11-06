@@ -1,3 +1,7 @@
+## [2.0.1] - 2020.11.06
+
+* fixed [#58](https://github.com/huangjianke/flutter_easyloading/issues/58)
+
 ## [2.0.0] - 2020.09.28
 
 * add custom animation style
