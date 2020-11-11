@@ -1,4 +1,4 @@
-# flutter_easyloading
+# Flutter EasyLoading
 
 [![pub package](https://img.shields.io/pub/v/flutter_easyloading?style=flat)](https://pub.dev/packages/flutter_easyloading) [![pub points](https://badges.bar/flutter_easyloading/pub%20points)](https://pub.dev/packages/flutter_easyloading/score) [![popularity](https://badges.bar/flutter_easyloading/popularity)](https://pub.dev/packages/flutter_easyloading/score) [![likes](https://badges.bar/flutter_easyloading/likes)](https://pub.dev/packages/flutter_easyloading/score) [![license](https://img.shields.io/github/license/huangjianke/flutter_easyloading?style=flat)](https://github.com/huangjianke/flutter_easyloading) [![stars](https://img.shields.io/github/stars/huangjianke/flutter_easyloading?style=social)](https://github.com/huangjianke/flutter_easyloading)
 
@@ -16,7 +16,7 @@ Add this to your package's `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  flutter_easyloading: ^2.0.1
+  flutter_easyloading: ^2.1.0
 ```
 
 ## Import
@@ -67,7 +67,29 @@ EasyLoading.showToast('Toast');
 EasyLoading.dismiss();
 ```
 
+Add loading status callback
+
+```dart
+EasyLoading.addStatusCallback((status) {
+  print('EasyLoading Status $status');
+});
+```
+
+Remove loading status callback(s)
+
+```dart
+EasyLoading.removeCallback(statusCallback);
+
+EasyLoading.removeAllCallbacks();
+```
+
 ## Customize
+
+❗️**Note:**
+
+- **`textColor`、`indicatorColor`、`progressColor`、`backgroundColor` only used for `EasyLoadingStyle.custom`.**
+
+- **`maskColor` only used for `EasyLoadingMaskType.custom`.**
 
 ```dart
 /// loading style, default [EasyLoadingStyle.dark].
@@ -139,6 +161,9 @@ Color maskColor;
 /// should allow user interactions while loading is displayed.
 bool userInteractions;
 
+/// should dismiss on user tap.
+bool dismissOnTap;
+
 /// indicator widget of loading
 Widget indicatorWidget;
 
@@ -152,13 +177,6 @@ Widget errorWidget;
 Widget infoWidget;
 ```
 
-❗️**Note:**
-
-- **`textColor`、`indicatorColor`、`progressColor`、`backgroundColor` only used for `EasyLoadingStyle.custom`.**
-
-- **`maskColor` only used for `EasyLoadingMaskType.custom`.**
-
-
 Because of `EasyLoading` is a singleton, so you can custom loading style any where like this:
 
 ```dart
@@ -168,11 +186,14 @@ EasyLoading.instance
   ..loadingStyle = EasyLoadingStyle.dark
   ..indicatorSize = 45.0
   ..radius = 10.0
+  ..progressColor = Colors.yellow
   ..backgroundColor = Colors.green
   ..indicatorColor = Colors.yellow
   ..textColor = Colors.yellow
   ..maskColor = Colors.blue.withOpacity(0.5)
-  ..userInteractions = true;
+  ..userInteractions = true
+  ..dismissOnTap = false
+  ..customAnimation = CustomAnimation();
 ```
 
 More indicatorType can see in 👉 [flutter_spinkit showcase](https://github.com/jogboms/flutter_spinkit#-showcase)

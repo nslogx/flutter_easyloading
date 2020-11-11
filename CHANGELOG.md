@@ -1,3 +1,10 @@
+## [2.1.0] - 2020.11.11
+
+* add loading status callback
+* add dismissOnTap option [#59](https://github.com/huangjianke/flutter_easyloading/issues/59)
+* fixed [#61](https://github.com/huangjianke/flutter_easyloading/issues/61)
+* fixed bugs
+
 ## [2.0.1] - 2020.11.06
 
 * fixed [#58](https://github.com/huangjianke/flutter_easyloading/issues/58)

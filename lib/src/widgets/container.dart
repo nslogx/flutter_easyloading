@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 
 import '../theme.dart';
 import '../easy_loading.dart';
@@ -8,14 +9,20 @@ class EasyLoadingContainer extends StatefulWidget {
   final Widget indicator;
   final String status;
   final bool animation;
+  final bool dismissOnTap;
   final EasyLoadingToastPosition toastPosition;
+  final EasyLoadingMaskType maskType;
+  final Completer<void> completer;
 
   const EasyLoadingContainer({
     Key key,
     this.indicator,
     this.status,
     this.animation = true,
+    this.dismissOnTap,
     this.toastPosition,
+    this.maskType,
+    this.completer,
   }) : super(key: key);
 
   @override
@@ -26,19 +33,25 @@ class EasyLoadingContainerState extends State<EasyLoadingContainer>
     with SingleTickerProviderStateMixin {
   String _status;
   AnimationController _animationController;
+  bool get isPersistentCallbacks =>
+      SchedulerBinding.instance.schedulerPhase ==
+      SchedulerPhase.persistentCallbacks;
 
   @override
   void initState() {
     super.initState();
     if (!mounted) return;
     _status = widget.status;
-
     _animationController = AnimationController(
       vsync: this,
       duration: EasyLoadingTheme.animationDuration,
-      value: widget.animation ? 0 : 1,
-    );
-    _animationController.forward();
+    )..addStatusListener((status) {
+        if (status == AnimationStatus.completed &&
+            !widget.completer.isCompleted) {
+          widget.completer?.complete();
+        }
+      });
+    show(widget.animation);
   }
 
   @override
@@ -48,12 +61,26 @@ class EasyLoadingContainerState extends State<EasyLoadingContainer>
     super.dispose();
   }
 
-  void dismiss(Completer completer) {
-    _animationController?.reverse();
-    Timer.periodic(EasyLoadingTheme.animationDuration, (Timer timer) {
-      timer?.cancel();
-      completer.complete();
-    });
+  Future<void> show(bool animation) {
+    if (isPersistentCallbacks) {
+      Completer<void> completer = Completer<void>();
+      SchedulerBinding.instance.addPostFrameCallback((_) => completer
+          .complete(_animationController?.forward(from: animation ? 0 : 1)));
+      return completer.future;
+    } else {
+      return _animationController?.forward(from: animation ? 0 : 1);
+    }
+  }
+
+  Future<void> dismiss(bool animation) {
+    if (isPersistentCallbacks) {
+      Completer<void> completer = Completer<void>();
+      SchedulerBinding.instance.addPostFrameCallback((_) => completer
+          .complete(_animationController?.reverse(from: animation ? 1 : 0)));
+      return completer.future;
+    } else {
+      return _animationController?.reverse(from: animation ? 1 : 0);
+    }
   }
 
   void updateStatus(String status) {
@@ -78,11 +105,15 @@ class EasyLoadingContainerState extends State<EasyLoadingContainer>
             return Opacity(
               opacity: _animationController?.value ?? 0,
               child: IgnorePointer(
-                ignoring: EasyLoadingTheme.ignoring,
-                child: Container(
-                  width: double.infinity,
-                  height: double.infinity,
-                  color: EasyLoadingTheme.maskColor,
+                ignoring: EasyLoadingTheme.ignoring(widget.dismissOnTap),
+                child: GestureDetector(
+                  onTap: () async => await EasyLoading.dismiss(),
+                  behavior: HitTestBehavior.opaque,
+                  child: Container(
+                    width: double.infinity,
+                    height: double.infinity,
+                    color: EasyLoadingTheme.maskColor(widget.maskType),
+                  ),
                 ),
               ),
             );

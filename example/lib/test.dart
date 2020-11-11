@@ -11,13 +11,20 @@ class _TestPageState extends State<TestPage> {
   @override
   void initState() {
     super.initState();
-    // EasyLoading.show();
+    // EasyLoading.dismiss();
+    EasyLoading.showSuccess('Use in initState');
+    EasyLoading.addStatusCallback(statusCallback);
   }
 
   @override
   void deactivate() {
     EasyLoading.dismiss();
+    EasyLoading.removeCallback(statusCallback);
     super.deactivate();
+  }
+
+  void statusCallback(EasyLoadingStatus status) {
+    print('Test EasyLoading Status $status');
   }
 
   void loadData() async {

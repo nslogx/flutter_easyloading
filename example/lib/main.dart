@@ -26,6 +26,7 @@ void configLoading() {
     ..textColor = Colors.yellow
     ..maskColor = Colors.blue.withOpacity(0.5)
     ..userInteractions = true
+    ..dismissOnTap = false
     ..customAnimation = CustomAnimation();
 }
 
@@ -63,7 +64,14 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
+    EasyLoading.addStatusCallback((status) {
+      print('EasyLoading Status $status');
+      if (status == EasyLoadingStatus.dismiss) {
+        _timer?.cancel();
+      }
+    });
     EasyLoading.showSuccess('Use in initState');
+    // EasyLoading.removeCallbacks();
   }
 
   @override
@@ -100,17 +108,22 @@ class _MyHomePageState extends State<MyHomePage> {
                   FlatButton(
                     textColor: Colors.blue,
                     child: Text('dismiss'),
-                    onPressed: () {
+                    onPressed: () async {
                       _timer?.cancel();
-                      EasyLoading.dismiss();
+                      await EasyLoading.dismiss();
+                      print('EasyLoading dismiss');
                     },
                   ),
                   FlatButton(
                     textColor: Colors.blue,
                     child: Text('show'),
-                    onPressed: () {
+                    onPressed: () async {
                       _timer?.cancel();
-                      EasyLoading.show(status: 'loading...');
+                      await EasyLoading.show(
+                        status: 'loading...',
+                        maskType: EasyLoadingMaskType.black,
+                      );
+                      print('EasyLoading show');
                     },
                   ),
                   FlatButton(
@@ -126,9 +139,10 @@ class _MyHomePageState extends State<MyHomePage> {
                   FlatButton(
                     textColor: Colors.blue,
                     child: Text('showSuccess'),
-                    onPressed: () {
+                    onPressed: () async {
                       _timer?.cancel();
-                      EasyLoading.showSuccess('Great Success!');
+                      await EasyLoading.showSuccess('Great Success!');
+                      print('EasyLoading showSuccess');
                     },
                   ),
                   FlatButton(

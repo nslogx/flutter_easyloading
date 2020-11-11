@@ -40,12 +40,14 @@ class EasyLoadingTheme {
               : Colors.black;
 
   /// mask color of loading
-  static Color get maskColor =>
-      EasyLoading.instance.maskType == EasyLoadingMaskType.custom
-          ? EasyLoading.instance.maskColor
-          : EasyLoading.instance.maskType == EasyLoadingMaskType.black
-              ? Colors.black.withOpacity(0.5)
-              : Colors.transparent;
+  static Color maskColor(EasyLoadingMaskType maskType) {
+    EasyLoadingMaskType type = maskType ?? EasyLoading.instance.maskType;
+    return type == EasyLoadingMaskType.custom
+        ? EasyLoading.instance.maskColor
+        : type == EasyLoadingMaskType.black
+            ? Colors.black.withOpacity(0.5)
+            : Colors.transparent;
+  }
 
   /// loading animation
   static EasyLoadingAnimation get loadingAnimation {
@@ -117,9 +119,13 @@ class EasyLoadingTheme {
   /// radius of loading
   static double get radius => EasyLoading.instance.radius;
 
-  static bool get ignoring =>
-      EasyLoading.instance.userInteractions ??
-      (EasyLoading.instance.maskType == EasyLoadingMaskType.none
-          ? true
-          : false);
+  static bool ignoring(bool dismissOnTap) {
+    bool dismiss = dismissOnTap ?? (EasyLoading.instance.dismissOnTap ?? false);
+    return dismiss
+        ? false
+        : (EasyLoading.instance.userInteractions ??
+            (EasyLoading.instance.maskType == EasyLoadingMaskType.none
+                ? true
+                : false));
+  }
 }

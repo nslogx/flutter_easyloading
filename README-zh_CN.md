@@ -1,4 +1,4 @@
-# flutter_easyloading
+# Flutter EasyLoading
 
 [![pub package](https://img.shields.io/pub/v/flutter_easyloading?style=flat)](https://pub.dev/packages/flutter_easyloading) [![pub points](https://badges.bar/flutter_easyloading/pub%20points)](https://pub.dev/packages/flutter_easyloading/score) [![popularity](https://badges.bar/flutter_easyloading/popularity)](https://pub.dev/packages/flutter_easyloading/score) [![likes](https://badges.bar/flutter_easyloading/likes)](https://pub.dev/packages/flutter_easyloading/score) [![license](https://img.shields.io/github/license/huangjianke/flutter_easyloading?style=flat)](https://github.com/huangjianke/flutter_easyloading) [![stars](https://img.shields.io/github/stars/huangjianke/flutter_easyloading?style=social)](https://github.com/huangjianke/flutter_easyloading)
 
@@ -16,7 +16,7 @@
 
 ```yaml
 dependencies:
-  flutter_easyloading: ^2.0.1
+  flutter_easyloading: ^2.1.0
 ```
 
 ## 导入
@@ -66,7 +66,29 @@ EasyLoading.showToast('Toast');
 EasyLoading.dismiss();
 ```
 
+添加 Loading 状态回调
+
+```dart
+EasyLoading.addStatusCallback((status) {
+  print('EasyLoading Status $status');
+});
+```
+
+移除 Loading 状态回调
+
+```dart
+EasyLoading.removeCallback(statusCallback);
+
+EasyLoading.removeAllCallbacks();
+```
+
 ## 自定义
+
+❗️**注意:**
+
+- **`textColor`、`indicatorColor`、`progressColor`、`backgroundColor` 仅对 `EasyLoadingStyle.custom`有效。**
+
+- **`maskColor` 仅对 `EasyLoadingMaskType.custom`有效。**
 
 ```dart
 /// loading的样式, 默认[EasyLoadingStyle.dark].
@@ -138,6 +160,9 @@ Color maskColor;
 /// 当loading展示的时候，是否允许用户操作.
 bool userInteractions;
 
+/// 点击背景是否关闭.
+bool dismissOnTap;
+
 /// 指示器自定义组件
 Widget indicatorWidget;
 
@@ -151,12 +176,6 @@ Widget errorWidget;
 Widget infoWidget;
 ```
 
-❗️**注意:**
-
-- **`textColor`、`indicatorColor`、`progressColor`、`backgroundColor` 仅对 `EasyLoadingStyle.custom`有效。**
-
-- **`maskColor` 仅对 `EasyLoadingMaskType.custom`有效。**
-
 因为 `EasyLoading` 是一个全局单例, 所以你可以在任意一个地方自定义它的样式:
 
 ```dart
@@ -166,11 +185,14 @@ EasyLoading.instance
   ..loadingStyle = EasyLoadingStyle.dark
   ..indicatorSize = 45.0
   ..radius = 10.0
+  ..progressColor = Colors.yellow
   ..backgroundColor = Colors.green
   ..indicatorColor = Colors.yellow
   ..textColor = Colors.yellow
   ..maskColor = Colors.blue.withOpacity(0.5)
-  ..userInteractions = true;
+  ..userInteractions = true
+  ..dismissOnTap = false
+  ..customAnimation = CustomAnimation();
 ```
 
 更多的指示器类型可查看 👉 [flutter_spinkit showcase](https://github.com/jogboms/flutter_spinkit#-showcase)
