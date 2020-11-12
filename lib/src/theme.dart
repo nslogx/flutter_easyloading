@@ -141,13 +141,12 @@ class EasyLoadingTheme {
   /// radius of loading
   static double get radius => EasyLoading.instance.radius;
 
-  static bool ignoring(bool dismissOnTap) {
-    bool dismiss = dismissOnTap ?? (EasyLoading.instance.dismissOnTap ?? false);
-    return dismiss
-        ? false
-        : (EasyLoading.instance.userInteractions ??
-            (EasyLoading.instance.maskType == EasyLoadingMaskType.none
-                ? true
-                : false));
+  /// should dismiss on user tap
+  static bool get dismissOnTap => EasyLoading.instance.dismissOnTap;
+
+  static bool ignoring(EasyLoadingMaskType maskType) {
+    EasyLoadingMaskType type = maskType ?? EasyLoading.instance.maskType;
+    return EasyLoading.instance.userInteractions ??
+        (type == EasyLoadingMaskType.none ? true : false);
   }
 }

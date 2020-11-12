@@ -55,7 +55,11 @@ class EasyLoadingContainer extends StatefulWidget {
 class EasyLoadingContainerState extends State<EasyLoadingContainer>
     with SingleTickerProviderStateMixin {
   String _status;
+  AlignmentGeometry _alignment;
+  bool _dismissOnTap, _ignoring;
+  Color _maskColor;
   AnimationController _animationController;
+
   bool get isPersistentCallbacks =>
       SchedulerBinding.instance.schedulerPhase ==
       SchedulerPhase.persistentCallbacks;
@@ -65,6 +69,14 @@ class EasyLoadingContainerState extends State<EasyLoadingContainer>
     super.initState();
     if (!mounted) return;
     _status = widget.status;
+    _alignment = (widget.indicator == null && widget.status?.isNotEmpty == true)
+        ? EasyLoadingTheme.alignment(widget.toastPosition)
+        : AlignmentDirectional.center;
+    _dismissOnTap =
+        widget.dismissOnTap ?? (EasyLoadingTheme.dismissOnTap ?? false);
+    _ignoring =
+        _dismissOnTap ? false : EasyLoadingTheme.ignoring(widget.maskType);
+    _maskColor = EasyLoadingTheme.maskColor(widget.maskType);
     _animationController = AnimationController(
       vsync: this,
       duration: EasyLoadingTheme.animationDuration,
@@ -113,12 +125,12 @@ class EasyLoadingContainerState extends State<EasyLoadingContainer>
     });
   }
 
+  void _onTap() async {
+    if (_dismissOnTap) await EasyLoading.dismiss();
+  }
+
   @override
   Widget build(BuildContext context) {
-    AlignmentGeometry _alignment =
-        (widget.indicator == null && widget.status?.isNotEmpty == true)
-            ? EasyLoadingTheme.alignment(widget.toastPosition)
-            : AlignmentDirectional.center;
     return Stack(
       alignment: _alignment,
       children: <Widget>[
@@ -128,16 +140,22 @@ class EasyLoadingContainerState extends State<EasyLoadingContainer>
             return Opacity(
               opacity: _animationController?.value ?? 0,
               child: IgnorePointer(
-                ignoring: EasyLoadingTheme.ignoring(widget.dismissOnTap),
-                child: GestureDetector(
-                  onTap: () async => await EasyLoading.dismiss(),
-                  behavior: HitTestBehavior.opaque,
-                  child: Container(
-                    width: double.infinity,
-                    height: double.infinity,
-                    color: EasyLoadingTheme.maskColor(widget.maskType),
-                  ),
-                ),
+                ignoring: _ignoring,
+                child: _dismissOnTap
+                    ? GestureDetector(
+                        onTap: _onTap,
+                        behavior: HitTestBehavior.translucent,
+                        child: Container(
+                          width: double.infinity,
+                          height: double.infinity,
+                          color: _maskColor,
+                        ),
+                      )
+                    : Container(
+                        width: double.infinity,
+                        height: double.infinity,
+                        color: _maskColor,
+                      ),
               ),
             );
           },
