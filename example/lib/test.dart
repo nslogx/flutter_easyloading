@@ -29,12 +29,12 @@ class _TestPageState extends State<TestPage> {
 
   void loadData() async {
     try {
-      EasyLoading.show();
+      await EasyLoading.show();
       Response response = await Dio().get('https://github.com');
       print(response);
-      EasyLoading.dismiss();
+      await EasyLoading.dismiss();
     } catch (e) {
-      EasyLoading.showError(e.toString());
+      await EasyLoading.showError(e.toString());
       print(e);
     }
   }

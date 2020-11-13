@@ -468,9 +468,7 @@ class EasyLoading {
       completer: completer,
     );
     completer.future.whenComplete(() {
-      for (final EasyLoadingStatusCallback callback in _statusCallbacks) {
-        if (callback != null) callback(EasyLoadingStatus.show);
-      }
+      _callback(EasyLoadingStatus.show);
       if (duration != null) {
         _cancelTimer();
         _timer = Timer.periodic(duration, (timer) async {
@@ -483,11 +481,13 @@ class EasyLoading {
     return completer.future;
   }
 
-  Future<void> _dismiss(bool animation) {
+  Future<void> _dismiss(bool animation) async {
+    if (key != null && key.currentState == null) {
+      _reset();
+      return;
+    }
+
     return key?.currentState?.dismiss(animation)?.whenComplete(() {
-      for (final EasyLoadingStatusCallback callback in _statusCallbacks) {
-        if (callback != null) callback(EasyLoadingStatus.dismiss);
-      }
       _reset();
     });
   }
@@ -498,6 +498,13 @@ class EasyLoading {
     _progressKey = null;
     _cancelTimer();
     _markNeedsBuild();
+    _callback(EasyLoadingStatus.dismiss);
+  }
+
+  void _callback(EasyLoadingStatus status) {
+    for (final EasyLoadingStatusCallback callback in _statusCallbacks) {
+      if (callback != null) callback(status);
+    }
   }
 
   void _markNeedsBuild() {
