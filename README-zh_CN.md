@@ -16,7 +16,7 @@
 
 ```yaml
 dependencies:
-  flutter_easyloading: ^2.1.3
+  flutter_easyloading: ^2.2.0
 ```
 
 ## 导入
@@ -39,10 +39,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: MyHomePage(title: 'Flutter EasyLoading'),
-      builder: (BuildContext context, Widget child) {
-        /// 确保 loading 组件能覆盖在其他组件之上.
-        return FlutterEasyLoading(child: child);
-      },
+      builder: EasyLoading.init(),
     );
   }
 }

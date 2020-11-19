@@ -1,3 +1,7 @@
+## [2.2.0] - 2020.11.19
+
+* add init method
+
 ## [2.1.3] - 2020.11.13
 
 * fixed [#64](https://github.com/huangjianke/flutter_easyloading/issues/64)

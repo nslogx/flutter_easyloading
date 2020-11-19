@@ -40,10 +40,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: MyHomePage(title: 'Flutter EasyLoading'),
-      builder: (BuildContext context, Widget child) {
-        /// make sure that loading can be displayed in front of all other widgets
-        return FlutterEasyLoading(child: child);
-      },
+      builder: EasyLoading.init(),
     );
   }
 }

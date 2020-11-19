@@ -29,6 +29,7 @@ import './widgets/container.dart';
 import './widgets/progress.dart';
 import './widgets/indicator.dart';
 import './widgets/overlay_entry.dart';
+import './widgets/loading.dart';
 import './animations/animation.dart';
 import './theme.dart';
 
@@ -232,6 +233,19 @@ class EasyLoading {
   }
 
   static bool get isShow => _getInstance().w != null;
+
+  /// init EasyLoading
+  static TransitionBuilder init({
+    TransitionBuilder builder,
+  }) {
+    return (BuildContext context, Widget child) {
+      if (builder != null) {
+        return builder(context, FlutterEasyLoading(child: child));
+      } else {
+        return FlutterEasyLoading(child: child);
+      }
+    };
+  }
 
   /// show loading with [status] [indicator] [maskType]
   static Future<void> show({
