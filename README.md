@@ -1,14 +1,14 @@
 # Flutter EasyLoading
 
-[![pub package](https://img.shields.io/pub/v/flutter_easyloading?style=flat)](https://pub.dev/packages/flutter_easyloading) [![pub points](https://badges.bar/flutter_easyloading/pub%20points)](https://pub.dev/packages/flutter_easyloading/score) [![popularity](https://badges.bar/flutter_easyloading/popularity)](https://pub.dev/packages/flutter_easyloading/score) [![likes](https://badges.bar/flutter_easyloading/likes)](https://pub.dev/packages/flutter_easyloading/score) [![license](https://img.shields.io/github/license/huangjianke/flutter_easyloading?style=flat)](https://github.com/huangjianke/flutter_easyloading) [![stars](https://img.shields.io/github/stars/huangjianke/flutter_easyloading?style=social)](https://github.com/huangjianke/flutter_easyloading)
+[![pub package](https://img.shields.io/pub/v/flutter_easyloading?style=flat)](https://pub.dev/packages/flutter_easyloading) [![pub points](https://badges.bar/flutter_easyloading/pub%20points)](https://pub.dev/packages/flutter_easyloading/score) [![popularity](https://badges.bar/flutter_easyloading/popularity)](https://pub.dev/packages/flutter_easyloading/score) [![likes](https://badges.bar/flutter_easyloading/likes)](https://pub.dev/packages/flutter_easyloading/score) [![license](https://img.shields.io/github/license/kokohuang/flutter_easyloading?style=flat)](https://github.com/kokohuang/flutter_easyloading) [![stars](https://img.shields.io/github/stars/kokohuang/flutter_easyloading?style=social)](https://github.com/kokohuang/flutter_easyloading)
 
 English | [简体中文](./README-zh_CN.md)
 
-<img src="https://raw.githubusercontent.com/huangjianke/flutter_easyloading/master/images/gif01.gif" width=200 height=429/> <img src="https://raw.githubusercontent.com/huangjianke/flutter_easyloading/master/images/gif02.gif" width=200 height=429/> <img src="https://raw.githubusercontent.com/huangjianke/flutter_easyloading/master/images/gif03.gif" width=200 height=429/> <img src="https://raw.githubusercontent.com/huangjianke/flutter_easyloading/master/images/gif04.gif" width=200 height=429/>
+<img src="https://raw.githubusercontent.com/kokohuang/flutter_easyloading/master/images/gif01.gif" width=200 height=429/> <img src="https://raw.githubusercontent.com/kokohuang/flutter_easyloading/master/images/gif02.gif" width=200 height=429/> <img src="https://raw.githubusercontent.com/kokohuang/flutter_easyloading/master/images/gif03.gif" width=200 height=429/> <img src="https://raw.githubusercontent.com/kokohuang/flutter_easyloading/master/images/gif04.gif" width=200 height=429/>
 
 ## Live Preview
 
-👉 [https://huangjianke.github.io/flutter_easyloading](https://huangjianke.github.io/flutter_easyloading/#/)
+👉 [https://kokohuang.github.io/flutter_easyloading](https://kokohuang.github.io/flutter_easyloading/#/)
 
 ## Installing
 
@@ -16,7 +16,7 @@ Add this to your package's `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  flutter_easyloading: ^2.2.0
+  flutter_easyloading: ^2.2.1
 ```
 
 ## Import
@@ -27,7 +27,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 ## How to use
 
-First, initialize `FlutterEasyLoading` in `MaterialApp`/`CupertinoApp`:
+First, initialize `EasyLoading` in your `MaterialApp`/`CupertinoApp`:
 
 ```dart
 class MyApp extends StatelessWidget {
@@ -197,7 +197,7 @@ More indicatorType can see in 👉 [flutter_spinkit showcase](https://github.com
 
 ## Custom Animation
 
-example: 👉 [Custom Animation](https://github.com/huangjianke/flutter_easyloading/blob/develop/example/lib/custom_animation.dart)
+example: 👉 [Custom Animation](https://github.com/kokohuang/flutter_easyloading/blob/develop/example/lib/custom_animation.dart)
 
 ## Todo
 
