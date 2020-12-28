@@ -1,3 +1,7 @@
+## [2.2.2] - 2020.12.28
+
+* fixed [#77](https://github.com/kokohuang/flutter_easyloading/issues/77)
+
 ## [2.2.1] - 2020.11.30
 
 * fixed bugs

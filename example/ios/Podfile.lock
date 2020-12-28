@@ -1,21 +1,15 @@
 PODS:
   - Flutter (1.0.0)
-  - flutter_boost (0.0.2):
-    - Flutter
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
-  - flutter_boost (from `.symlinks/plugins/flutter_boost/ios`)
 
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
-  flutter_boost:
-    :path: ".symlinks/plugins/flutter_boost/ios"
 
 SPEC CHECKSUMS:
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
-  flutter_boost: a7cfa776b75329d5e7d101d0cd33e75042bcde69
 
 PODFILE CHECKSUM: f32fb4e7c14f8b3ca19a369d7be425dd9241af27
 

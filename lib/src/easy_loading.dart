@@ -274,6 +274,14 @@ class EasyLoading {
       value >= 0.0 && value <= 1.0,
       'progress value should be 0.0 ~ 1.0',
     );
+
+    if (_getInstance().loadingStyle == EasyLoadingStyle.custom) {
+      assert(
+        _getInstance().progressColor != null,
+        'while loading style is custom, progressColor should not be null',
+      );
+    }
+
     if (_getInstance().w == null || _getInstance().progressKey == null) {
       if (_getInstance().key != null) await dismiss(animation: false);
       GlobalKey<EasyLoadingProgressState> _progressKey =
@@ -434,10 +442,6 @@ class EasyLoading {
       assert(
         indicatorColor != null,
         'while loading style is custom, indicatorColor should not be null',
-      );
-      assert(
-        progressColor != null,
-        'while loading style is custom, progressColor should not be null',
       );
       assert(
         textColor != null,
