@@ -216,3 +216,8 @@ example: 👉 [Custom Animation](https://github.com/kokohuang/flutter_easyloadin
 ## ❤️❤️❤️
 
 Thanks to [flutter_spinkit](https://github.com/jogboms/flutter_spinkit) ❤️
+
+Supported by [JetBrains Open Source](https://www.jetbrains.com/community/opensource/#support)
+
+[<img src="https://raw.githubusercontent.com/kokohuang/flutter_easyloading/master/images/jetbrains.png" width=200 height=112/>](https://www.jetbrains.com/?from=FlutterEasyLoading)
+

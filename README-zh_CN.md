@@ -216,3 +216,6 @@ EasyLoading.instance
 
 感谢 [flutter_spinkit](https://github.com/jogboms/flutter_spinkit) ❤️
 
+感谢 [JetBrains Open Source](https://www.jetbrains.com/community/opensource/#support) 提供支持
+
+[<img src="https://raw.githubusercontent.com/kokohuang/flutter_easyloading/master/images/jetbrains.png" width=200 height=112/>](https://www.jetbrains.com/?from=FlutterEasyLoading)
