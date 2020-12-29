@@ -1,6 +1,6 @@
 name: flutter_easyloading
 description: ✨A clean and lightweight loading/toast widget for Flutter, easy to use without context, support iOS、Android and Web
-version: 2.2.1
+version: 2.2.2
 homepage: https://github.com/kokohuang/flutter_easyloading
 
 environment:
