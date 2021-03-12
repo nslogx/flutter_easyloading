@@ -27,14 +27,14 @@ class EasyLoadingOverlayEntry extends OverlayEntry {
   final WidgetBuilder builder;
 
   EasyLoadingOverlayEntry({
-    @required this.builder,
+    required this.builder,
   }) : super(builder: builder);
 
   @override
   void markNeedsBuild() {
-    if (SchedulerBinding.instance.schedulerPhase ==
+    if (SchedulerBinding.instance?.schedulerPhase ==
         SchedulerPhase.persistentCallbacks) {
-      SchedulerBinding.instance.addPostFrameCallback((_) {
+      SchedulerBinding.instance?.addPostFrameCallback((_) {
         super.markNeedsBuild();
       });
     } else {

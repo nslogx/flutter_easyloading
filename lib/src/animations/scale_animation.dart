@@ -33,9 +33,8 @@ class ScaleAnimation extends EasyLoadingAnimation {
     AnimationController controller,
     AlignmentGeometry alignment,
   ) {
-    double opacity = controller?.value ?? 0;
     return Opacity(
-      opacity: opacity,
+      opacity: controller.value,
       child: ScaleTransition(
         scale: controller,
         child: child,

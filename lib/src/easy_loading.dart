@@ -104,106 +104,105 @@ typedef EasyLoadingStatusCallback = void Function(EasyLoadingStatus status);
 
 class EasyLoading {
   /// loading style, default [EasyLoadingStyle.dark].
-  EasyLoadingStyle loadingStyle;
+  late EasyLoadingStyle loadingStyle;
 
   /// loading indicator type, default [EasyLoadingIndicatorType.fadingCircle].
-  EasyLoadingIndicatorType indicatorType;
+  late EasyLoadingIndicatorType indicatorType;
 
   /// loading mask type, default [EasyLoadingMaskType.none].
-  EasyLoadingMaskType maskType;
+  late EasyLoadingMaskType maskType;
 
   /// toast position, default [EasyLoadingToastPosition.center].
-  EasyLoadingToastPosition toastPosition;
+  late EasyLoadingToastPosition toastPosition;
 
   /// loading animationStyle, default [EasyLoadingAnimationStyle.opacity].
-  EasyLoadingAnimationStyle animationStyle;
-
-  /// loading custom animation, default null.
-  EasyLoadingAnimation customAnimation;
+  late EasyLoadingAnimationStyle animationStyle;
 
   /// textAlign of status, default [TextAlign.center].
-  TextAlign textAlign;
-
-  /// textStyle of status, default null.
-  TextStyle textStyle;
+  late TextAlign textAlign;
 
   /// content padding of loading.
-  EdgeInsets contentPadding;
+  late EdgeInsets contentPadding;
 
   /// padding of [status].
-  EdgeInsets textPadding;
+  late EdgeInsets textPadding;
 
   /// size of indicator, default 40.0.
-  double indicatorSize;
+  late double indicatorSize;
 
   /// radius of loading, default 5.0.
-  double radius;
+  late double radius;
 
   /// fontSize of loading, default 15.0.
-  double fontSize;
+  late double fontSize;
 
   /// width of progress indicator, default 2.0.
-  double progressWidth;
+  late double progressWidth;
 
   /// width of indicator, default 4.0, only used for [EasyLoadingIndicatorType.ring, EasyLoadingIndicatorType.dualRing].
-  double lineWidth;
+  late double lineWidth;
 
   /// display duration of [showSuccess] [showError] [showInfo] [showToast], default 2000ms.
-  Duration displayDuration;
+  late Duration displayDuration;
 
   /// animation duration of indicator, default 200ms.
-  Duration animationDuration;
+  late Duration animationDuration;
+
+  /// loading custom animation, default null.
+  EasyLoadingAnimation? customAnimation;
+
+  /// textStyle of status, default null.
+  TextStyle? textStyle;
 
   /// color of loading status, only used for [EasyLoadingStyle.custom].
-  Color textColor;
+  Color? textColor;
 
   /// color of loading indicator, only used for [EasyLoadingStyle.custom].
-  Color indicatorColor;
+  Color? indicatorColor;
 
   /// progress color of loading, only used for [EasyLoadingStyle.custom].
-  Color progressColor;
+  Color? progressColor;
 
   /// background color of loading, only used for [EasyLoadingStyle.custom].
-  Color backgroundColor;
+  Color? backgroundColor;
 
   /// mask color of loading, only used for [EasyLoadingMaskType.custom].
-  Color maskColor;
+  Color? maskColor;
 
   /// should allow user interactions while loading is displayed.
-  bool userInteractions;
+  bool? userInteractions;
 
   /// should dismiss on user tap.
-  bool dismissOnTap;
+  bool? dismissOnTap;
 
   /// indicator widget of loading
-  Widget indicatorWidget;
+  Widget? indicatorWidget;
 
   /// success widget of loading
-  Widget successWidget;
+  Widget? successWidget;
 
   /// error widget of loading
-  Widget errorWidget;
+  Widget? errorWidget;
 
   /// info widget of loading
-  Widget infoWidget;
+  Widget? infoWidget;
 
-  EasyLoadingOverlayEntry overlayEntry;
-  Widget _w;
+  Widget? _w;
 
-  GlobalKey<EasyLoadingContainerState> _key;
-  GlobalKey<EasyLoadingProgressState> _progressKey;
-  Timer _timer;
+  EasyLoadingOverlayEntry? overlayEntry;
+  GlobalKey<EasyLoadingContainerState>? _key;
+  GlobalKey<EasyLoadingProgressState>? _progressKey;
+  Timer? _timer;
 
-  Widget get w => _w;
-  GlobalKey<EasyLoadingContainerState> get key => _key;
-  GlobalKey<EasyLoadingProgressState> get progressKey => _progressKey;
+  Widget? get w => _w;
+  GlobalKey<EasyLoadingContainerState>? get key => _key;
+  GlobalKey<EasyLoadingProgressState>? get progressKey => _progressKey;
 
   final List<EasyLoadingStatusCallback> _statusCallbacks =
       <EasyLoadingStatusCallback>[];
 
-  factory EasyLoading() => _getInstance();
-  static EasyLoading _instance;
-  static EasyLoading get instance => _getInstance();
+  factory EasyLoading() => _instance;
+  static final EasyLoading _instance = EasyLoading._internal();
 
   EasyLoading._internal() {
     /// set deafult value
@@ -227,18 +226,14 @@ class EasyLoading {
     );
   }
 
-  static EasyLoading _getInstance() {
-    if (_instance == null) _instance = EasyLoading._internal();
-    return _instance;
-  }
-
-  static bool get isShow => _getInstance().w != null;
+  static EasyLoading get instance => _instance;
+  static bool get isShow => _instance.w != null;
 
   /// init EasyLoading
   static TransitionBuilder init({
-    TransitionBuilder builder,
+    TransitionBuilder? builder,
   }) {
-    return (BuildContext context, Widget child) {
+    return (BuildContext context, Widget? child) {
       if (builder != null) {
         return builder(context, FlutterEasyLoading(child: child));
       } else {
@@ -249,14 +244,13 @@ class EasyLoading {
 
   /// show loading with [status] [indicator] [maskType]
   static Future<void> show({
-    String status,
-    Widget indicator,
-    EasyLoadingMaskType maskType,
-    bool dismissOnTap,
+    String? status,
+    Widget? indicator,
+    EasyLoadingMaskType? maskType,
+    bool? dismissOnTap,
   }) {
-    Widget w =
-        indicator ?? (_getInstance().indicatorWidget ?? LoadingIndicator());
-    return _getInstance()._show(
+    Widget w = indicator ?? (_instance.indicatorWidget ?? LoadingIndicator());
+    return _instance._show(
       status: status,
       maskType: maskType,
       dismissOnTap: dismissOnTap,
@@ -267,57 +261,57 @@ class EasyLoading {
   /// show progress with [value] [status] [maskType], value should be 0.0 ~ 1.0.
   static Future<void> showProgress(
     double value, {
-    String status,
-    EasyLoadingMaskType maskType,
+    String? status,
+    EasyLoadingMaskType? maskType,
   }) async {
     assert(
       value >= 0.0 && value <= 1.0,
       'progress value should be 0.0 ~ 1.0',
     );
 
-    if (_getInstance().loadingStyle == EasyLoadingStyle.custom) {
+    if (_instance.loadingStyle == EasyLoadingStyle.custom) {
       assert(
-        _getInstance().progressColor != null,
+        _instance.progressColor != null,
         'while loading style is custom, progressColor should not be null',
       );
     }
 
-    if (_getInstance().w == null || _getInstance().progressKey == null) {
-      if (_getInstance().key != null) await dismiss(animation: false);
+    if (_instance.w == null || _instance.progressKey == null) {
+      if (_instance.key != null) await dismiss(animation: false);
       GlobalKey<EasyLoadingProgressState> _progressKey =
           GlobalKey<EasyLoadingProgressState>();
       Widget w = EasyLoadingProgress(
         key: _progressKey,
         value: value,
       );
-      _getInstance()._show(
+      _instance._show(
         status: status,
         maskType: maskType,
         dismissOnTap: false,
         w: w,
       );
-      _getInstance()._progressKey = _progressKey;
+      _instance._progressKey = _progressKey;
     }
     // update progress
-    _getInstance().progressKey?.currentState?.updateProgress(min(1.0, value));
+    _instance.progressKey?.currentState?.updateProgress(min(1.0, value));
     // update status
-    if (status != null) _getInstance().key?.currentState?.updateStatus(status);
+    if (status != null) _instance.key?.currentState?.updateStatus(status);
   }
 
   /// showSuccess [status] [duration] [maskType]
   static Future<void> showSuccess(
     String status, {
-    Duration duration,
-    EasyLoadingMaskType maskType,
-    bool dismissOnTap,
+    Duration? duration,
+    EasyLoadingMaskType? maskType,
+    bool? dismissOnTap,
   }) {
-    Widget w = _getInstance().successWidget ??
+    Widget w = _instance.successWidget ??
         Icon(
           Icons.done,
           color: EasyLoadingTheme.indicatorColor,
           size: EasyLoadingTheme.indicatorSize,
         );
-    return _getInstance()._show(
+    return _instance._show(
       status: status,
       duration: duration ?? EasyLoadingTheme.displayDuration,
       maskType: maskType,
@@ -329,17 +323,17 @@ class EasyLoading {
   /// showError [status] [duration] [maskType]
   static Future<void> showError(
     String status, {
-    Duration duration,
-    EasyLoadingMaskType maskType,
-    bool dismissOnTap,
+    Duration? duration,
+    EasyLoadingMaskType? maskType,
+    bool? dismissOnTap,
   }) {
-    Widget w = _getInstance().errorWidget ??
+    Widget w = _instance.errorWidget ??
         Icon(
           Icons.clear,
           color: EasyLoadingTheme.indicatorColor,
           size: EasyLoadingTheme.indicatorSize,
         );
-    return _getInstance()._show(
+    return _instance._show(
       status: status,
       duration: duration ?? EasyLoadingTheme.displayDuration,
       maskType: maskType,
@@ -351,17 +345,17 @@ class EasyLoading {
   /// showInfo [status] [duration] [maskType]
   static Future<void> showInfo(
     String status, {
-    Duration duration,
-    EasyLoadingMaskType maskType,
-    bool dismissOnTap,
+    Duration? duration,
+    EasyLoadingMaskType? maskType,
+    bool? dismissOnTap,
   }) {
-    Widget w = _getInstance().infoWidget ??
+    Widget w = _instance.infoWidget ??
         Icon(
           Icons.info_outline,
           color: EasyLoadingTheme.indicatorColor,
           size: EasyLoadingTheme.indicatorSize,
         );
-    return _getInstance()._show(
+    return _instance._show(
       status: status,
       duration: duration ?? EasyLoadingTheme.displayDuration,
       maskType: maskType,
@@ -373,12 +367,12 @@ class EasyLoading {
   /// showToast [status] [duration] [toastPosition] [maskType]
   static Future<void> showToast(
     String status, {
-    Duration duration,
-    EasyLoadingToastPosition toastPosition,
-    EasyLoadingMaskType maskType,
-    bool dismissOnTap,
+    Duration? duration,
+    EasyLoadingToastPosition? toastPosition,
+    EasyLoadingMaskType? maskType,
+    bool? dismissOnTap,
   }) {
-    return _getInstance()._show(
+    return _instance._show(
       status: status,
       duration: duration ?? EasyLoadingTheme.displayDuration,
       toastPosition: toastPosition ?? EasyLoadingTheme.toastPosition,
@@ -392,46 +386,41 @@ class EasyLoading {
     bool animation = true,
   }) {
     // cancel timer
-    _getInstance()._cancelTimer();
-    return _getInstance()._dismiss(animation);
+    _instance._cancelTimer();
+    return _instance._dismiss(animation);
   }
 
   /// add loading status callback
   static void addStatusCallback(EasyLoadingStatusCallback callback) {
-    if (!_getInstance()._statusCallbacks.contains(callback)) {
-      _getInstance()._statusCallbacks.add(callback);
+    if (!_instance._statusCallbacks.contains(callback)) {
+      _instance._statusCallbacks.add(callback);
     }
   }
 
   /// remove single loading status callback
   static void removeCallback(EasyLoadingStatusCallback callback) {
-    if (_getInstance()._statusCallbacks.contains(callback)) {
-      _getInstance()._statusCallbacks.remove(callback);
+    if (_instance._statusCallbacks.contains(callback)) {
+      _instance._statusCallbacks.remove(callback);
     }
   }
 
   /// remove all loading status callback
   static void removeAllCallbacks() {
-    _getInstance()._statusCallbacks.clear();
+    _instance._statusCallbacks.clear();
   }
 
   /// show [status] [duration] [toastPosition] [maskType]
   Future<void> _show({
-    Widget w,
-    String status,
-    Duration duration,
-    EasyLoadingToastPosition toastPosition = EasyLoadingToastPosition.center,
-    EasyLoadingMaskType maskType,
-    bool dismissOnTap,
+    Widget? w,
+    String? status,
+    Duration? duration,
+    EasyLoadingMaskType? maskType,
+    bool? dismissOnTap,
+    EasyLoadingToastPosition? toastPosition,
   }) async {
     assert(
       overlayEntry != null,
-      'overlayEntry should not be null',
-    );
-
-    assert(
-      toastPosition != null,
-      'toastPosition should not be null',
+      'You should call EasyLoading.init() in your MaterialApp',
     );
 
     if (loadingStyle == EasyLoadingStyle.custom) {
@@ -449,12 +438,7 @@ class EasyLoading {
       );
     }
 
-    if (maskType == null) maskType = _getInstance().maskType;
-    assert(
-      maskType != null,
-      'maskType should not be null',
-    );
-
+    maskType ??= _instance.maskType;
     if (maskType == EasyLoadingMaskType.custom) {
       assert(
         maskColor != null,
@@ -469,6 +453,7 @@ class EasyLoading {
       );
     }
 
+    toastPosition ??= EasyLoadingToastPosition.center;
     bool animation = _w == null;
     _progressKey = null;
     if (_key != null) await dismiss(animation: false);
@@ -489,9 +474,8 @@ class EasyLoading {
       _callback(EasyLoadingStatus.show);
       if (duration != null) {
         _cancelTimer();
-        _timer = Timer.periodic(duration, (timer) async {
+        _timer = Timer(duration, () async {
           await dismiss();
-          _cancelTimer();
         });
       }
     });
@@ -500,12 +484,12 @@ class EasyLoading {
   }
 
   Future<void> _dismiss(bool animation) async {
-    if (key != null && key.currentState == null) {
+    if (key != null && key?.currentState == null) {
       _reset();
       return;
     }
 
-    return key?.currentState?.dismiss(animation)?.whenComplete(() {
+    return key?.currentState?.dismiss(animation).whenComplete(() {
       _reset();
     });
   }
@@ -521,7 +505,7 @@ class EasyLoading {
 
   void _callback(EasyLoadingStatus status) {
     for (final EasyLoadingStatusCallback callback in _statusCallbacks) {
-      if (callback != null) callback(status);
+      callback(status);
     }
   }
 

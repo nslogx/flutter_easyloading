@@ -46,17 +46,17 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  MyHomePage({Key? key, this.title}) : super(key: key);
 
-  final String title;
+  final String? title;
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  Timer _timer;
-  double _progress;
+  Timer? _timer;
+  late double _progress;
 
   @override
   void initState() {
@@ -75,7 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(widget.title ?? ''),
       ),
       body: Container(
         width: MediaQuery.of(context).size.width,
@@ -89,8 +89,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 runAlignment: WrapAlignment.center,
                 crossAxisAlignment: WrapCrossAlignment.center,
                 children: <Widget>[
-                  FlatButton(
-                    textColor: Colors.blue,
+                  TextButton(
                     child: Text('open test page'),
                     onPressed: () {
                       _timer?.cancel();
@@ -102,8 +101,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       );
                     },
                   ),
-                  FlatButton(
-                    textColor: Colors.blue,
+                  TextButton(
                     child: Text('dismiss'),
                     onPressed: () async {
                       _timer?.cancel();
@@ -111,8 +109,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       print('EasyLoading dismiss');
                     },
                   ),
-                  FlatButton(
-                    textColor: Colors.blue,
+                  TextButton(
                     child: Text('show'),
                     onPressed: () async {
                       _timer?.cancel();
@@ -123,8 +120,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       print('EasyLoading show');
                     },
                   ),
-                  FlatButton(
-                    textColor: Colors.blue,
+                  TextButton(
                     child: Text('showToast'),
                     onPressed: () {
                       _timer?.cancel();
@@ -133,8 +129,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       );
                     },
                   ),
-                  FlatButton(
-                    textColor: Colors.blue,
+                  TextButton(
                     child: Text('showSuccess'),
                     onPressed: () async {
                       _timer?.cancel();
@@ -142,24 +137,21 @@ class _MyHomePageState extends State<MyHomePage> {
                       print('EasyLoading showSuccess');
                     },
                   ),
-                  FlatButton(
-                    textColor: Colors.blue,
+                  TextButton(
                     child: Text('showError'),
                     onPressed: () {
                       _timer?.cancel();
                       EasyLoading.showError('Failed with Error');
                     },
                   ),
-                  FlatButton(
-                    textColor: Colors.blue,
+                  TextButton(
                     child: Text('showInfo'),
                     onPressed: () {
                       _timer?.cancel();
                       EasyLoading.showInfo('Useful Information.');
                     },
                   ),
-                  FlatButton(
-                    textColor: Colors.blue,
+                  TextButton(
                     child: Text('showProgress'),
                     onPressed: () {
                       _progress = 0;

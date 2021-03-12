@@ -29,23 +29,23 @@ import '../theme.dart';
 import '../easy_loading.dart';
 
 class EasyLoadingContainer extends StatefulWidget {
-  final Widget indicator;
-  final String status;
+  final Widget? indicator;
+  final String? status;
+  final bool? dismissOnTap;
+  final EasyLoadingToastPosition? toastPosition;
+  final EasyLoadingMaskType? maskType;
+  final Completer<void>? completer;
   final bool animation;
-  final bool dismissOnTap;
-  final EasyLoadingToastPosition toastPosition;
-  final EasyLoadingMaskType maskType;
-  final Completer<void> completer;
 
   const EasyLoadingContainer({
-    Key key,
+    Key? key,
     this.indicator,
     this.status,
-    this.animation = true,
     this.dismissOnTap,
     this.toastPosition,
     this.maskType,
     this.completer,
+    this.animation = true,
   }) : super(key: key);
 
   @override
@@ -54,14 +54,14 @@ class EasyLoadingContainer extends StatefulWidget {
 
 class EasyLoadingContainerState extends State<EasyLoadingContainer>
     with SingleTickerProviderStateMixin {
-  String _status;
-  AlignmentGeometry _alignment;
-  bool _dismissOnTap, _ignoring;
-  Color _maskColor;
-  AnimationController _animationController;
+  String? _status;
+  Color? _maskColor;
+  late AnimationController _animationController;
+  late AlignmentGeometry _alignment;
+  late bool _dismissOnTap, _ignoring;
 
   bool get isPersistentCallbacks =>
-      SchedulerBinding.instance.schedulerPhase ==
+      SchedulerBinding.instance?.schedulerPhase ==
       SchedulerPhase.persistentCallbacks;
 
   @override
@@ -81,8 +81,8 @@ class EasyLoadingContainerState extends State<EasyLoadingContainer>
       vsync: this,
       duration: EasyLoadingTheme.animationDuration,
     )..addStatusListener((status) {
-        if (status == AnimationStatus.completed &&
-            !widget.completer.isCompleted) {
+        bool isCompleted = widget.completer?.isCompleted ?? false;
+        if (status == AnimationStatus.completed && !isCompleted) {
           widget.completer?.complete();
         }
       });
@@ -91,30 +91,29 @@ class EasyLoadingContainerState extends State<EasyLoadingContainer>
 
   @override
   void dispose() {
-    _animationController?.dispose();
-    _animationController = null;
+    _animationController.dispose();
     super.dispose();
   }
 
   Future<void> show(bool animation) {
     if (isPersistentCallbacks) {
       Completer<void> completer = Completer<void>();
-      SchedulerBinding.instance.addPostFrameCallback((_) => completer
-          .complete(_animationController?.forward(from: animation ? 0 : 1)));
+      SchedulerBinding.instance?.addPostFrameCallback((_) => completer
+          .complete(_animationController.forward(from: animation ? 0 : 1)));
       return completer.future;
     } else {
-      return _animationController?.forward(from: animation ? 0 : 1);
+      return _animationController.forward(from: animation ? 0 : 1);
     }
   }
 
   Future<void> dismiss(bool animation) {
     if (isPersistentCallbacks) {
       Completer<void> completer = Completer<void>();
-      SchedulerBinding.instance.addPostFrameCallback((_) => completer
-          .complete(_animationController?.reverse(from: animation ? 1 : 0)));
+      SchedulerBinding.instance?.addPostFrameCallback((_) => completer
+          .complete(_animationController.reverse(from: animation ? 1 : 0)));
       return completer.future;
     } else {
-      return _animationController?.reverse(from: animation ? 1 : 0);
+      return _animationController.reverse(from: animation ? 1 : 0);
     }
   }
 
@@ -136,9 +135,9 @@ class EasyLoadingContainerState extends State<EasyLoadingContainer>
       children: <Widget>[
         AnimatedBuilder(
           animation: _animationController,
-          builder: (BuildContext context, Widget child) {
+          builder: (BuildContext context, Widget? child) {
             return Opacity(
-              opacity: _animationController?.value ?? 0,
+              opacity: _animationController.value,
               child: IgnorePointer(
                 ignoring: _ignoring,
                 child: _dismissOnTap
@@ -162,8 +161,8 @@ class EasyLoadingContainerState extends State<EasyLoadingContainer>
         ),
         AnimatedBuilder(
           animation: _animationController,
-          builder: (BuildContext context, Widget child) {
-            return EasyLoadingTheme.loadingAnimation?.buildWidget(
+          builder: (BuildContext context, Widget? child) {
+            return EasyLoadingTheme.loadingAnimation.buildWidget(
               _Indicator(
                 status: _status,
                 indicator: widget.indicator,
@@ -179,12 +178,12 @@ class EasyLoadingContainerState extends State<EasyLoadingContainer>
 }
 
 class _Indicator extends StatelessWidget {
-  final Widget indicator;
-  final String status;
+  final Widget? indicator;
+  final String? status;
 
   const _Indicator({
-    @required this.indicator,
-    @required this.status,
+    required this.indicator,
+    required this.status,
   });
 
   @override
@@ -203,26 +202,24 @@ class _Indicator extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          indicator != null
-              ? Container(
-                  margin: status?.isNotEmpty == true
-                      ? EasyLoadingTheme.textPadding
-                      : EdgeInsets.zero,
-                  child: indicator,
-                )
-              : null,
-          status?.isNotEmpty == true
-              ? Text(
-                  status,
-                  style: EasyLoadingTheme.textStyle ??
-                      TextStyle(
-                        color: EasyLoadingTheme.textColor,
-                        fontSize: EasyLoadingTheme.fontSize,
-                      ),
-                  textAlign: EasyLoadingTheme.textAlign,
-                )
-              : null,
-        ].where((w) => w != null).toList(),
+          if (indicator != null)
+            Container(
+              margin: status?.isNotEmpty == true
+                  ? EasyLoadingTheme.textPadding
+                  : EdgeInsets.zero,
+              child: indicator,
+            ),
+          if (status != null)
+            Text(
+              status!,
+              style: EasyLoadingTheme.textStyle ??
+                  TextStyle(
+                    color: EasyLoadingTheme.textColor,
+                    fontSize: EasyLoadingTheme.fontSize,
+                  ),
+              textAlign: EasyLoadingTheme.textAlign,
+            ),
+        ],
       ),
     );
   }

@@ -26,12 +26,12 @@ import '../easy_loading.dart';
 import './overlay_entry.dart';
 
 class FlutterEasyLoading extends StatefulWidget {
-  final Widget child;
+  final Widget? child;
 
   const FlutterEasyLoading({
-    Key key,
-    @required this.child,
-  })  : assert(child != null),
+    Key? key,
+    required this.child,
+  })   : assert(child != null),
         super(key: key);
 
   @override
@@ -39,7 +39,7 @@ class FlutterEasyLoading extends StatefulWidget {
 }
 
 class _FlutterEasyLoadingState extends State<FlutterEasyLoading> {
-  EasyLoadingOverlayEntry _overlayEntry;
+  late EasyLoadingOverlayEntry _overlayEntry;
 
   @override
   void initState() {
@@ -51,18 +51,18 @@ class _FlutterEasyLoadingState extends State<FlutterEasyLoading> {
   }
 
   @override
-  void dispose() {
-    _overlayEntry = null;
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Material(
       child: Overlay(
         initialEntries: [
           EasyLoadingOverlayEntry(
-            builder: (BuildContext context) => widget.child,
+            builder: (BuildContext context) {
+              if (widget.child != null) {
+                return widget.child!;
+              } else {
+                return Container();
+              }
+            },
           ),
           _overlayEntry,
         ],

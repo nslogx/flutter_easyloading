@@ -28,7 +28,7 @@ import '../theme.dart';
 
 class LoadingIndicator extends StatefulWidget {
   const LoadingIndicator({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -40,8 +40,7 @@ class _LoadingIndicatorState extends State<LoadingIndicator> {
 
   /// indicator color of loading
   final Color _indicatorColor = EasyLoadingTheme.indicatorColor;
-
-  Widget _indicator;
+  late Widget _indicator;
 
   @override
   void initState() {
@@ -50,7 +49,6 @@ class _LoadingIndicatorState extends State<LoadingIndicator> {
 
   @override
   void dispose() {
-    _indicator = null;
     super.dispose();
   }
 

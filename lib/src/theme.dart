@@ -32,7 +32,7 @@ class EasyLoadingTheme {
   /// color of indicator
   static Color get indicatorColor =>
       EasyLoading.instance.loadingStyle == EasyLoadingStyle.custom
-          ? EasyLoading.instance.indicatorColor
+          ? EasyLoading.instance.indicatorColor!
           : EasyLoading.instance.loadingStyle == EasyLoadingStyle.dark
               ? Colors.white
               : Colors.black;
@@ -40,7 +40,7 @@ class EasyLoadingTheme {
   /// progress color of loading
   static Color get progressColor =>
       EasyLoading.instance.loadingStyle == EasyLoadingStyle.custom
-          ? EasyLoading.instance.progressColor
+          ? EasyLoading.instance.progressColor!
           : EasyLoading.instance.loadingStyle == EasyLoadingStyle.dark
               ? Colors.white
               : Colors.black;
@@ -48,7 +48,7 @@ class EasyLoadingTheme {
   /// background color of loading
   static Color get backgroundColor =>
       EasyLoading.instance.loadingStyle == EasyLoadingStyle.custom
-          ? EasyLoading.instance.backgroundColor
+          ? EasyLoading.instance.backgroundColor!
           : EasyLoading.instance.loadingStyle == EasyLoadingStyle.dark
               ? Colors.black.withOpacity(0.9)
               : Colors.white;
@@ -56,17 +56,17 @@ class EasyLoadingTheme {
   /// font color of status
   static Color get textColor =>
       EasyLoading.instance.loadingStyle == EasyLoadingStyle.custom
-          ? EasyLoading.instance.textColor
+          ? EasyLoading.instance.textColor!
           : EasyLoading.instance.loadingStyle == EasyLoadingStyle.dark
               ? Colors.white
               : Colors.black;
 
   /// mask color of loading
-  static Color maskColor(EasyLoadingMaskType maskType) {
-    EasyLoadingMaskType type = maskType ?? EasyLoading.instance.maskType;
-    return type == EasyLoadingMaskType.custom
-        ? EasyLoading.instance.maskColor
-        : type == EasyLoadingMaskType.black
+  static Color maskColor(EasyLoadingMaskType? maskType) {
+    maskType ??= EasyLoading.instance.maskType;
+    return maskType == EasyLoadingMaskType.custom
+        ? EasyLoading.instance.maskColor!
+        : maskType == EasyLoadingMaskType.black
             ? Colors.black.withOpacity(0.5)
             : Colors.transparent;
   }
@@ -76,7 +76,7 @@ class EasyLoadingTheme {
     EasyLoadingAnimation _animation;
     switch (EasyLoading.instance.animationStyle) {
       case EasyLoadingAnimationStyle.custom:
-        _animation = EasyLoading.instance.customAnimation;
+        _animation = EasyLoading.instance.customAnimation!;
         break;
       case EasyLoadingAnimationStyle.offset:
         _animation = OffsetAnimation();
@@ -112,7 +112,7 @@ class EasyLoadingTheme {
       EasyLoading.instance.toastPosition;
 
   /// toast position
-  static AlignmentGeometry alignment(EasyLoadingToastPosition position) =>
+  static AlignmentGeometry alignment(EasyLoadingToastPosition? position) =>
       position == EasyLoadingToastPosition.bottom
           ? AlignmentDirectional.bottomCenter
           : (position == EasyLoadingToastPosition.top
@@ -136,17 +136,17 @@ class EasyLoadingTheme {
   static TextAlign get textAlign => EasyLoading.instance.textAlign;
 
   /// textStyle of status
-  static TextStyle get textStyle => EasyLoading.instance.textStyle;
+  static TextStyle? get textStyle => EasyLoading.instance.textStyle;
 
   /// radius of loading
   static double get radius => EasyLoading.instance.radius;
 
   /// should dismiss on user tap
-  static bool get dismissOnTap => EasyLoading.instance.dismissOnTap;
+  static bool? get dismissOnTap => EasyLoading.instance.dismissOnTap;
 
-  static bool ignoring(EasyLoadingMaskType maskType) {
-    EasyLoadingMaskType type = maskType ?? EasyLoading.instance.maskType;
+  static bool ignoring(EasyLoadingMaskType? maskType) {
+    maskType ??= EasyLoading.instance.maskType;
     return EasyLoading.instance.userInteractions ??
-        (type == EasyLoadingMaskType.none ? true : false);
+        (maskType == EasyLoadingMaskType.none ? true : false);
   }
 }

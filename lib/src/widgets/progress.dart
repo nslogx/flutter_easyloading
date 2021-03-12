@@ -30,8 +30,8 @@ class EasyLoadingProgress extends StatefulWidget {
   final double value;
 
   const EasyLoadingProgress({
-    Key key,
-    @required this.value,
+    Key? key,
+    required this.value,
   }) : super(key: key);
 
   @override
@@ -78,9 +78,9 @@ class _CircleProgress extends ProgressIndicator {
   final Color color;
 
   _CircleProgress({
-    @required this.value,
-    @required this.width,
-    @required this.color,
+    required this.value,
+    required this.width,
+    required this.color,
   });
 
   @override
@@ -116,9 +116,9 @@ class _CirclePainter extends CustomPainter {
   final double width;
 
   _CirclePainter({
-    @required this.color,
-    @required this.value,
-    @required this.width,
+    required this.color,
+    required this.value,
+    required this.width,
   });
 
   @override

@@ -1,6 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:dio/dio.dart';
 
 class TestPage extends StatefulWidget {
   @override
@@ -30,7 +31,10 @@ class _TestPageState extends State<TestPage> {
   void loadData() async {
     try {
       await EasyLoading.show();
-      Response response = await Dio().get('https://github.com');
+      HttpClient client = HttpClient();
+      HttpClientRequest request =
+          await client.getUrl(Uri.parse('https://github.com'));
+      HttpClientResponse response = await request.close();
       print(response);
       await EasyLoading.dismiss();
     } catch (e) {
@@ -46,8 +50,7 @@ class _TestPageState extends State<TestPage> {
         title: Text('Test Page'),
       ),
       body: Center(
-        child: FlatButton(
-          textColor: Colors.blue,
+        child: TextButton(
           child: Text('loadData'),
           onPressed: () {
             loadData();

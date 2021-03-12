@@ -42,9 +42,8 @@ class OffsetAnimation extends EasyLoadingAnimation {
       begin: _begin,
       end: Offset(0, 0),
     ).animate(controller);
-    double value = controller?.value ?? 0;
     return Opacity(
-      opacity: value,
+      opacity: controller.value,
       child: SlideTransition(
         position: _animation,
         child: child,
