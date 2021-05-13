@@ -198,6 +198,8 @@ class EasyLoading {
   GlobalKey<EasyLoadingContainerState>? get key => _key;
   GlobalKey<EasyLoadingProgressState>? get progressKey => _progressKey;
 
+  static int counter = 0;
+
   final List<EasyLoadingStatusCallback> _statusCallbacks =
       <EasyLoadingStatusCallback>[];
 
@@ -480,10 +482,16 @@ class EasyLoading {
       }
     });
     _markNeedsBuild();
+
+    counter++;
     return completer.future;
   }
 
   Future<void> _dismiss(bool animation) async {
+    counter--;
+
+    if (counter > 0) return;
+    
     if (key != null && key?.currentState == null) {
       _reset();
       return;
