@@ -165,6 +165,9 @@ class EasyLoading {
 
   /// background color of loading, only used for [EasyLoadingStyle.custom].
   Color? backgroundColor;
+  
+  /// boxShadow of loading, only used for [EasyLoadingStyle.custom].
+  List<BoxShadow>? boxShadow;
 
   /// mask color of loading, only used for [EasyLoadingMaskType.custom].
   Color? maskColor;
