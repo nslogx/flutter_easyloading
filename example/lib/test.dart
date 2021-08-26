@@ -53,7 +53,8 @@ class _TestPageState extends State<TestPage> {
         child: TextButton(
           child: Text('loadData'),
           onPressed: () {
-            loadData();
+            EasyLoading.show(status: '加载中...');
+            // loadData();
             // await Future.delayed(Duration(seconds: 2));
             // EasyLoading.show(status: 'loading...');
             // await Future.delayed(Duration(seconds: 5));

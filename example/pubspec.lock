@@ -65,9 +65,9 @@ packages:
   flutter_easyloading:
     dependency: "direct main"
     description:
-      path: ".."
-      relative: true
-    source: path
+      name: flutter_easyloading
+      url: "https://pub.flutter-io.cn"
+    source: hosted
     version: "3.0.0"
   flutter_spinkit:
     dependency: transitive
