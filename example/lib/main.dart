@@ -40,18 +40,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: MyHomePage(title: 'Flutter EasyLoading'),
-      builder: EasyLoading.init(
-        builder: ResponsiveWrapper.builder(
-            BouncingScrollWrapper.builder(context, widget),
-            maxWidth: 1200,
-            minWidth: 400,
-            defaultScale: true,
-            breakpoints: [
-              ResponsiveBreakpoint.resize(400, name: 'Low Mobile'),
-              ResponsiveBreakpoint.resize(600, name: MOBILE),
-              ResponsiveBreakpoint.autoScale(800, name: TABLET),
-              ResponsiveBreakpoint.autoScale(1200, name: DESKTOP)
-            ]),
+      builder: EasyLoading.init(),
       ),
     );
   }
