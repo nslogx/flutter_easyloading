@@ -163,7 +163,7 @@ class _LoadingIndicatorState extends State<LoadingIndicator> {
         );
         break;
       case EasyLoadingIndicatorType.pouringHourGlass:
-        _indicator = SpinKitPouringHourglass(
+        _indicator = SpinKitPouringHourGlass(
           color: _indicatorColor,
           size: _size,
         );
