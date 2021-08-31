@@ -1,3 +1,7 @@
+## [3.0.2] - 2021.08.31
+
+* fixed [#125](https://github.com/nslog11/flutter_easyloading/issues/125)
+
 ## [3.0.1] - 2021.08.28
 
 * fixed [#120](https://github.com/nslog11/flutter_easyloading/issues/120)
