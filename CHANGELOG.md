@@ -1,3 +1,7 @@
+## [3.0.1] - 2021.08.28
+
+* fixed [#120](https://github.com/nslog11/flutter_easyloading/issues/120)
+
 ## [3.0.0] - 2021.03.12
 
 * 🎉 It's support Null Safety now 
