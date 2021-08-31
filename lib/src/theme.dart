@@ -56,7 +56,7 @@ class EasyLoadingTheme {
   /// boxShadow color of loading
   static List<BoxShadow>? get boxShadow =>
       EasyLoading.instance.loadingStyle == EasyLoadingStyle.custom
-          ? EasyLoading.instance.boxShadow ?? BoxShadow()
+          ? EasyLoading.instance.boxShadow ?? [BoxShadow()]
           : null;
 
   /// font color of status

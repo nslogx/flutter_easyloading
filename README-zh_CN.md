@@ -16,7 +16,7 @@
 
 ```yaml
 dependencies:
-  flutter_easyloading: ^3.0.2
+  flutter_easyloading: ^3.0.3
 ```
 
 ## 导入
