@@ -195,6 +195,7 @@ class _Indicator extends StatelessWidget {
         borderRadius: BorderRadius.circular(
           EasyLoadingTheme.radius,
         ),
+        boxShadow: EasyLoadingTheme.boxShadow,
       ),
       padding: EasyLoadingTheme.contentPadding,
       child: Column(
