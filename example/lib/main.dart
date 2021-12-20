@@ -41,7 +41,6 @@ class MyApp extends StatelessWidget {
       ),
       home: MyHomePage(title: 'Flutter EasyLoading'),
       builder: EasyLoading.init(),
-      ),
     );
   }
 }
@@ -157,10 +156,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     onPressed: () {
                       _progress = 0;
                       _timer?.cancel();
-                      _timer = Timer.periodic(const Duration(milliseconds: 100),
-                          (Timer timer) {
-                        EasyLoading.showProgress(_progress,
-                            status: '${(_progress * 100).toStringAsFixed(0)}%');
+                      _timer = Timer.periodic(const Duration(milliseconds: 100), (Timer timer) {
+                        EasyLoading.showProgress(_progress, status: '${(_progress * 100).toStringAsFixed(0)}%');
                         _progress += 0.03;
 
                         if (_progress >= 1) {
@@ -245,8 +242,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     Text('Toast Positon'),
                     Padding(
                       padding: EdgeInsets.only(top: 10.0),
-                      child:
-                          CupertinoSegmentedControl<EasyLoadingToastPosition>(
+                      child: CupertinoSegmentedControl<EasyLoadingToastPosition>(
                         selectedColor: Colors.blue,
                         children: {
                           EasyLoadingToastPosition.top: Padding(
@@ -277,8 +273,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     Text('Animation Style'),
                     Padding(
                       padding: EdgeInsets.only(top: 10.0),
-                      child:
-                          CupertinoSegmentedControl<EasyLoadingAnimationStyle>(
+                      child: CupertinoSegmentedControl<EasyLoadingAnimationStyle>(
                         selectedColor: Colors.blue,
                         children: {
                           EasyLoadingAnimationStyle.opacity: Padding(
@@ -316,8 +311,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     Text('IndicatorType(total: 23)'),
                     Padding(
                       padding: EdgeInsets.only(top: 10.0),
-                      child:
-                          CupertinoSegmentedControl<EasyLoadingIndicatorType>(
+                      child: CupertinoSegmentedControl<EasyLoadingIndicatorType>(
                         selectedColor: Colors.blue,
                         children: {
                           EasyLoadingIndicatorType.circle: Padding(
