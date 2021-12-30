@@ -21,6 +21,7 @@
 // IN THE SOFTWARE.
 
 import 'dart:async';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -52,17 +53,15 @@ class EasyLoadingContainer extends StatefulWidget {
   EasyLoadingContainerState createState() => EasyLoadingContainerState();
 }
 
-class EasyLoadingContainerState extends State<EasyLoadingContainer>
-    with SingleTickerProviderStateMixin {
+class EasyLoadingContainerState extends State<EasyLoadingContainer> with SingleTickerProviderStateMixin {
   String? _status;
   Color? _maskColor;
+  late EasyLoadingMaskType? _maskType;
   late AnimationController _animationController;
   late AlignmentGeometry _alignment;
   late bool _dismissOnTap, _ignoring;
 
-  bool get isPersistentCallbacks =>
-      SchedulerBinding.instance?.schedulerPhase ==
-      SchedulerPhase.persistentCallbacks;
+  bool get isPersistentCallbacks => SchedulerBinding.instance?.schedulerPhase == SchedulerPhase.persistentCallbacks;
 
   @override
   void initState() {
@@ -72,11 +71,10 @@ class EasyLoadingContainerState extends State<EasyLoadingContainer>
     _alignment = (widget.indicator == null && widget.status?.isNotEmpty == true)
         ? EasyLoadingTheme.alignment(widget.toastPosition)
         : AlignmentDirectional.center;
-    _dismissOnTap =
-        widget.dismissOnTap ?? (EasyLoadingTheme.dismissOnTap ?? false);
-    _ignoring =
-        _dismissOnTap ? false : EasyLoadingTheme.ignoring(widget.maskType);
+    _dismissOnTap = widget.dismissOnTap ?? (EasyLoadingTheme.dismissOnTap ?? false);
+    _ignoring = _dismissOnTap ? false : EasyLoadingTheme.ignoring(widget.maskType);
     _maskColor = EasyLoadingTheme.maskColor(widget.maskType);
+    _maskType = widget.maskType;
     _animationController = AnimationController(
       vsync: this,
       duration: EasyLoadingTheme.animationDuration,
@@ -98,8 +96,8 @@ class EasyLoadingContainerState extends State<EasyLoadingContainer>
   Future<void> show(bool animation) {
     if (isPersistentCallbacks) {
       Completer<void> completer = Completer<void>();
-      SchedulerBinding.instance?.addPostFrameCallback((_) => completer
-          .complete(_animationController.forward(from: animation ? 0 : 1)));
+      SchedulerBinding.instance
+          ?.addPostFrameCallback((_) => completer.complete(_animationController.forward(from: animation ? 0 : 1)));
       return completer.future;
     } else {
       return _animationController.forward(from: animation ? 0 : 1);
@@ -109,8 +107,8 @@ class EasyLoadingContainerState extends State<EasyLoadingContainer>
   Future<void> dismiss(bool animation) {
     if (isPersistentCallbacks) {
       Completer<void> completer = Completer<void>();
-      SchedulerBinding.instance?.addPostFrameCallback((_) => completer
-          .complete(_animationController.reverse(from: animation ? 1 : 0)));
+      SchedulerBinding.instance
+          ?.addPostFrameCallback((_) => completer.complete(_animationController.reverse(from: animation ? 1 : 0)));
       return completer.future;
     } else {
       return _animationController.reverse(from: animation ? 1 : 0);
@@ -141,20 +139,8 @@ class EasyLoadingContainerState extends State<EasyLoadingContainer>
               child: IgnorePointer(
                 ignoring: _ignoring,
                 child: _dismissOnTap
-                    ? GestureDetector(
-                        onTap: _onTap,
-                        behavior: HitTestBehavior.translucent,
-                        child: Container(
-                          width: double.infinity,
-                          height: double.infinity,
-                          color: _maskColor,
-                        ),
-                      )
-                    : Container(
-                        width: double.infinity,
-                        height: double.infinity,
-                        color: _maskColor,
-                      ),
+                    ? GestureDetector(onTap: _onTap, behavior: HitTestBehavior.translucent, child: _buildMaskContainer())
+                    : _buildMaskContainerByMaskType(),
               ),
             );
           },
@@ -173,6 +159,24 @@ class EasyLoadingContainerState extends State<EasyLoadingContainer>
           },
         ),
       ],
+    );
+  }
+
+  Widget _buildMaskContainerByMaskType() {
+    if (_maskType == EasyLoadingMaskType.blur)
+      return BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+        child: _buildMaskContainer(),
+      );
+
+    return _buildMaskContainer();
+  }
+
+  Container _buildMaskContainer() {
+    return Container(
+      width: double.infinity,
+      height: double.infinity,
+      color: _maskColor,
     );
   }
 }
@@ -205,9 +209,7 @@ class _Indicator extends StatelessWidget {
         children: <Widget>[
           if (indicator != null)
             Container(
-              margin: status?.isNotEmpty == true
-                  ? EasyLoadingTheme.textPadding
-                  : EdgeInsets.zero,
+              margin: status?.isNotEmpty == true ? EasyLoadingTheme.textPadding : EdgeInsets.zero,
               child: indicator,
             ),
           if (status != null)
