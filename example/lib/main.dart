@@ -41,7 +41,6 @@ class MyApp extends StatelessWidget {
       ),
       home: MyHomePage(title: 'Flutter EasyLoading'),
       builder: EasyLoading.init(),
-      ),
     );
   }
 }
