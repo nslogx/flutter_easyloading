@@ -19,6 +19,7 @@ void configLoading() {
     ..indicatorType = EasyLoadingIndicatorType.fadingCircle
     ..loadingStyle = EasyLoadingStyle.dark
     ..indicatorSize = 45.0
+    ..axis = Axis.horizontal
     ..radius = 10.0
     ..progressColor = Colors.yellow
     ..backgroundColor = Colors.green
@@ -27,6 +28,7 @@ void configLoading() {
     ..maskColor = Colors.blue.withOpacity(0.5)
     ..userInteractions = true
     ..dismissOnTap = false
+    ..indicatorType = EasyLoadingIndicatorType.chasingDots
     ..customAnimation = CustomAnimation();
 }
 
@@ -159,7 +161,8 @@ class _MyHomePageState extends State<MyHomePage> {
                       _timer = Timer.periodic(const Duration(milliseconds: 100),
                           (Timer timer) {
                         EasyLoading.showProgress(_progress,
-                            status: '${(_progress * 100).toStringAsFixed(0)}%');
+                            status:
+                                '${(_progress * 100).toStringAsFixed(0).padLeft(2, ' ')}%');
                         _progress += 0.03;
 
                         if (_progress >= 1) {

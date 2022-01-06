@@ -100,8 +100,14 @@ class EasyLoadingTheme {
   /// font size of status
   static double get fontSize => EasyLoading.instance.fontSize;
 
+  /// axis
+  static Axis get axis => EasyLoading.instance.axis;
+
   /// size of indicator
-  static double get indicatorSize => EasyLoading.instance.indicatorSize;
+  static double indicatorSizeOf(Axis? axis) =>
+      (axis ?? EasyLoading.instance.axis) == Axis.horizontal
+          ? EasyLoading.instance.horizontalIndicatorSize
+          : EasyLoading.instance.indicatorSize;
 
   /// width of progress indicator
   static double get progressWidth => EasyLoading.instance.progressWidth;
@@ -137,6 +143,9 @@ class EasyLoadingTheme {
 
   /// padding of status
   static EdgeInsets get textPadding => EasyLoading.instance.textPadding;
+
+  /// horizontal indicator status space
+  static double get horizontalSpace => EasyLoading.instance.horizontalSpace;
 
   /// textAlign of status
   static TextAlign get textAlign => EasyLoading.instance.textAlign;

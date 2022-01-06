@@ -27,8 +27,11 @@ import '../easy_loading.dart';
 import '../theme.dart';
 
 class LoadingIndicator extends StatefulWidget {
-  const LoadingIndicator({
+  final Axis? axis;
+
+  LoadingIndicator({
     Key? key,
+    this.axis,
   }) : super(key: key);
 
   @override
@@ -36,8 +39,6 @@ class LoadingIndicator extends StatefulWidget {
 }
 
 class _LoadingIndicatorState extends State<LoadingIndicator> {
-  final double _size = EasyLoadingTheme.indicatorSize;
-
   /// indicator color of loading
   final Color _indicatorColor = EasyLoadingTheme.indicatorColor;
   late Widget _indicator;
@@ -54,7 +55,9 @@ class _LoadingIndicatorState extends State<LoadingIndicator> {
 
   @override
   Widget build(BuildContext context) {
+    final double _size = EasyLoadingTheme.indicatorSizeOf(widget.axis);
     double _width = _size;
+
     switch (EasyLoadingTheme.indicatorType) {
       case EasyLoadingIndicatorType.fadingCircle:
         _indicator = SpinKitFadingCircle(
@@ -210,6 +213,7 @@ class _LoadingIndicatorState extends State<LoadingIndicator> {
     return Container(
       constraints: BoxConstraints(
         maxWidth: _width,
+        maxHeight: _width,
       ),
       child: _indicator,
     );

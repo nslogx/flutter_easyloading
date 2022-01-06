@@ -24,6 +24,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'dart:ui' as ui;
 
 import '../theme.dart';
 import '../easy_loading.dart';
@@ -34,6 +35,7 @@ class EasyLoadingContainer extends StatefulWidget {
   final bool? dismissOnTap;
   final EasyLoadingToastPosition? toastPosition;
   final EasyLoadingMaskType? maskType;
+  final Axis? axis;
   final Completer<void>? completer;
   final bool animation;
 
@@ -44,6 +46,7 @@ class EasyLoadingContainer extends StatefulWidget {
     this.dismissOnTap,
     this.toastPosition,
     this.maskType,
+    this.axis,
     this.completer,
     this.animation = true,
   }) : super(key: key);
@@ -59,6 +62,7 @@ class EasyLoadingContainerState extends State<EasyLoadingContainer>
   late AnimationController _animationController;
   late AlignmentGeometry _alignment;
   late bool _dismissOnTap, _ignoring;
+  late Axis _axis;
 
   bool get isPersistentCallbacks =>
       SchedulerBinding.instance?.schedulerPhase ==
@@ -86,6 +90,7 @@ class EasyLoadingContainerState extends State<EasyLoadingContainer>
           widget.completer?.complete();
         }
       });
+    _axis = widget.axis ?? EasyLoadingTheme.axis;
     show(widget.animation);
   }
 
@@ -166,6 +171,7 @@ class EasyLoadingContainerState extends State<EasyLoadingContainer>
               _Indicator(
                 status: _status,
                 indicator: widget.indicator,
+                axis: _axis,
               ),
               _animationController,
               _alignment,
@@ -180,10 +186,12 @@ class EasyLoadingContainerState extends State<EasyLoadingContainer>
 class _Indicator extends StatelessWidget {
   final Widget? indicator;
   final String? status;
+  final Axis? axis;
 
   const _Indicator({
     required this.indicator,
     required this.status,
+    required this.axis,
   });
 
   @override
@@ -198,28 +206,68 @@ class _Indicator extends StatelessWidget {
         boxShadow: EasyLoadingTheme.boxShadow,
       ),
       padding: EasyLoadingTheme.contentPadding,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          if (indicator != null)
-            Container(
-              margin: status?.isNotEmpty == true
-                  ? EasyLoadingTheme.textPadding
-                  : EdgeInsets.zero,
-              child: indicator,
-            ),
-          if (status != null)
-            Text(
-              status!,
-              style: EasyLoadingTheme.textStyle ??
-                  TextStyle(
-                    color: EasyLoadingTheme.textColor,
-                    fontSize: EasyLoadingTheme.fontSize,
-                  ),
-              textAlign: EasyLoadingTheme.textAlign,
-            ),
+      child: _buildBody(),
+    );
+  }
+
+  Widget _buildBody() {
+    if (indicator != null && status != null) {
+      return axis == Axis.vertical
+          ? _buildVerticalIndicator()
+          : _buildHorizontalIndicator();
+    } else {
+      return indicator != null ? indicator! : _buildOnlyStatus();
+    }
+  }
+
+  Widget _buildOnlyStatus() {
+    return Text(
+      status ?? '',
+      style: EasyLoadingTheme.textStyle ??
+          TextStyle(
+            color: EasyLoadingTheme.textColor,
+            fontSize: EasyLoadingTheme.fontSize,
+          ),
+      textAlign: EasyLoadingTheme.textAlign,
+    );
+  }
+
+  Widget _buildVerticalIndicator() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        Container(
+          margin: status?.isNotEmpty == true
+              ? EasyLoadingTheme.textPadding
+              : EdgeInsets.zero,
+          child: indicator,
+        ),
+        _buildOnlyStatus(),
+      ],
+    );
+  }
+
+  Widget _buildHorizontalIndicator() {
+    return Text.rich(
+      TextSpan(
+        children: [
+          WidgetSpan(
+            alignment: ui.PlaceholderAlignment.middle,
+            child: indicator!,
+          ),
+          WidgetSpan(
+            child: SizedBox(width: EasyLoadingTheme.horizontalSpace),
+          ),
+          TextSpan(
+            text: status,
+            style: EasyLoadingTheme.textStyle ??
+                TextStyle(
+                  color: EasyLoadingTheme.textColor,
+                  fontSize: EasyLoadingTheme.fontSize,
+                ),
+          ),
         ],
       ),
     );
