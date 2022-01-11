@@ -29,9 +29,12 @@ import '../theme.dart';
 class EasyLoadingProgress extends StatefulWidget {
   final double value;
 
+  final Axis? axis;
+
   const EasyLoadingProgress({
     Key? key,
     required this.value,
+    this.axis,
   }) : super(key: key);
 
   @override
@@ -60,9 +63,11 @@ class EasyLoadingProgressState extends State<EasyLoadingProgress> {
 
   @override
   Widget build(BuildContext context) {
+    final double _size = EasyLoadingTheme.indicatorSizeOf(widget.axis);
+
     return SizedBox(
-      width: EasyLoadingTheme.indicatorSize,
-      height: EasyLoadingTheme.indicatorSize,
+      width: _size,
+      height: _size,
       child: _CircleProgress(
         value: _value,
         color: EasyLoadingTheme.progressColor,

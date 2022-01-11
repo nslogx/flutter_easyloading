@@ -127,8 +127,17 @@ class EasyLoading {
   /// padding of [status].
   late EdgeInsets textPadding;
 
-  /// size of indicator, default 40.0.
+  /// horizontal indicator status space
+  late double horizontalSpace;
+
+  /// vertical Indicator Size, default 40.0.
   late double indicatorSize;
+
+  /// indicator size in horizontal direction, default 20.0.
+  late double horizontalIndicatorSize;
+
+  /// axis direction, default horizontal
+  late Axis axis;
 
   /// radius of loading, default 5.0.
   late double radius;
@@ -165,7 +174,7 @@ class EasyLoading {
 
   /// background color of loading, only used for [EasyLoadingStyle.custom].
   Color? backgroundColor;
-  
+
   /// boxShadow of loading, only used for [EasyLoadingStyle.custom].
   List<BoxShadow>? boxShadow;
 
@@ -216,6 +225,8 @@ class EasyLoading {
     animationStyle = EasyLoadingAnimationStyle.opacity;
     textAlign = TextAlign.center;
     indicatorSize = 40.0;
+    horizontalIndicatorSize = 20.0;
+    axis = Axis.vertical;
     radius = 5.0;
     fontSize = 15.0;
     progressWidth = 2.0;
@@ -223,6 +234,7 @@ class EasyLoading {
     displayDuration = const Duration(milliseconds: 2000);
     animationDuration = const Duration(milliseconds: 200);
     textPadding = const EdgeInsets.only(bottom: 10.0);
+    horizontalSpace = 8;
     contentPadding = const EdgeInsets.symmetric(
       vertical: 15.0,
       horizontal: 20.0,
@@ -250,13 +262,17 @@ class EasyLoading {
     String? status,
     Widget? indicator,
     EasyLoadingMaskType? maskType,
+    Axis? axis,
     bool? dismissOnTap,
   }) {
-    Widget w = indicator ?? (_instance.indicatorWidget ?? LoadingIndicator());
+    Widget w = indicator ??
+        (_instance.indicatorWidget ?? LoadingIndicator(axis: axis));
     return _instance._show(
       status: status,
       maskType: maskType,
+      axis: axis,
       dismissOnTap: dismissOnTap,
+      toastPosition: EasyLoadingToastPosition.center,
       w: w,
     );
   }
@@ -266,6 +282,7 @@ class EasyLoading {
     double value, {
     String? status,
     EasyLoadingMaskType? maskType,
+    Axis? axis,
   }) async {
     assert(
       value >= 0.0 && value <= 1.0,
@@ -286,11 +303,14 @@ class EasyLoading {
       Widget w = EasyLoadingProgress(
         key: _progressKey,
         value: value,
+        axis: axis,
       );
       _instance._show(
         status: status,
         maskType: maskType,
+        axis: axis,
         dismissOnTap: false,
+        toastPosition: EasyLoadingToastPosition.center,
         w: w,
       );
       _instance._progressKey = _progressKey;
@@ -306,18 +326,20 @@ class EasyLoading {
     String status, {
     Duration? duration,
     EasyLoadingMaskType? maskType,
+    Axis? axis,
     bool? dismissOnTap,
   }) {
     Widget w = _instance.successWidget ??
         Icon(
           Icons.done,
           color: EasyLoadingTheme.indicatorColor,
-          size: EasyLoadingTheme.indicatorSize,
+          size: EasyLoadingTheme.indicatorSizeOf(axis),
         );
     return _instance._show(
       status: status,
       duration: duration ?? EasyLoadingTheme.displayDuration,
       maskType: maskType,
+      axis: axis,
       dismissOnTap: dismissOnTap,
       w: w,
     );
@@ -328,18 +350,20 @@ class EasyLoading {
     String status, {
     Duration? duration,
     EasyLoadingMaskType? maskType,
+    Axis? axis,
     bool? dismissOnTap,
   }) {
     Widget w = _instance.errorWidget ??
         Icon(
           Icons.clear,
           color: EasyLoadingTheme.indicatorColor,
-          size: EasyLoadingTheme.indicatorSize,
+          size: EasyLoadingTheme.indicatorSizeOf(axis),
         );
     return _instance._show(
       status: status,
       duration: duration ?? EasyLoadingTheme.displayDuration,
       maskType: maskType,
+      axis: axis,
       dismissOnTap: dismissOnTap,
       w: w,
     );
@@ -350,18 +374,20 @@ class EasyLoading {
     String status, {
     Duration? duration,
     EasyLoadingMaskType? maskType,
+    Axis? axis,
     bool? dismissOnTap,
   }) {
     Widget w = _instance.infoWidget ??
         Icon(
           Icons.info_outline,
           color: EasyLoadingTheme.indicatorColor,
-          size: EasyLoadingTheme.indicatorSize,
+          size: EasyLoadingTheme.indicatorSizeOf(axis),
         );
     return _instance._show(
       status: status,
       duration: duration ?? EasyLoadingTheme.displayDuration,
       maskType: maskType,
+      axis: axis,
       dismissOnTap: dismissOnTap,
       w: w,
     );
@@ -373,6 +399,7 @@ class EasyLoading {
     Duration? duration,
     EasyLoadingToastPosition? toastPosition,
     EasyLoadingMaskType? maskType,
+    Axis? axis,
     bool? dismissOnTap,
   }) {
     return _instance._show(
@@ -380,6 +407,7 @@ class EasyLoading {
       duration: duration ?? EasyLoadingTheme.displayDuration,
       toastPosition: toastPosition ?? EasyLoadingTheme.toastPosition,
       maskType: maskType,
+      axis: axis,
       dismissOnTap: dismissOnTap,
     );
   }
@@ -418,6 +446,7 @@ class EasyLoading {
     String? status,
     Duration? duration,
     EasyLoadingMaskType? maskType,
+    Axis? axis,
     bool? dismissOnTap,
     EasyLoadingToastPosition? toastPosition,
   }) async {
@@ -456,7 +485,7 @@ class EasyLoading {
       );
     }
 
-    toastPosition ??= EasyLoadingToastPosition.center;
+    toastPosition ??= EasyLoadingTheme.toastPosition;
     bool animation = _w == null;
     _progressKey = null;
     if (_key != null) await dismiss(animation: false);
@@ -470,6 +499,7 @@ class EasyLoading {
       animation: animation,
       toastPosition: toastPosition,
       maskType: maskType,
+      axis: axis,
       dismissOnTap: dismissOnTap,
       completer: completer,
     );
