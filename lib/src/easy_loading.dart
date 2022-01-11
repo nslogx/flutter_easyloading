@@ -272,6 +272,7 @@ class EasyLoading {
       maskType: maskType,
       axis: axis,
       dismissOnTap: dismissOnTap,
+      toastPosition: EasyLoadingToastPosition.center,
       w: w,
     );
   }
@@ -309,6 +310,7 @@ class EasyLoading {
         maskType: maskType,
         axis: axis,
         dismissOnTap: false,
+        toastPosition: EasyLoadingToastPosition.center,
         w: w,
       );
       _instance._progressKey = _progressKey;
@@ -483,7 +485,7 @@ class EasyLoading {
       );
     }
 
-    toastPosition ??= EasyLoadingToastPosition.center;
+    toastPosition ??= EasyLoadingTheme.toastPosition;
     bool animation = _w == null;
     _progressKey = null;
     if (_key != null) await dismiss(animation: false);
