@@ -28,6 +28,9 @@ import 'package:flutter/scheduler.dart';
 import '../theme.dart';
 import '../easy_loading.dart';
 
+//https://docs.flutter.dev/development/tools/sdk/release-notes/release-notes-3.0.0
+T? _ambiguate<T>(T? value) => value;
+
 class EasyLoadingContainer extends StatefulWidget {
   final Widget? indicator;
   final String? status;
@@ -60,8 +63,9 @@ class EasyLoadingContainerState extends State<EasyLoadingContainer>
   late AlignmentGeometry _alignment;
   late bool _dismissOnTap, _ignoring;
 
+  //https://docs.flutter.dev/development/tools/sdk/release-notes/release-notes-3.0.0
   bool get isPersistentCallbacks =>
-      SchedulerBinding.instance?.schedulerPhase ==
+      _ambiguate(SchedulerBinding.instance)!.schedulerPhase ==
       SchedulerPhase.persistentCallbacks;
 
   @override
@@ -98,8 +102,9 @@ class EasyLoadingContainerState extends State<EasyLoadingContainer>
   Future<void> show(bool animation) {
     if (isPersistentCallbacks) {
       Completer<void> completer = Completer<void>();
-      SchedulerBinding.instance?.addPostFrameCallback((_) => completer
-          .complete(_animationController.forward(from: animation ? 0 : 1)));
+      _ambiguate(SchedulerBinding.instance)!.addPostFrameCallback((_) =>
+          completer
+              .complete(_animationController.forward(from: animation ? 0 : 1)));
       return completer.future;
     } else {
       return _animationController.forward(from: animation ? 0 : 1);
@@ -109,8 +114,9 @@ class EasyLoadingContainerState extends State<EasyLoadingContainer>
   Future<void> dismiss(bool animation) {
     if (isPersistentCallbacks) {
       Completer<void> completer = Completer<void>();
-      SchedulerBinding.instance?.addPostFrameCallback((_) => completer
-          .complete(_animationController.reverse(from: animation ? 1 : 0)));
+      _ambiguate(SchedulerBinding.instance)!.addPostFrameCallback((_) =>
+          completer
+              .complete(_animationController.reverse(from: animation ? 1 : 0)));
       return completer.future;
     } else {
       return _animationController.reverse(from: animation ? 1 : 0);

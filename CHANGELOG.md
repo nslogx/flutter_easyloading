@@ -1,3 +1,7 @@
+## [3.0.4] - 2022.05.19
+
+* 🎉 It's support flutter 3.0 and previous version now 
+* fixed [#169](https://github.com/nslog11/flutter_easyloading/issues/169)
 ## [3.0.3] - 2021.08.31
 
 * fixed [#126](https://github.com/nslog11/flutter_easyloading/issues/126)
