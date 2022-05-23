@@ -78,3 +78,6 @@ build/
 # add some ignore
 .vscode
 pubspec.lock
+
+.vscode/launch.json
+example/pubspec.lock
