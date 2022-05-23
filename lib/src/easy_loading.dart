@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2020 nslog11
+// Copyright (c) 2020 nslogx
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
 // copy of this software and associated documentation files (the "Software"),
@@ -165,7 +165,7 @@ class EasyLoading {
 
   /// background color of loading, only used for [EasyLoadingStyle.custom].
   Color? backgroundColor;
-  
+
   /// boxShadow of loading, only used for [EasyLoadingStyle.custom].
   List<BoxShadow>? boxShadow;
 
