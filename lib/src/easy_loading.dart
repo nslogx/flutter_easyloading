@@ -254,23 +254,19 @@ class EasyLoading {
     bool? dismissOnTap,
   }) {
     Widget w = indicator ?? (_instance.indicatorWidget ?? LoadingIndicator());
-    showFunc() => _instance._show(
-          status: status,
-          maskType: maskType,
-          dismissOnTap: dismissOnTap,
-          w: w,
-        );
 
     final isIgnoringBackButton = !EasyLoadingTheme.ignoring(maskType);
 
-    if (!isIgnoringBackButton) return showFunc();
+    if (isIgnoringBackButton) {
+      BackButtonInterceptor.add(_backButtonInterceptor);
+    }
 
-    BackButtonInterceptor.add(_backButtonInterceptor);
-
-    return (dismissOnTap ?? false)
-        ? showFunc().whenComplete(
-            () => BackButtonInterceptor.remove(_backButtonInterceptor))
-        : showFunc();
+    return _instance._show(
+      status: status,
+      maskType: maskType,
+      dismissOnTap: dismissOnTap,
+      w: w,
+    );
   }
 
   /// show progress with [value] [status] [maskType], value should be 0.0 ~ 1.0.
@@ -299,22 +295,18 @@ class EasyLoading {
         key: _progressKey,
         value: value,
       );
-
       final isIgnoringBackButton = !EasyLoadingTheme.ignoring(maskType);
 
-      if (isIgnoringBackButton)
+      if (isIgnoringBackButton) {
         BackButtonInterceptor.add(_backButtonInterceptor);
+      }
 
-      _instance
-          ._show(
-            status: status,
-            maskType: maskType,
-            dismissOnTap: false,
-            w: w,
-          )
-          .whenComplete(
-            () => BackButtonInterceptor.remove(_backButtonInterceptor),
-          );
+      _instance._show(
+        status: status,
+        maskType: maskType,
+        dismissOnTap: false,
+        w: w,
+      );
       _instance._progressKey = _progressKey;
     }
     // update progress
@@ -413,8 +405,14 @@ class EasyLoading {
     // cancel timer
     _instance._cancelTimer();
     return _instance._dismiss(animation).whenComplete(
-          () => BackButtonInterceptor.remove(_backButtonInterceptor),
-        );
+      () {
+        final isIgnoringBackButton = !EasyLoadingTheme.ignoring(null);
+
+        if (!isIgnoringBackButton) return;
+
+        BackButtonInterceptor.remove(_backButtonInterceptor);
+      },
+    );
   }
 
   /// add loading status callback
