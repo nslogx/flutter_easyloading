@@ -24,6 +24,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:back_button_interceptor/back_button_interceptor.dart';
 
 import './widgets/container.dart';
 import './widgets/progress.dart';
@@ -253,12 +254,23 @@ class EasyLoading {
     bool? dismissOnTap,
   }) {
     Widget w = indicator ?? (_instance.indicatorWidget ?? LoadingIndicator());
-    return _instance._show(
-      status: status,
-      maskType: maskType,
-      dismissOnTap: dismissOnTap,
-      w: w,
-    );
+    showFunc() => _instance._show(
+          status: status,
+          maskType: maskType,
+          dismissOnTap: dismissOnTap,
+          w: w,
+        );
+
+    final isIgnoring = EasyLoadingTheme.ignoring(maskType);
+
+    if (!isIgnoring) return showFunc();
+
+    BackButtonInterceptor.add(_backButtonInterceptor);
+
+    return (dismissOnTap ?? false)
+        ? showFunc().whenComplete(
+            () => BackButtonInterceptor.remove(_backButtonInterceptor))
+        : showFunc();
   }
 
   /// show progress with [value] [status] [maskType], value should be 0.0 ~ 1.0.
@@ -390,7 +402,9 @@ class EasyLoading {
   }) {
     // cancel timer
     _instance._cancelTimer();
-    return _instance._dismiss(animation);
+    return _instance._dismiss(animation).whenComplete(
+          () => BackButtonInterceptor.remove(_backButtonInterceptor),
+        );
   }
 
   /// add loading status callback
@@ -520,4 +534,10 @@ class EasyLoading {
     _timer?.cancel();
     _timer = null;
   }
+
+  static bool _backButtonInterceptor(
+    bool stopDefaultButtonEvent,
+    RouteInfo routeInfo,
+  ) =>
+      true;
 }
