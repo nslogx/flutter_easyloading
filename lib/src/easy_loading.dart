@@ -299,12 +299,21 @@ class EasyLoading {
         key: _progressKey,
         value: value,
       );
-      _instance._show(
-        status: status,
-        maskType: maskType,
-        dismissOnTap: false,
-        w: w,
-      );
+
+      final isIgnoring = EasyLoadingTheme.ignoring(maskType);
+
+      if (isIgnoring) BackButtonInterceptor.add(_backButtonInterceptor);
+
+      _instance
+          ._show(
+            status: status,
+            maskType: maskType,
+            dismissOnTap: false,
+            w: w,
+          )
+          .whenComplete(
+            () => BackButtonInterceptor.remove(_backButtonInterceptor),
+          );
       _instance._progressKey = _progressKey;
     }
     // update progress
