@@ -261,7 +261,7 @@ class EasyLoading {
           w: w,
         );
 
-    final isIgnoringBackButton = !EasyLoadingTheme.ignoring(maskType);
+    final isIgnoringBackButton = !(_instance.userInteractions ?? false);
 
     if (!isIgnoringBackButton) return showFunc();
 
@@ -300,7 +300,7 @@ class EasyLoading {
         value: value,
       );
 
-      final isIgnoringBackButton = !EasyLoadingTheme.ignoring(maskType);
+      final isIgnoringBackButton = !(_instance.userInteractions ?? false);
 
       if (isIgnoringBackButton)
         BackButtonInterceptor.add(_backButtonInterceptor);
