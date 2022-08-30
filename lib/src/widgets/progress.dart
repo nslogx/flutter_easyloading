@@ -45,6 +45,7 @@ class EasyLoadingProgressState extends State<EasyLoadingProgress> {
   @override
   void initState() {
     super.initState();
+    _value = widget.value;
   }
 
   @override
