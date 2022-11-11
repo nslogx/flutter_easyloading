@@ -113,6 +113,12 @@ class EasyLoading {
   /// loading mask type, default [EasyLoadingMaskType.none].
   late EasyLoadingMaskType maskType;
 
+  /// Value of blur mask, default 5.0.
+  late double sigmaX;
+
+  /// Value of blur mask, default 5.0.
+  late double sigmaY;
+
   /// toast position, default [EasyLoadingToastPosition.center].
   late EasyLoadingToastPosition toastPosition;
 
@@ -218,6 +224,8 @@ class EasyLoading {
     textAlign = TextAlign.center;
     indicatorSize = 40.0;
     radius = 5.0;
+    sigmaX = 5.0;
+    sigmaY = 5.0;
     fontSize = 15.0;
     progressWidth = 2.0;
     lineWidth = 4.0;
@@ -472,6 +480,8 @@ class EasyLoading {
       toastPosition: toastPosition,
       maskType: maskType,
       dismissOnTap: dismissOnTap,
+      sigmaX: sigmaX,
+      sigmaY: sigmaY,
       completer: completer,
     );
     completer.future.whenComplete(() {

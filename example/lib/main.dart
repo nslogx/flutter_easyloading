@@ -20,7 +20,6 @@ void configLoading() {
     ..loadingStyle = EasyLoadingStyle.dark
     ..indicatorSize = 45.0
     ..radius = 10.0
-    ..maskType = EasyLoadingMaskType.blur
     ..progressColor = Colors.yellow
     ..backgroundColor = Colors.green
     ..indicatorColor = Colors.yellow

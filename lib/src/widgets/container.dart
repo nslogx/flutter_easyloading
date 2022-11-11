@@ -40,6 +40,8 @@ class EasyLoadingContainer extends StatefulWidget {
   final EasyLoadingMaskType? maskType;
   final Completer<void>? completer;
   final bool animation;
+  final double sigmaX;
+  final double sigmaY;
 
   const EasyLoadingContainer({
     Key? key,
@@ -49,6 +51,8 @@ class EasyLoadingContainer extends StatefulWidget {
     this.toastPosition,
     this.maskType,
     this.completer,
+    required this.sigmaX,
+    required this.sigmaY,
     this.animation = true,
   }) : super(key: key);
 
@@ -183,7 +187,7 @@ class EasyLoadingContainerState extends State<EasyLoadingContainer>
   Widget _buildMaskContainerByMaskType() {
     if (_maskType == EasyLoadingMaskType.blur)
       return BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+        filter: ImageFilter.blur(sigmaX: widget.sigmaX, sigmaY: widget.sigmaY),
         child: _buildMaskContainer(),
       );
 
