@@ -1,14 +1,14 @@
 # Flutter EasyLoading
 
-[![pub package](https://img.shields.io/pub/v/flutter_easyloading?style=flat)](https://pub.dev/packages/flutter_easyloading) [![pub points](https://badges.bar/flutter_easyloading/pub%20points)](https://pub.dev/packages/flutter_easyloading/score) [![popularity](https://badges.bar/flutter_easyloading/popularity)](https://pub.dev/packages/flutter_easyloading/score) [![likes](https://badges.bar/flutter_easyloading/likes)](https://pub.dev/packages/flutter_easyloading/score) [![license](https://img.shields.io/github/license/nslog11/flutter_easyloading?style=flat)](https://github.com/nslog11/flutter_easyloading) [![stars](https://img.shields.io/github/stars/nslog11/flutter_easyloading?style=social)](https://github.com/nslog11/flutter_easyloading)
+[![pub package](https://img.shields.io/pub/v/flutter_easyloading?style=flat)](https://pub.dev/packages/flutter_easyloading) [![pub points](https://badges.bar/flutter_easyloading/pub%20points)](https://pub.dev/packages/flutter_easyloading/score) [![popularity](https://badges.bar/flutter_easyloading/popularity)](https://pub.dev/packages/flutter_easyloading/score) [![likes](https://badges.bar/flutter_easyloading/likes)](https://pub.dev/packages/flutter_easyloading/score) [![license](https://img.shields.io/github/license/nslogx/flutter_easyloading?style=flat)](https://github.com/nslogx/flutter_easyloading) [![stars](https://img.shields.io/github/stars/nslogx/flutter_easyloading?style=social)](https://github.com/nslogx/flutter_easyloading)
 
 English | [简体中文](./README-zh_CN.md)
 
-<img src="https://raw.githubusercontent.com/nslog11/flutter_easyloading/master/images/gif01.gif" width=200 height=429/> <img src="https://raw.githubusercontent.com/nslog11/flutter_easyloading/master/images/gif02.gif" width=200 height=429/> <img src="https://raw.githubusercontent.com/nslog11/flutter_easyloading/master/images/gif03.gif" width=200 height=429/> <img src="https://raw.githubusercontent.com/nslog11/flutter_easyloading/master/images/gif04.gif" width=200 height=429/>
+<img src="https://raw.githubusercontent.com/nslogx/flutter_easyloading/master/images/gif01.gif" width=200 height=429/> <img src="https://raw.githubusercontent.com/nslogx/flutter_easyloading/master/images/gif02.gif" width=200 height=429/> <img src="https://raw.githubusercontent.com/nslogx/flutter_easyloading/master/images/gif03.gif" width=200 height=429/> <img src="https://raw.githubusercontent.com/nslogx/flutter_easyloading/master/images/gif04.gif" width=200 height=429/>
 
 ## Live Preview
 
-👉 [https://nslog11.github.io/flutter_easyloading](https://nslog11.github.io/flutter_easyloading/#/)
+👉 [https://nslogx.github.io/flutter_easyloading](https://nslogx.github.io/flutter_easyloading/#/)
 
 ## Installing
 
@@ -16,7 +16,7 @@ Add this to your package's `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  flutter_easyloading: ^3.0.3
+  flutter_easyloading: ^latest
 ```
 
 ## Import
@@ -197,7 +197,7 @@ More indicatorType can see in 👉 [flutter_spinkit showcase](https://github.com
 
 ## Custom Animation
 
-example: 👉 [Custom Animation](https://github.com/nslog11/flutter_easyloading/blob/develop/example/lib/custom_animation.dart)
+example: 👉 [Custom Animation](https://github.com/nslogx/flutter_easyloading/blob/develop/example/lib/custom_animation.dart)
 
 ## Todo
 
@@ -219,5 +219,5 @@ Thanks to [flutter_spinkit](https://github.com/jogboms/flutter_spinkit) ❤️
 
 Supported by [JetBrains Open Source](https://www.jetbrains.com/community/opensource/#support)
 
-[<img src="https://raw.githubusercontent.com/nslog11/flutter_easyloading/master/images/jetbrains.png" width=200 height=112/>](https://www.jetbrains.com/?from=FlutterEasyLoading)
+[<img src="https://raw.githubusercontent.com/nslogx/flutter_easyloading/master/images/jetbrains.png" width=200 height=112/>](https://www.jetbrains.com/?from=FlutterEasyLoading)
 

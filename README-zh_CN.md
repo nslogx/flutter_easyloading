@@ -1,14 +1,14 @@
 # Flutter EasyLoading
 
-[![pub package](https://img.shields.io/pub/v/flutter_easyloading?style=flat)](https://pub.dev/packages/flutter_easyloading) [![pub points](https://badges.bar/flutter_easyloading/pub%20points)](https://pub.dev/packages/flutter_easyloading/score) [![popularity](https://badges.bar/flutter_easyloading/popularity)](https://pub.dev/packages/flutter_easyloading/score) [![likes](https://badges.bar/flutter_easyloading/likes)](https://pub.dev/packages/flutter_easyloading/score) [![license](https://img.shields.io/github/license/nslog11/flutter_easyloading?style=flat)](https://github.com/nslog11/flutter_easyloading) [![stars](https://img.shields.io/github/stars/nslog11/flutter_easyloading?style=social)](https://github.com/nslog11/flutter_easyloading)
+[![pub package](https://img.shields.io/pub/v/flutter_easyloading?style=flat)](https://pub.dev/packages/flutter_easyloading) [![pub points](https://badges.bar/flutter_easyloading/pub%20points)](https://pub.dev/packages/flutter_easyloading/score) [![popularity](https://badges.bar/flutter_easyloading/popularity)](https://pub.dev/packages/flutter_easyloading/score) [![likes](https://badges.bar/flutter_easyloading/likes)](https://pub.dev/packages/flutter_easyloading/score) [![license](https://img.shields.io/github/license/nslogx/flutter_easyloading?style=flat)](https://github.com/nslogx/flutter_easyloading) [![stars](https://img.shields.io/github/stars/nslogx/flutter_easyloading?style=social)](https://github.com/nslogx/flutter_easyloading)
 
 [English](./README.md) | 简体中文
 
-<img src="https://raw.githubusercontent.com/nslog11/flutter_easyloading/master/images/gif01.gif" width=200 height=429/> <img src="https://raw.githubusercontent.com/nslog11/flutter_easyloading/master/images/gif02.gif" width=200 height=429/> <img src="https://raw.githubusercontent.com/nslog11/flutter_easyloading/master/images/gif03.gif" width=200 height=429/> <img src="https://raw.githubusercontent.com/nslog11/flutter_easyloading/master/images/gif04.gif" width=200 height=429/>
+<img src="https://raw.githubusercontent.com/nslogx/flutter_easyloading/master/images/gif01.gif" width=200 height=429/> <img src="https://raw.githubusercontent.com/nslogx/flutter_easyloading/master/images/gif02.gif" width=200 height=429/> <img src="https://raw.githubusercontent.com/nslogx/flutter_easyloading/master/images/gif03.gif" width=200 height=429/> <img src="https://raw.githubusercontent.com/nslogx/flutter_easyloading/master/images/gif04.gif" width=200 height=429/>
 
 ## 在线预览
 
-👉 [https://nslog11.github.io/flutter_easyloading](https://nslog11.github.io/flutter_easyloading/#/)
+👉 [https://nslogx.github.io/flutter_easyloading](https://nslogx.github.io/flutter_easyloading/#/)
 
 ## 安装
 
@@ -16,7 +16,7 @@
 
 ```yaml
 dependencies:
-  flutter_easyloading: ^3.0.3
+  flutter_easyloading: ^latest
 ```
 
 ## 导入
@@ -196,7 +196,7 @@ EasyLoading.instance
 
 ## 自定义动画
 
-例子: 👉 [Custom Animation](https://github.com/nslog11/flutter_easyloading/blob/develop/example/lib/custom_animation.dart)
+例子: 👉 [Custom Animation](https://github.com/nslogx/flutter_easyloading/blob/develop/example/lib/custom_animation.dart)
 
 ## 待完成
 
@@ -218,4 +218,4 @@ EasyLoading.instance
 
 感谢 [JetBrains Open Source](https://www.jetbrains.com/community/opensource/#support) 提供支持
 
-[<img src="https://raw.githubusercontent.com/nslog11/flutter_easyloading/master/images/jetbrains.png" width=200 height=112/>](https://www.jetbrains.com/?from=FlutterEasyLoading)
+[<img src="https://raw.githubusercontent.com/nslogx/flutter_easyloading/master/images/jetbrains.png" width=200 height=112/>](https://www.jetbrains.com/?from=FlutterEasyLoading)

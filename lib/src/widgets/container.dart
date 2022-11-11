@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2020 nslog11
+// Copyright (c) 2020 nslogx
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
 // copy of this software and associated documentation files (the "Software"),
@@ -29,6 +29,9 @@ import 'package:flutter/scheduler.dart';
 import '../theme.dart';
 import '../easy_loading.dart';
 
+//https://docs.flutter.dev/development/tools/sdk/release-notes/release-notes-3.0.0
+T? _ambiguate<T>(T? value) => value;
+
 class EasyLoadingContainer extends StatefulWidget {
   final Widget? indicator;
   final String? status;
@@ -53,7 +56,8 @@ class EasyLoadingContainer extends StatefulWidget {
   EasyLoadingContainerState createState() => EasyLoadingContainerState();
 }
 
-class EasyLoadingContainerState extends State<EasyLoadingContainer> with SingleTickerProviderStateMixin {
+class EasyLoadingContainerState extends State<EasyLoadingContainer>
+    with SingleTickerProviderStateMixin {
   String? _status;
   Color? _maskColor;
   late EasyLoadingMaskType? _maskType;
@@ -61,7 +65,14 @@ class EasyLoadingContainerState extends State<EasyLoadingContainer> with SingleT
   late AlignmentGeometry _alignment;
   late bool _dismissOnTap, _ignoring;
 
-  bool get isPersistentCallbacks => SchedulerBinding.instance?.schedulerPhase == SchedulerPhase.persistentCallbacks;
+// // <<<<<<< HEAD
+//   bool get isPersistentCallbacks => SchedulerBinding.instance.schedulerPhase == SchedulerPhase.persistentCallbacks;
+// // =======
+  //https://docs.flutter.dev/development/tools/sdk/release-notes/release-notes-3.0.0
+  bool get isPersistentCallbacks =>
+      _ambiguate(SchedulerBinding.instance)!.schedulerPhase ==
+      SchedulerPhase.persistentCallbacks;
+// >>>>>>> develop
 
   @override
   void initState() {
@@ -71,8 +82,10 @@ class EasyLoadingContainerState extends State<EasyLoadingContainer> with SingleT
     _alignment = (widget.indicator == null && widget.status?.isNotEmpty == true)
         ? EasyLoadingTheme.alignment(widget.toastPosition)
         : AlignmentDirectional.center;
-    _dismissOnTap = widget.dismissOnTap ?? (EasyLoadingTheme.dismissOnTap ?? false);
-    _ignoring = _dismissOnTap ? false : EasyLoadingTheme.ignoring(widget.maskType);
+    _dismissOnTap =
+        widget.dismissOnTap ?? (EasyLoadingTheme.dismissOnTap ?? false);
+    _ignoring =
+        _dismissOnTap ? false : EasyLoadingTheme.ignoring(widget.maskType);
     _maskColor = EasyLoadingTheme.maskColor(widget.maskType);
     _maskType = widget.maskType;
     _animationController = AnimationController(
@@ -96,8 +109,14 @@ class EasyLoadingContainerState extends State<EasyLoadingContainer> with SingleT
   Future<void> show(bool animation) {
     if (isPersistentCallbacks) {
       Completer<void> completer = Completer<void>();
-      SchedulerBinding.instance
-          ?.addPostFrameCallback((_) => completer.complete(_animationController.forward(from: animation ? 0 : 1)));
+// <<<<<<< HEAD
+//       SchedulerBinding.instance
+//           ?.addPostFrameCallback((_) => completer.complete(_animationController.forward(from: animation ? 0 : 1)));
+// =======
+      _ambiguate(SchedulerBinding.instance)!.addPostFrameCallback((_) =>
+          completer
+              .complete(_animationController.forward(from: animation ? 0 : 1)));
+// >>>>>>> develop
       return completer.future;
     } else {
       return _animationController.forward(from: animation ? 0 : 1);
@@ -107,8 +126,14 @@ class EasyLoadingContainerState extends State<EasyLoadingContainer> with SingleT
   Future<void> dismiss(bool animation) {
     if (isPersistentCallbacks) {
       Completer<void> completer = Completer<void>();
-      SchedulerBinding.instance
-          ?.addPostFrameCallback((_) => completer.complete(_animationController.reverse(from: animation ? 1 : 0)));
+// <<<<<<< HEAD
+//       SchedulerBinding.instance
+//           ?.addPostFrameCallback((_) => completer.complete(_animationController.reverse(from: animation ? 1 : 0)));
+// =======
+      _ambiguate(SchedulerBinding.instance)!.addPostFrameCallback((_) =>
+          completer
+              .complete(_animationController.reverse(from: animation ? 1 : 0)));
+// >>>>>>> develop
       return completer.future;
     } else {
       return _animationController.reverse(from: animation ? 1 : 0);
@@ -139,7 +164,10 @@ class EasyLoadingContainerState extends State<EasyLoadingContainer> with SingleT
               child: IgnorePointer(
                 ignoring: _ignoring,
                 child: _dismissOnTap
-                    ? GestureDetector(onTap: _onTap, behavior: HitTestBehavior.translucent, child: _buildMaskContainer())
+                    ? GestureDetector(
+                        onTap: _onTap,
+                        behavior: HitTestBehavior.translucent,
+                        child: _buildMaskContainer())
                     : _buildMaskContainerByMaskType(),
               ),
             );
@@ -209,7 +237,9 @@ class _Indicator extends StatelessWidget {
         children: <Widget>[
           if (indicator != null)
             Container(
-              margin: status?.isNotEmpty == true ? EasyLoadingTheme.textPadding : EdgeInsets.zero,
+              margin: status?.isNotEmpty == true
+                  ? EasyLoadingTheme.textPadding
+                  : EdgeInsets.zero,
               child: indicator,
             ),
           if (status != null)
