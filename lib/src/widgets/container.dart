@@ -109,14 +109,11 @@ class EasyLoadingContainerState extends State<EasyLoadingContainer>
   Future<void> show(bool animation) {
     if (isPersistentCallbacks) {
       Completer<void> completer = Completer<void>();
-// <<<<<<< HEAD
-//       SchedulerBinding.instance
-//           ?.addPostFrameCallback((_) => completer.complete(_animationController.forward(from: animation ? 0 : 1)));
-// =======
+
       _ambiguate(SchedulerBinding.instance)!.addPostFrameCallback((_) =>
           completer
               .complete(_animationController.forward(from: animation ? 0 : 1)));
-// >>>>>>> develop
+
       return completer.future;
     } else {
       return _animationController.forward(from: animation ? 0 : 1);
@@ -126,14 +123,11 @@ class EasyLoadingContainerState extends State<EasyLoadingContainer>
   Future<void> dismiss(bool animation) {
     if (isPersistentCallbacks) {
       Completer<void> completer = Completer<void>();
-// <<<<<<< HEAD
-//       SchedulerBinding.instance
-//           ?.addPostFrameCallback((_) => completer.complete(_animationController.reverse(from: animation ? 1 : 0)));
-// =======
+
       _ambiguate(SchedulerBinding.instance)!.addPostFrameCallback((_) =>
           completer
               .complete(_animationController.reverse(from: animation ? 1 : 0)));
-// >>>>>>> develop
+
       return completer.future;
     } else {
       return _animationController.reverse(from: animation ? 1 : 0);
