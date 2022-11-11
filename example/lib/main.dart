@@ -20,6 +20,7 @@ void configLoading() {
     ..loadingStyle = EasyLoadingStyle.dark
     ..indicatorSize = 45.0
     ..radius = 10.0
+    ..maskType = EasyLoadingMaskType.blur
     ..progressColor = Colors.yellow
     ..backgroundColor = Colors.green
     ..indicatorColor = Colors.yellow
@@ -115,7 +116,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       _timer?.cancel();
                       await EasyLoading.show(
                         status: 'loading...',
-                        maskType: EasyLoadingMaskType.black,
+                        maskType: EasyLoadingMaskType.blur,
                       );
                       print('EasyLoading show');
                     },

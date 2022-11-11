@@ -60,19 +60,15 @@ class EasyLoadingContainerState extends State<EasyLoadingContainer>
     with SingleTickerProviderStateMixin {
   String? _status;
   Color? _maskColor;
-  late EasyLoadingMaskType? _maskType;
   late AnimationController _animationController;
   late AlignmentGeometry _alignment;
   late bool _dismissOnTap, _ignoring;
+  late EasyLoadingMaskType? _maskType;
 
-// // <<<<<<< HEAD
-//   bool get isPersistentCallbacks => SchedulerBinding.instance.schedulerPhase == SchedulerPhase.persistentCallbacks;
-// // =======
   //https://docs.flutter.dev/development/tools/sdk/release-notes/release-notes-3.0.0
   bool get isPersistentCallbacks =>
       _ambiguate(SchedulerBinding.instance)!.schedulerPhase ==
       SchedulerPhase.persistentCallbacks;
-// >>>>>>> develop
 
   @override
   void initState() {
@@ -84,10 +80,9 @@ class EasyLoadingContainerState extends State<EasyLoadingContainer>
         : AlignmentDirectional.center;
     _dismissOnTap =
         widget.dismissOnTap ?? (EasyLoadingTheme.dismissOnTap ?? false);
-    _ignoring =
-        _dismissOnTap ? false : EasyLoadingTheme.ignoring(widget.maskType);
-    _maskColor = EasyLoadingTheme.maskColor(widget.maskType);
     _maskType = widget.maskType;
+    _ignoring = _dismissOnTap ? false : EasyLoadingTheme.ignoring(_maskType);
+    _maskColor = EasyLoadingTheme.maskColor(_maskType);
     _animationController = AnimationController(
       vsync: this,
       duration: EasyLoadingTheme.animationDuration,
@@ -161,7 +156,8 @@ class EasyLoadingContainerState extends State<EasyLoadingContainer>
                     ? GestureDetector(
                         onTap: _onTap,
                         behavior: HitTestBehavior.translucent,
-                        child: _buildMaskContainer())
+                        child: _buildMaskContainer(),
+                      )
                     : _buildMaskContainerByMaskType(),
               ),
             );

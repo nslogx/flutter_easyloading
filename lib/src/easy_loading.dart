@@ -59,14 +59,13 @@ enum EasyLoadingAnimationStyle {
 /// [none] default mask type, allow user interactions while loading is displayed
 /// [clear] don't allow user interactions while loading is displayed
 /// [black] don't allow user interactions while loading is displayed
-/// [blur] don't allow user interactions while loading is displayed
 /// [custom] while mask type is custom, maskColor should not be null
 enum EasyLoadingMaskType {
   none,
   clear,
   black,
-  blur,
   custom,
+  blur,
 }
 
 /// loading indicator type. see [https://github.com/jogboms/flutter_spinkit#-showcase]

@@ -58,10 +58,10 @@ packages:
   flutter_easyloading:
     dependency: "direct main"
     description:
-      name: flutter_easyloading
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.0.3"
+      path: ".."
+      relative: true
+    source: path
+    version: "3.0.5"
   flutter_spinkit:
     dependency: transitive
     description:
