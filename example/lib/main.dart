@@ -228,6 +228,10 @@ class _MyHomePageState extends State<MyHomePage> {
                             padding: EdgeInsets.all(5.0),
                             child: Text('custom'),
                           ),
+                          EasyLoadingMaskType.blur: Padding(
+                            padding: EdgeInsets.all(5.0),
+                            child: Text('blur'),
+                          ),
                         },
                         onValueChanged: (value) {
                           EasyLoading.instance.maskType = value;

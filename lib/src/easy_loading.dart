@@ -197,6 +197,12 @@ class EasyLoading {
   /// info widget of loading
   Widget? infoWidget;
 
+  /// padding of mask, default 0.
+  EdgeInsets? maskPadding;
+
+  /// activate safe area of mask, default false.
+  bool? maskUseSafeArea;
+
   Widget? _w;
 
   EasyLoadingOverlayEntry? overlayEntry;
@@ -236,6 +242,8 @@ class EasyLoading {
       vertical: 15.0,
       horizontal: 20.0,
     );
+    maskPadding = EdgeInsets.zero;
+    maskUseSafeArea = false;
   }
 
   static EasyLoading get instance => _instance;
@@ -260,6 +268,8 @@ class EasyLoading {
     Widget? indicator,
     EasyLoadingMaskType? maskType,
     bool? dismissOnTap,
+    EdgeInsets? maskPadding,
+    bool? maskUseSafeArea,
   }) {
     Widget w = indicator ?? (_instance.indicatorWidget ?? LoadingIndicator());
     return _instance._show(
@@ -267,6 +277,8 @@ class EasyLoading {
       maskType: maskType,
       dismissOnTap: dismissOnTap,
       w: w,
+      maskPadding: maskPadding,
+      maskUseSafeArea: maskUseSafeArea,
     );
   }
 
@@ -275,6 +287,8 @@ class EasyLoading {
     double value, {
     String? status,
     EasyLoadingMaskType? maskType,
+    EdgeInsets? maskPadding,
+    bool? maskUseSafeArea,
   }) async {
     assert(
       value >= 0.0 && value <= 1.0,
@@ -301,6 +315,8 @@ class EasyLoading {
         maskType: maskType,
         dismissOnTap: false,
         w: w,
+        maskPadding: maskPadding,
+        maskUseSafeArea: maskUseSafeArea,
       );
       _instance._progressKey = _progressKey;
     }
@@ -316,6 +332,8 @@ class EasyLoading {
     Duration? duration,
     EasyLoadingMaskType? maskType,
     bool? dismissOnTap,
+    EdgeInsets? maskPadding,
+    bool? maskUseSafeArea,
   }) {
     Widget w = _instance.successWidget ??
         Icon(
@@ -329,6 +347,8 @@ class EasyLoading {
       maskType: maskType,
       dismissOnTap: dismissOnTap,
       w: w,
+      maskPadding: maskPadding,
+      maskUseSafeArea: maskUseSafeArea,
     );
   }
 
@@ -338,6 +358,8 @@ class EasyLoading {
     Duration? duration,
     EasyLoadingMaskType? maskType,
     bool? dismissOnTap,
+    EdgeInsets? maskPadding,
+    bool? maskUseSafeArea,
   }) {
     Widget w = _instance.errorWidget ??
         Icon(
@@ -351,6 +373,8 @@ class EasyLoading {
       maskType: maskType,
       dismissOnTap: dismissOnTap,
       w: w,
+      maskPadding: maskPadding,
+      maskUseSafeArea: maskUseSafeArea,
     );
   }
 
@@ -360,6 +384,8 @@ class EasyLoading {
     Duration? duration,
     EasyLoadingMaskType? maskType,
     bool? dismissOnTap,
+    EdgeInsets? maskPadding,
+    bool? maskUseSafeArea,
   }) {
     Widget w = _instance.infoWidget ??
         Icon(
@@ -373,6 +399,8 @@ class EasyLoading {
       maskType: maskType,
       dismissOnTap: dismissOnTap,
       w: w,
+      maskPadding: maskPadding,
+      maskUseSafeArea: maskUseSafeArea,
     );
   }
 
@@ -429,6 +457,8 @@ class EasyLoading {
     EasyLoadingMaskType? maskType,
     bool? dismissOnTap,
     EasyLoadingToastPosition? toastPosition,
+    EdgeInsets? maskPadding,
+    bool? maskUseSafeArea,
   }) async {
     assert(
       overlayEntry != null,
@@ -483,6 +513,8 @@ class EasyLoading {
       sigmaX: sigmaX,
       sigmaY: sigmaY,
       completer: completer,
+      padding: maskPadding ?? this.maskPadding,
+      useSafeArea: maskUseSafeArea ?? this.maskUseSafeArea ?? false,
     );
     completer.future.whenComplete(() {
       _callback(EasyLoadingStatus.show);

@@ -42,6 +42,8 @@ class EasyLoadingContainer extends StatefulWidget {
   final bool animation;
   final double sigmaX;
   final double sigmaY;
+  final EdgeInsetsGeometry? padding;
+  final bool useSafeArea;
 
   const EasyLoadingContainer({
     Key? key,
@@ -54,6 +56,8 @@ class EasyLoadingContainer extends StatefulWidget {
     required this.sigmaX,
     required this.sigmaY,
     this.animation = true,
+    this.useSafeArea = false,
+    this.padding,
   }) : super(key: key);
 
   @override
@@ -146,27 +150,46 @@ class EasyLoadingContainerState extends State<EasyLoadingContainer>
 
   @override
   Widget build(BuildContext context) {
+    final background = AnimatedBuilder(
+      animation: _animationController,
+      builder: (BuildContext context, Widget? child) {
+        return Opacity(
+          opacity: _animationController.value,
+          child: IgnorePointer(
+            ignoring: _ignoring,
+            child: Container(
+              color: Colors.transparent,
+              child: Padding(
+                padding: widget.padding ?? EdgeInsets.zero,
+                child: Container(
+                  color: Colors.transparent,
+                  child: _dismissOnTap
+                      ? GestureDetector(
+                          onTap: _onTap,
+                          behavior: HitTestBehavior.translucent,
+                          child: _buildMaskContainerByMaskType(),
+                        )
+                      : _buildMaskContainerByMaskType(),
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+
+    Widget withSafeArea = background;
+
+    if (widget.useSafeArea) {
+      withSafeArea = SafeArea(
+        child: background,
+      );
+    }
+
     return Stack(
       alignment: _alignment,
       children: <Widget>[
-        AnimatedBuilder(
-          animation: _animationController,
-          builder: (BuildContext context, Widget? child) {
-            return Opacity(
-              opacity: _animationController.value,
-              child: IgnorePointer(
-                ignoring: _ignoring,
-                child: _dismissOnTap
-                    ? GestureDetector(
-                        onTap: _onTap,
-                        behavior: HitTestBehavior.translucent,
-                        child: _buildMaskContainer(),
-                      )
-                    : _buildMaskContainerByMaskType(),
-              ),
-            );
-          },
-        ),
+        withSafeArea,
         AnimatedBuilder(
           animation: _animationController,
           builder: (BuildContext context, Widget? child) {
@@ -186,9 +209,12 @@ class EasyLoadingContainerState extends State<EasyLoadingContainer>
 
   Widget _buildMaskContainerByMaskType() {
     if (_maskType == EasyLoadingMaskType.blur)
-      return BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: widget.sigmaX, sigmaY: widget.sigmaY),
-        child: _buildMaskContainer(),
+      return ClipRect(
+        child: BackdropFilter(
+          filter:
+              ImageFilter.blur(sigmaX: widget.sigmaX, sigmaY: widget.sigmaY),
+          child: _buildMaskContainer(),
+        ),
       );
 
     return _buildMaskContainer();
