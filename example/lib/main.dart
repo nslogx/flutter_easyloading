@@ -115,7 +115,6 @@ class _MyHomePageState extends State<MyHomePage> {
                       _timer?.cancel();
                       await EasyLoading.show(
                         status: 'loading...',
-                        maskType: EasyLoadingMaskType.blur,
                       );
                       print('EasyLoading show');
                     },

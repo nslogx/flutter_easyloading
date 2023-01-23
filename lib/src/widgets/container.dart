@@ -242,13 +242,15 @@ class _Indicator extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.all(50.0),
-      decoration: BoxDecoration(
-        color: EasyLoadingTheme.backgroundColor,
-        borderRadius: BorderRadius.circular(
-          EasyLoadingTheme.radius,
-        ),
-        boxShadow: EasyLoadingTheme.boxShadow,
-      ),
+      decoration: EasyLoadingTheme.backgroundColor == Colors.transparent
+          ? null
+          : BoxDecoration(
+              color: EasyLoadingTheme.backgroundColor,
+              borderRadius: BorderRadius.circular(
+                EasyLoadingTheme.radius,
+              ),
+              boxShadow: EasyLoadingTheme.boxShadow,
+            ),
       padding: EasyLoadingTheme.contentPadding,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
