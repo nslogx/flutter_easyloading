@@ -217,6 +217,8 @@ example: 👉 [Custom Animation](https://github.com/nslogx/flutter_easyloading/b
 
 Thanks to [flutter_spinkit](https://github.com/jogboms/flutter_spinkit) ❤️
 
+Thanks to [back_button_interceptor](https://github.com/marcglasberg/back_button_interceptor) ❤️
+
 Supported by [JetBrains Open Source](https://www.jetbrains.com/community/opensource/#support)
 
 [<img src="https://raw.githubusercontent.com/nslogx/flutter_easyloading/master/images/jetbrains.png" width=200 height=112/>](https://www.jetbrains.com/?from=FlutterEasyLoading)
