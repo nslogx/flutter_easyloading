@@ -132,6 +132,9 @@ class EasyLoadingTheme {
   static Duration get animationDuration =>
       EasyLoading.instance.animationDuration;
 
+  /// contentMargin of loading
+  static EdgeInsets get contentMargin => EasyLoading.instance.contentMargin;
+
   /// contentPadding of loading
   static EdgeInsets get contentPadding => EasyLoading.instance.contentPadding;
 
