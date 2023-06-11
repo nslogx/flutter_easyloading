@@ -122,6 +122,9 @@ class EasyLoading {
   late TextAlign textAlign;
 
   /// content padding of loading.
+  late EdgeInsets contentMargin;
+
+  /// content padding of loading.
   late EdgeInsets contentPadding;
 
   /// padding of [status].
@@ -223,6 +226,7 @@ class EasyLoading {
     displayDuration = const Duration(milliseconds: 2000);
     animationDuration = const Duration(milliseconds: 200);
     textPadding = const EdgeInsets.only(bottom: 10.0);
+    contentMargin = const EdgeInsets.all(50.0);
     contentPadding = const EdgeInsets.symmetric(
       vertical: 15.0,
       horizontal: 20.0,
