@@ -25,13 +25,13 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-import './widgets/container.dart';
-import './widgets/progress.dart';
-import './widgets/indicator.dart';
-import './widgets/overlay_entry.dart';
-import './widgets/loading.dart';
 import './animations/animation.dart';
 import './theme.dart';
+import './widgets/container.dart';
+import './widgets/indicator.dart';
+import './widgets/loading.dart';
+import './widgets/overlay_entry.dart';
+import './widgets/progress.dart';
 
 /// loading style
 enum EasyLoadingStyle {
@@ -251,6 +251,7 @@ class EasyLoading {
     Widget? indicator,
     EasyLoadingMaskType? maskType,
     bool? dismissOnTap,
+    bool? disableBackWhileLoading,
   }) {
     Widget w = indicator ?? (_instance.indicatorWidget ?? LoadingIndicator());
     return _instance._show(
@@ -258,6 +259,7 @@ class EasyLoading {
       maskType: maskType,
       dismissOnTap: dismissOnTap,
       w: w,
+      disableBackWhileLoading: disableBackWhileLoading,
     );
   }
 
@@ -420,6 +422,7 @@ class EasyLoading {
     EasyLoadingMaskType? maskType,
     bool? dismissOnTap,
     EasyLoadingToastPosition? toastPosition,
+    bool? disableBackWhileLoading,
   }) async {
     assert(
       overlayEntry != null,
@@ -472,6 +475,7 @@ class EasyLoading {
       maskType: maskType,
       dismissOnTap: dismissOnTap,
       completer: completer,
+      disableBackWhileLoading: disableBackWhileLoading ?? false,
     );
     completer.future.whenComplete(() {
       _callback(EasyLoadingStatus.show);
